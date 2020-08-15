@@ -97,7 +97,7 @@
 // HRESULT translation for Direct3D and other APIs 
 #include <dxerr.h>
 
-
+auto __vsnwprintf = _vsnwprintf;
 #if defined(DEBUG) || defined(_DEBUG)
 #ifndef V
 #define V(x)           { hr = (x); if( FAILED(hr) ) { DXUTTrace( __FILE__, (DWORD)__LINE__, hr, L#x, true ); } }
@@ -344,7 +344,7 @@ void      WINAPI DXUTDestroyState(); // Optional method to destroy DXUT's memory
 //--------------------------------------------------------------------------------------
 #include "DXUTmisc.h"
 #include "DXUTenum.h"
-
+#include "../../stdafx.h"
 
 #endif
 

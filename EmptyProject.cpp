@@ -12,7 +12,7 @@
 bool CALLBACK IsD3D9DeviceAcceptable( D3DCAPS9* pCaps, D3DFORMAT AdapterFormat, D3DFORMAT BackBufferFormat,
                                       bool bWindowed, void* pUserContext )
 {
-  
+
     // Typically want to skip back buffer formats that don't support alpha blending
     IDirect3D9* pD3D = DXUTGetD3D9Object();
     if( FAILED( pD3D->CheckDeviceFormat( pCaps->AdapterOrdinal, pCaps->DeviceType,
