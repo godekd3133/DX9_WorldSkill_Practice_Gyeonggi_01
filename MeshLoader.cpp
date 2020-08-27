@@ -45,34 +45,17 @@ CMeshLoader::~CMeshLoader()
 //--------------------------------------------------------------------------------------
 void CMeshLoader::Destroy()
 {
-    for( int iMaterial = 0; iMaterial < m_Materials.GetSize(); iMaterial++ )
-    {
-        Material* pMaterial = m_Materials.GetAt( iMaterial );
-
-        // Avoid releasing the same texture twice
-        for( int x = iMaterial + 1; x < m_Materials.GetSize(); x++ )
-        {
-            Material* pCur = m_Materials.GetAt( x );
-            if( pCur->pTexture == pMaterial->pTexture )
-                pCur->pTexture = NULL;
-        }
-
-        SAFE_RELEASE( pMaterial->pTexture );
-        SAFE_DELETE( pMaterial );
-    }
-
     m_Materials.RemoveAll();
     m_Vertices.RemoveAll();
     m_Indices.RemoveAll();
     m_Attributes.RemoveAll();
 
-    SAFE_RELEASE( m_pMesh );
     m_pd3dDevice = NULL;
 }
 
 
 //--------------------------------------------------------------------------------------
-HRESULT CMeshLoader::Create( IDirect3DDevice9* pd3dDevice, const WCHAR* strFilename )
+HRESULT CMeshLoader::Create( IDirect3DDevice9* pd3dDevice, const WCHAR* strFilename ,string _mapPath)
 {
     HRESULT hr;
     WCHAR str[ MAX_PATH ] = {0};
@@ -113,11 +96,23 @@ HRESULT CMeshLoader::Create( IDirect3DDevice9* pd3dDevice, const WCHAR* strFilen
             }
 
             // Not found, load the texture
-            if( !bFound )
-            {
-                V_RETURN( DXUTFindDXSDKMediaFileCch( str, MAX_PATH, pMaterial->strTexture ) );
-                V_RETURN( D3DXCreateTextureFromFile( pd3dDevice, pMaterial->strTexture,
-                                                     &( pMaterial->pTexture ) ) );
+			if (!bFound)
+			{
+				/*V_RETURN( DXUTFindDXSDKMediaFileCch( str, MAX_PATH, pMaterial->strTexture ) );
+				V_RETURN( D3DXCreateTextureFromFile( pd3dDevice, pMaterial->strTexture,
+													 &( pMaterial->pTexture ) ) );*/
+
+				wstring wPath = pMaterial->strTexture;
+
+				if (wPath.empty() == false)
+				{
+					string Path;
+					Path.assign(wPath.begin(), wPath.end());
+		
+					GRAPHICS.AddSprite(_mapPath + Path, _mapPath + Path);
+					pMaterial->pTexture = SPRITE(_mapPath + Path)->m_pTexture;
+				}
+		
             }
         }
     }
@@ -194,13 +189,11 @@ HRESULT CMeshLoader::LoadGeometryFromOBJ( const WCHAR* strFileName )
     CGrowableArray <D3DXVECTOR3> Normals;
 
     // The first subset uses the default material
-    Material* pMaterial = new Material();
-    if( pMaterial == NULL )
-        return E_OUTOFMEMORY;
+	Material* pMaterial = NULL;
 
-    InitMaterial( pMaterial );
-    wcscpy_s( pMaterial->strName, MAX_PATH - 1, L"default" );
-    m_Materials.Add( pMaterial );
+//    InitMaterial( pMaterial );
+   // wcscpy_s( pMaterial->strName, MAX_PATH - 1, L"default" );
+   // m_Materials.Add( pMaterial );
 
     DWORD dwCurSubset = 0;
 
@@ -340,7 +333,12 @@ HRESULT CMeshLoader::LoadGeometryFromOBJ( const WCHAR* strFileName )
     // If an associated material file was found, read that in as well.
     if( strMaterialFilename[0] )
     {
-        V_RETURN( LoadMaterialsFromMTL( strMaterialFilename ) );
+		wstring path = strFileName;
+		path.pop_back();
+		path.pop_back();
+		path.pop_back();
+		path+= L"mtl";
+			V_RETURN(LoadMaterialsFromMTL(path.c_str()));
     }
 
     return S_OK;
@@ -564,7 +562,6 @@ HRESULT CMeshLoader::LoadMaterialsFromMTL( const WCHAR* strFileName )
 //--------------------------------------------------------------------------------------
 void CMeshLoader::InitMaterial( Material* pMaterial )
 {
-    ZeroMemory( pMaterial, sizeof( Material ) );
 
     pMaterial->vAmbient = D3DXVECTOR3( 0.2f, 0.2f, 0.2f );
     pMaterial->vDiffuse = D3DXVECTOR3( 0.8f, 0.8f, 0.8f );
