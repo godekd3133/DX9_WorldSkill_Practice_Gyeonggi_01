@@ -29,7 +29,10 @@ void CAnimator3D::Start()
 void CAnimator3D::Update()
 {
 	if (m_pCurrentState)
+	{
+		m_pCurrentState->Update();
 		MeshRenderer->m_pMesh = m_pCurrentState->GetCurrentMesh();
+	}
 }
 
 void CAnimator3D::LateUpdate()
@@ -80,11 +83,12 @@ void CAnimator3D::AddState(string _StateName, string _ResourceKey, float _Delay,
 
 		if (pFrameMesh == nullptr)
 		{
-			pAnimation->m_vecMesh.push_back(pFrameMesh);
 			pAnimation->m_iMaxFrame = Frame - 1;
 			break;
 		}
+		pAnimation->m_vecMesh.push_back(pFrameMesh);
 
 		Frame++;
 	}
+	m_mapAnimation.insert(make_pair(_StateName, pAnimation));
 }

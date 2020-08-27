@@ -198,16 +198,16 @@ HRESULT CMeshLoader::LoadGeometryFromOBJ( const WCHAR* strFileName )
     DWORD dwCurSubset = 0;
 
     // File input
-    WCHAR strCommand[256] = {0};
+    WCHAR strCommand[128] = {0};
     wifstream InFile( str );
     if( !InFile )
         return DXTRACE_ERR( L"wifstream::open", E_FAIL );
 
-    for(; ; )
+   while(InFile.eof()==false)
     {
         InFile >> strCommand;
-        if( !InFile )
-            break;
+        //if( !InFile  )
+          //  break;
 
         if( 0 == wcscmp( strCommand, L"#" ) )
         {
@@ -323,7 +323,7 @@ HRESULT CMeshLoader::LoadGeometryFromOBJ( const WCHAR* strFileName )
             // Unimplemented or unrecognized command
         }
 
-        InFile.ignore( 1000, '\n' );
+        InFile.ignore( 10000, '\n' );
     }
 
     // Cleanup
@@ -519,8 +519,7 @@ HRESULT CMeshLoader::LoadMaterialsFromMTL( const WCHAR* strFileName )
             InFile >> r >> g >> b;
             pMaterial->vSpecular = D3DXVECTOR3( r, g, b );
         }
-        else if( 0 == wcscmp( strCommand, L"d" ) ||
-                 0 == wcscmp( strCommand, L"Tr" ) )
+        else if( 0 == wcscmp( strCommand, L"d" )  )
         {
             // Alpha
             InFile >> pMaterial->fAlpha;

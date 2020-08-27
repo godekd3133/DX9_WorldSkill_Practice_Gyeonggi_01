@@ -24,10 +24,15 @@ public:
 public:
 	void Update();
 	void SetTransform();
-
+	CGameObject * m_pFollowObject = nullptr;
+	float m_fSpeed = 0.f;
 public:
 	void Shake(float _fTime, float _fPower);
-
+	void Follow(CGameObject * _Follow, float _fSpeed)
+	{
+		m_pFollowObject = _Follow;
+		m_fSpeed = _fSpeed;
+	}
 private:
 	void ShakeCamera()
 	{

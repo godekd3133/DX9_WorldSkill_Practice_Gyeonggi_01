@@ -12,8 +12,19 @@ CMainGame::~CMainGame()
 }
 
 void CMainGame::Init()
-{
-	AddMesh("PLAYER_ATTACK_01", "Player/Attack01/Attack01", "Player/Attack01" ,9);
+{ 
+	thread th = thread([=]() {
+		AddMesh("MAP_STAGE01", "Map/Stage01/Stage01", "Map/Stage01");
+		AddMesh("MAP_STAGE02", "Map/Stage02/Stage02", "Map/Stage02");
+		AddMesh("PLAYER_ATTACK_01", "Player/Attack01/Attack01", "Player/Attack01", 9);
+		AddMesh("PLAYER_ATTACK_02", "Player/Attack02/Attack02", "Player/Attack02", 10);
+		AddMesh("PLAYER_ATTACK_03", "Player/Attack03/Attack03", "Player/Attack03", 15);
+
+		AddMesh("PLAYER_IDLE", "Player/Idle/Idle", "Player/Idle", 32);
+//		AddMesh("PLAYER_ATTACK_01", "Player/Attack01/Attack01", "Player/Attack01", 9);
+	});
+
+	th.join();
 	//AddMesh("PLAYER_ATTACK_02", "Player/Attack02/Attack02", "Player/Attack02", 10);
 	//AddMesh("PLAYER_ATTACK_03", "Player/Attack03/Attack03", "Player/Attack03", 15);
 
@@ -30,6 +41,7 @@ void CMainGame::Init()
 
 	SCENE.AddScene("S_TITLE", new CTitleScene());
 	SCENE.ChangeScene("S_TITLE");
+
 }
 
 void CMainGame::Update()
@@ -99,7 +111,7 @@ void CMainGame::AddMesh(string _Key, string _Path, string _MapPath, int _Count)
 		string Key = _Key;
 		string Path = "./resource/" +  _Path + ".obj";
 		string MapPath = "./resource/" +  _MapPath + "/";
-		GRAPHICS.AddMesh(_Key, _Path,_MapPath);
+		GRAPHICS.AddMesh(Key, Path, MapPath);
 	}
 	else
 	{

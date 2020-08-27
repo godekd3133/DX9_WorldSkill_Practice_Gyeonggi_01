@@ -3,8 +3,8 @@
 
 CCameraManager::CCameraManager()
 {
-	m_vPos = Vector3(0, 0, -10);
-	m_vLookAt = Vector3(0, 0, 0);
+	m_vPos = Vector3(0, 200, 0);
+	m_vLookAt = Vector3(0, 250, 500);
 	m_vUp = Vector3(0, 1, 0);
 	sa = new CScheduleAdmin();
 
@@ -28,7 +28,13 @@ void CCameraManager::Update()
 		m_fCameraTime -= dt;
 		ShakeCamera();
 	}
-	m_vShakePos = Lerp(m_vShakePos, m_vPos, dt * 8);
+	m_vShakePos = Lerp(m_vShakePos, Vector3(0,0,0), dt * 8);
+
+	if (m_pFollowObject)
+	{
+		m_vLookAt.x = Lerp(m_vLookAt.x, m_pFollowObject->tf->m_vPos.x, dt * 2);
+		m_vPos = m_vLookAt + Vector3(0,80,-400);
+	}
 
 	D3DXMatrixLookAtLH(&m_matView, &(m_vPos + m_vShakePos), &(m_vLookAt + m_vShakePos), &m_vUp);
 	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4.f, 16.f / 9.f, 1.f, 1000000);

@@ -16,6 +16,7 @@ public:
 
 public:
 	bool m_bStart = false;
+	bool m_bEnable = true;
 	CGameObject * go;
 	CTransform * tf;
 	CScheduleAdmin * sa;

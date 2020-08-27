@@ -14,6 +14,7 @@ public:
 	string m_Name;
 	Tag m_Tag;
 	CTransform * tf;
+	bool m_bDestroy = false;
 public:
 	CGameObject * m_pParent = nullptr;
 	vector<CGameObject*>  m_pChild;

@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <functional>
 #include <set>
+#include <thread>
 
 using namespace std;
 
@@ -92,7 +93,7 @@ using namespace my;
 enum class RenderMode {RM_Default , RM_UI, RM_Billboard};
 enum class SortingLayer { SR_Default};
 
-enum class Tag {Untagged};
+enum class Tag {Untagged,Map};
 #include "CScheduleAdmin.h"
 #include "CSprite.h"
 #include "CScene.h"

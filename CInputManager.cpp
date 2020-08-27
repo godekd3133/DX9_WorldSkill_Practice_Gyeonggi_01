@@ -28,7 +28,7 @@ bool CInputManager::KeyDown(int _Key)
 
 bool CInputManager::KeyPress(int _Key)
 {
-	return m_bCurInput[256] && m_bLastInput[256];
+	return m_bCurInput[_Key] && m_bLastInput[_Key];
 }
 
 bool CInputManager::KeyUp(int _Key)

@@ -17,13 +17,17 @@ void CObjectManager::Update()
 	{
 		for (auto comp : iter->m_listComponent)
 		{
-			if(comp->m_bStart == true)
-			comp->Start();
+			if (comp->m_bStart == false)
+			{
+				comp->m_bStart = true;
+				comp->Start();
+			}
 		}
 
 		if (iter->m_bEnable)
 			for (auto comp : iter->m_listComponent)
 			{
+				if(comp->m_bEnable)
 				comp->Update();
 			}
 	}
@@ -33,11 +37,12 @@ void CObjectManager::Update()
 		if (iter->m_bEnable)
 			for (auto comp : iter->m_listComponent)
 			{
-				comp->LateUpdate();
+				if (comp->m_bEnable)
+					comp->LateUpdate();
 			}
 	}
 
-	/*for (auto iter = m_listGameObject.begin(); iter != m_listGameObject.end(); )
+	for (auto iter = m_listGameObject.begin(); iter != m_listGameObject.end(); )
 	{
 		if ((*iter)->m_bDestroy)
 		{
@@ -50,14 +55,32 @@ void CObjectManager::Update()
 			iter = m_listGameObject.erase(iter);
 		}
 		else iter++;
-	}*/
+	}
 }
 
 void CObjectManager::Render()
 {
 	for (auto iter : m_listRenderer3D)
 	{
-		iter->OnRender();
+		if(iter->go->m_Tag == Tag::Map)
+		g_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CW);
+
+		if (iter->m_bEnable)
+		{
+			iter->OnRender();
+		}
+		g_Device->SetRenderState(D3DRS_CULLMODE, D3DCULL_CCW);
+
+	}
+
+	m_listRenderer2D.sort([](CRenderer2D * _Prev, CRenderer2D * _Next)->bool {
+		return (int)_Prev->m_SortingLayer < (int)_Next->m_SortingLayer;
+	});
+
+	for (auto iter : m_listRenderer2D)
+	{
+		if (iter->m_bEnable)
+			iter->OnRender();
 	}
 }
 
