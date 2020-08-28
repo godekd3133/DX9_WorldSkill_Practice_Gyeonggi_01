@@ -17,5 +17,5 @@ public:
 	bool KeyPress(int _Key);
 	bool KeyUp(int _Key);
 };
-#define INPUT (CInputManager::GetInstance())
+#define INPUT (*CInputManager::GetInstance())
 

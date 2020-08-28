@@ -1,11 +1,11 @@
 #pragma once
 #include "CComponent.h"
-class CPlayerMovement :
+class CRigidBody :
 	public CComponent
 {
 public:
-	CPlayerMovement();
-	~CPlayerMovement();
+	CRigidBody();
+	~CRigidBody();
 
 public:
 	virtual void Awake() override;
@@ -14,10 +14,13 @@ public:
 	virtual void LateUpdate() override;
 	virtual void OnDestroy() override;
 	virtual void OnCollision() override;
+	
+public:
+	Vector3 m_vVelocity;
+	bool m_bGravity = true;
+public:
+	void AddForce(Vector3 _vVelocitiy);
 
-	void Move(Vector3 _vDirection, float _MoveSpeed);
-	float Direction = 0.f;
-	void OnLanding();
-	bool TriggerAttackCombo = false;
+	list < function<void()>> OnLanding;
 };
 

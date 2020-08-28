@@ -14,14 +14,23 @@ CMainGame::~CMainGame()
 void CMainGame::Init()
 { 
 	thread th = thread([=]() {
-		AddMesh("MAP_STAGE01", "Map/Stage01/Stage01", "Map/Stage01");
+		AddMesh("MAP_STAGE01", "Map/Stage01/Stage01_2", "Map/Stage01");
 		AddMesh("MAP_STAGE02", "Map/Stage02/Stage02", "Map/Stage02");
+
+		AddMesh("PLAYER_IDLE", "Player/Idle/Idle", "Player/Idle", 32);
+		AddMesh("PLAYER_RUN", "Player/Run/Run", "Player/Run", 23);
+		AddMesh("PLAYER_JUMP", "Player/Jump/Jump", "Player/Jump", 35); 
+		
 		AddMesh("PLAYER_ATTACK_01", "Player/Attack01/Attack01", "Player/Attack01", 9);
 		AddMesh("PLAYER_ATTACK_02", "Player/Attack02/Attack02", "Player/Attack02", 10);
 		AddMesh("PLAYER_ATTACK_03", "Player/Attack03/Attack03", "Player/Attack03", 15);
+		
+		AddMesh("PLAYER_KICK_01", "Player/Kick01/Kick01", "Player/JumpKick", 16);
+		AddMesh("PLAYER_KICK_02", "Player/Kick02/Kick02", "Player/JumpKick", 22);
 
-		AddMesh("PLAYER_IDLE", "Player/Idle/Idle", "Player/Idle", 32);
-//		AddMesh("PLAYER_ATTACK_01", "Player/Attack01/Attack01", "Player/Attack01", 9);
+		AddMesh("PLAYER_GROUNDPUNCH", "Player/GroundPunch/GroundPunch", "Player/GroundPunch", 25);
+
+		AddSprite("EFFECT_SKILL02_SPLASH", "Effect/Skill02/Splash/Splash", 24);
 	});
 
 	th.join();
@@ -29,13 +38,11 @@ void CMainGame::Init()
 	//AddMesh("PLAYER_ATTACK_03", "Player/Attack03/Attack03", "Player/Attack03", 15);
 
 	//AddMesh("PLAYER_GROUNDKICK", "Player/GroundKick/GroundKick", "Player/GroundKick", 33);
-	//AddMesh("PLAYER_GROUNDPUNCH", "Player/GroundPunch/GroundPunch", "Player/GroundPunch", 25);
 	//AddMesh("PLAYER_HIT", "Player/Hit/Hit", "Player/Hit", 16);
 	//AddMesh("PLAYER_IDLE", "Player/Idle/Idle", "Player/Idle", 32);
 	//AddMesh("PLAYER_JUMP", "Player/Jump/Jump", "Player/Jump", 35);
 	//AddMesh("PLAYER_JUMPKICK", "Player/JumpKick/JumpKick", "Player/JumpKick", 26);
-	//AddMesh("PLAYER_KICK_01", "Player/Kick01/Kick01", "Player/JumpKick", 16);
-	//AddMesh("PLAYER_KICK_02", "Player/Kick02/Kick02", "Player/JumpKick", 22);
+
 	//AddMesh("PLAYER_RUN", "Player/Run/Run", "Player/Run", 23);
 	//AddMesh("PLAYER_WALK", "Player/Walk/Walk", "Player/Walk", 31);
 
@@ -52,7 +59,7 @@ void CMainGame::Update()
 
 	SCENE.Update();
 
-	INPUT->Update();
+	INPUT.Update();
 
 	OBJ.Update();
 }
@@ -90,15 +97,15 @@ void CMainGame::AddSprite(string _Key, string _Path, int _Count)
 	if (_Count == 0)
 	{
 		string Key = _Key;
-		string Path = _Path + ".png";
-		GRAPHICS.AddSprite(_Key, _Path);
+		string Path = "./resource/" + _Path + ".png";
+		GRAPHICS.AddSprite(Key, Path);
 	}
 	else
 	{
 		for (int i = 0; i < _Count; i++)
 		{
 			string Key = _Key + " (" + to_string(i + 1) + ")";
-			string Path = _Path + " (" + to_string(i + 1) + ").png";
+			string Path = "./resource/" + _Path + " (" + to_string(i + 1) + ").png";
 			GRAPHICS.AddSprite(Key, Path);
 		}
 	}

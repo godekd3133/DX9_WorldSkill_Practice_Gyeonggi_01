@@ -23,8 +23,11 @@ void CAnimation3D::Update()
 		if (m_iCurFrame >= m_iMaxFrame)
 		{
 			if (m_bRepeat == false)
-				m_bEnable = true;
-			else 
+			{
+				m_iCurFrame--;
+				m_bEnable = false;
+			}
+			else
 				m_iCurFrame = 0;
 
 			if (auto find = m_mapEvent.find(m_iCurFrame); find != m_mapEvent.end())

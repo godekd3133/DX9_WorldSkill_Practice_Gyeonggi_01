@@ -29,6 +29,8 @@ void CSpriteRenderer::LateUpdate()
 
 void CSpriteRenderer::OnRender()
 {
+	if (m_pSprite)
+		GRAPHICS.Render_Sprite(m_pSprite, tf->ToMatrix(), m_vAnchor, m_vFillAmount, m_Color, m_RenderMode);
 }
 
 void CSpriteRenderer::OnDestroy()

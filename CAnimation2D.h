@@ -24,7 +24,9 @@ public:
 	void Update();
 
 	void AddEvent(int _State, Event _Event);
-	float GetNormalizeTime() { return (float)m_iCurFrame / (float)m_iMaxFrame; }
-	CSprite * GetCurrentSprite() { return m_vecSprite[m_iCurFrame]; }
+	float GetNormalizeTime() { return (float)m_iCurFrame / (float)(m_iMaxFrame-1); }
+	CSprite * GetCurrentSprite() {
+		return m_vecSprite[m_iCurFrame];
+	}
 };
 

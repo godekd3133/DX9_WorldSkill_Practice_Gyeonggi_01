@@ -60,7 +60,7 @@ namespace my
 	}
 	static float GetDirAngle(Vector3 _vDir)
 	{
-		float angle = atan2f(_vDir.x, _vDir.z);
+		float angle = atan2f(_vDir.z, _vDir.x);
 
 		return D3DXToDegree(angle);
 	}
@@ -91,7 +91,7 @@ namespace my
 };
 using namespace my;
 enum class RenderMode {RM_Default , RM_UI, RM_Billboard};
-enum class SortingLayer { SR_Default};
+enum class SortingLayer { SR_Default,SR_Effect};
 
 enum class Tag {Untagged,Map};
 #include "CScheduleAdmin.h"
@@ -106,9 +106,10 @@ enum class Tag {Untagged,Map};
 #include "CRenderer3D.h"
 #include "CSpriteRenderer.h"
 #include "CMeshRenderer.h"
+#include "CEffect.h"
 #include "CText.h"
 
-
+#include "CRigidBody.h"
 #include "CAnimation2D.h"
 #include "CAnimation3D.h"
 #include "CAnimator3D.h"

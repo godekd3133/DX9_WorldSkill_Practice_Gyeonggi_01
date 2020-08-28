@@ -12,7 +12,7 @@ private:
 public:
 	int m_iMaxFrame;
 	int m_iCurFrame;
-
+	string m_Name;
 private:	
 	CMeshRenderer * MeshRenderer;
 
@@ -27,7 +27,7 @@ public:
 	void Update();
 
 	void AddEvent(int _State, Event _Event);
-	float GetNormalizeTime() { return (float)m_iCurFrame / (float)m_iMaxFrame; }
+	float GetNormalizeTime() { return (float)m_iCurFrame / (float)(m_iMaxFrame-1); }
 	CMesh * GetCurrentMesh() { return m_vecMesh[m_iCurFrame]; }
 };
 

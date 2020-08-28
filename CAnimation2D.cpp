@@ -21,10 +21,13 @@ void CAnimation2D::Update()
 	{
 		m_fTime = 0.f;
 		m_iCurFrame++;
-		if (m_iCurFrame > m_iMaxFrame)
+		if (m_iCurFrame >= m_iMaxFrame)
 		{
 			if (m_bRepeat == false)
-				m_bEnable = true;
+			{
+				m_iCurFrame--;
+				m_bEnable = false;
+			}
 			else
 				m_iCurFrame = 0;
 

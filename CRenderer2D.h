@@ -19,6 +19,8 @@ public:
 public:
 	Color m_Color;
 	SortingLayer m_SortingLayer;
+	Vector2 m_vAnchor = Vector2(0.5f,0.5f);
+	Vector2 m_vFillAmount = Vector2(1.f, 1.f);
 	RenderMode m_RenderMode;
 };
 

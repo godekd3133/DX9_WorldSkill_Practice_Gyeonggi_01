@@ -95,6 +95,9 @@
     <Filter Include="002 : GAME\Scene\00 : LoadScene">
       <UniqueIdentifier>{2ccedb30-2992-42d3-abee-55cf3e082756}</UniqueIdentifier>
     </Filter>
+    <Filter Include="001 : ENGINE\Component\Components\RigidBody">
+      <UniqueIdentifier>{9bc5d224-640c-4239-bca5-f0fede422ead}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -230,6 +233,8 @@
     </ClCompile>
     <ClCompile Include="CTitleScene.cpp" />
     <ClCompile Include="CPlayerMovement.cpp" />
+    <ClCompile Include="CRigidBody.cpp" />
+    <ClCompile Include="CEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -309,6 +314,8 @@
     </ClInclude>
     <ClInclude Include="CTitleScene.h" />
     <ClInclude Include="CPlayerMovement.h" />
+    <ClInclude Include="CRigidBody.h" />
+    <ClInclude Include="CEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

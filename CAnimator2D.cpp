@@ -29,7 +29,11 @@ void CAnimator2D::Start()
 void CAnimator2D::Update()
 {
 	if (m_pCurrentState)
+	{
+		if (m_pCurrentState->m_bEnable)
+			m_pCurrentState->Update();
 		SpriteRenderer->m_pSprite = m_pCurrentState->GetCurrentSprite();
+	}
 }
 
 void CAnimator2D::LateUpdate()
@@ -46,7 +50,14 @@ void CAnimator2D::OnCollision()
 
 void CAnimator2D::SetCurrentState(string _State)
 {
-	m_pCurrentState = m_mapAnimation[_State];
+	if (m_pCurrentState != m_mapAnimation[_State])
+	{
+		m_pCurrentState = m_mapAnimation[_State];
+		m_pCurrentState->m_bEnable = true;
+		m_pCurrentState->m_iCurFrame = 0;
+	}
+	else
+		m_pCurrentState = m_mapAnimation[_State];
 }
 
 CAnimation2D * CAnimator2D::GetState(string _State)
@@ -80,11 +91,12 @@ void CAnimator2D::AddState(string _StateName, string _ResourceKey, float _Delay,
 
 		if (pFrameSprite == nullptr)
 		{
-			pAnimation->m_vecSprite.push_back(pFrameSprite);
 			pAnimation->m_iMaxFrame = Frame - 1;
 			break;
 		}
+			pAnimation->m_vecSprite.push_back(pFrameSprite);
 
 		Frame++;
 	}
+	m_mapAnimation.insert(make_pair(_StateName, pAnimation));
 }

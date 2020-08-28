@@ -18,6 +18,7 @@ public:
 public:
 	CGameObject * m_pParent = nullptr;
 	vector<CGameObject*>  m_pChild;
+	void Destroy() { m_bDestroy = true; }
 public:
 	list <CComponent*> m_listComponent;
 

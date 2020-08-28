@@ -30,6 +30,7 @@ void CAnimator3D::Update()
 {
 	if (m_pCurrentState)
 	{
+		if(m_pCurrentState->m_bEnable)
 		m_pCurrentState->Update();
 		MeshRenderer->m_pMesh = m_pCurrentState->GetCurrentMesh();
 	}
@@ -49,7 +50,15 @@ void CAnimator3D::OnCollision()
 
 void CAnimator3D::SetCurrentState(string _State)
 {
-	m_pCurrentState = m_mapAnimation[_State];
+	if (m_pCurrentState != m_mapAnimation[_State])
+	{
+		m_pCurrentState = m_mapAnimation[_State];
+		m_pCurrentState->m_bEnable = true;
+		m_pCurrentState->m_iCurFrame = 0;
+	}
+	else
+		m_pCurrentState = m_mapAnimation[_State];
+
 }
 
 CAnimation3D * CAnimator3D::GetState(string _State)
@@ -66,6 +75,7 @@ void CAnimator3D::AddState(string _StateName, string _ResourceKey, float _Delay,
 {
 	CAnimation3D * pAnimation = new CAnimation3D();
 
+	pAnimation->m_Name = _StateName;
 	pAnimation->m_fTime = 0.f;
 	pAnimation->m_fDelay = _Delay;
 	pAnimation->m_bRepeat = _Repeat;

@@ -27,8 +27,12 @@ void CObjectManager::Update()
 		if (iter->m_bEnable)
 			for (auto comp : iter->m_listComponent)
 			{
-				if(comp->m_bEnable)
+				if (comp->m_bEnable)
+				{
+					comp->sa->Update();
 				comp->Update();
+
+				}
 			}
 	}
 
