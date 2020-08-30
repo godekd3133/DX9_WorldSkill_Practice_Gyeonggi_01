@@ -114,3 +114,42 @@ CGameObject * CObjectManager::Create(string _Name, Tag _Tag)
 	m_listGameObject.push_back(pObject);
 	return pObject;
 }
+
+bool CObjectManager::IsCollision(CCollider * _Prev, CCollider * _Next)
+{
+	return my::GetLength(_Prev->tf->GetWorldPos(), _Next->tf->GetWorldPos()) < _Prev->m_fRadius + _Next->m_fRadius;
+}
+
+CGameObject * CObjectManager::Find(string _Name)
+{
+	for (auto iter : m_listGameObject)
+		if (iter->m_Name == _Name)
+			return iter;
+	return nullptr;
+}
+
+CGameObject * CObjectManager::Find(Tag _Tag)
+{
+	for (auto iter : m_listGameObject)
+		if (iter->m_Tag == _Tag)
+			return iter;
+	return nullptr;
+}
+
+list <CGameObject * > CObjectManager::Finds(string _Name)
+{
+	list <CGameObject * > listFind;
+	for (auto iter : m_listGameObject)
+		if (iter->m_Name == _Name)
+			listFind.push_back(iter);
+	return listFind;
+}
+
+list <CGameObject * >CObjectManager::Finds(Tag _Tag)
+{
+	list <CGameObject*> listFind;
+	for (auto iter : m_listGameObject)
+		if (iter->m_Tag == _Tag)
+			listFind.push_back(iter);
+	return listFind;
+}

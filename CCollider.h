@@ -17,8 +17,7 @@ public:
 
 public:
 	void Init(float _fRadius);
-
-private:
 	float m_fRadius;	
+
 };
 
