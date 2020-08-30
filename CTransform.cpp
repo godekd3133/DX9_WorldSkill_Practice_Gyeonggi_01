@@ -107,17 +107,15 @@ bool CTransform::LerpScale(Vector3 _vTarget, float _fTime)
 Matrix CTransform::ToMatrix()
 {
 	Matrix matTrans, matRot, matScale, matWorld;
+	Vector3 WorldPos = GetWorldPos();
 
-	D3DXMatrixTranslation(&matTrans, m_vPos.x, m_vPos.y, m_vPos.z);
+
+	D3DXMatrixTranslation(&matTrans, WorldPos.x, WorldPos.y, WorldPos.z);
 	D3DXMatrixScaling(&matScale, m_vScale.x, m_vScale.y, m_vScale.z);
 	D3DXMatrixRotationQuaternion(&matRot, &m_quatRotation);
 
 	matWorld = matScale * matRot * matTrans;
 
-	if (go->m_pParent)
-	{
-		matWorld *= go->m_pParent->tf->ToMatrix();
-	}
 
 	return matWorld;
 }

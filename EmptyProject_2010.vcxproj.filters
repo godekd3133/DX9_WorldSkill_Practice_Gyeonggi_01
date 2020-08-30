@@ -98,6 +98,39 @@
     <Filter Include="001 : ENGINE\Component\Components\RigidBody">
       <UniqueIdentifier>{9bc5d224-640c-4239-bca5-f0fede422ead}</UniqueIdentifier>
     </Filter>
+    <Filter Include="001 : ENGINE\Scene\00 : Title">
+      <UniqueIdentifier>{18a3f7e3-8018-46ad-99de-fdd2eefbfd66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="001 : ENGINE\Scene\01 : Stage01">
+      <UniqueIdentifier>{5ebc1f99-bec1-4b3f-b94a-156d5452f84c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="001 : ENGINE\Scene\02 : Stage02">
+      <UniqueIdentifier>{ba245029-0999-46b7-aed3-e87ab5f7a560}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="001 : ENGINE\Scene\03 : StageClear">
+      <UniqueIdentifier>{04973c15-9c6f-4c0c-bbcd-d10cb0a2b3a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="001 : ENGINE\Scene\04 : GameOver">
+      <UniqueIdentifier>{e2a00696-e9c3-4f77-bf3f-48b5dfaaddcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="001 : ENGINE\Scene\05 : GameClear">
+      <UniqueIdentifier>{e08de961-b28e-4a5d-a1e6-212264893311}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="002 : GAME\Component">
+      <UniqueIdentifier>{d22592d9-c339-47ec-a66e-6a11bdc50470}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="002 : GAME\Component\Player">
+      <UniqueIdentifier>{ed3db69f-f1e3-4530-b428-5af235386cc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="002 : GAME\Component\Map">
+      <UniqueIdentifier>{cf5494f8-38f9-4e16-bb95-a74e590376a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="002 : GAME\Component\Enemy">
+      <UniqueIdentifier>{250e1467-a694-4d96-8ac6-3c5e53389ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="002 : GAME\Component\Effect">
+      <UniqueIdentifier>{e6ffb54d-271a-49fa-a3b0-879e8f1845ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -231,10 +264,39 @@
     <ClCompile Include="CTransform.cpp">
       <Filter>001 : ENGINE\Component\Components</Filter>
     </ClCompile>
-    <ClCompile Include="CTitleScene.cpp" />
-    <ClCompile Include="CPlayerMovement.cpp" />
-    <ClCompile Include="CRigidBody.cpp" />
-    <ClCompile Include="CEffect.cpp" />
+    <ClCompile Include="CGameOver.cpp">
+      <Filter>001 : ENGINE\Scene\04 : GameOver</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameClear.cpp">
+      <Filter>001 : ENGINE\Scene\05 : GameClear</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage01.cpp">
+      <Filter>001 : ENGINE\Scene\01 : Stage01</Filter>
+    </ClCompile>
+    <ClCompile Include="CStage02.cpp">
+      <Filter>001 : ENGINE\Scene\02 : Stage02</Filter>
+    </ClCompile>
+    <ClCompile Include="CStageClear.cpp">
+      <Filter>001 : ENGINE\Scene\03 : StageClear</Filter>
+    </ClCompile>
+    <ClCompile Include="CTitleScene.cpp">
+      <Filter>001 : ENGINE\Scene\00 : Title</Filter>
+    </ClCompile>
+    <ClCompile Include="CRigidBody.cpp">
+      <Filter>001 : ENGINE\Component\Components\RigidBody</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy.cpp">
+      <Filter>002 : GAME\Component\Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="CPlayerMovement.cpp">
+      <Filter>002 : GAME\Component\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="CScrollMap.cpp">
+      <Filter>002 : GAME\Component\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="CEffect.cpp">
+      <Filter>002 : GAME\Component\Effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -312,10 +374,39 @@
     <ClInclude Include="CCollider.h">
       <Filter>001 : ENGINE\Component\Components</Filter>
     </ClInclude>
-    <ClInclude Include="CTitleScene.h" />
-    <ClInclude Include="CPlayerMovement.h" />
-    <ClInclude Include="CRigidBody.h" />
-    <ClInclude Include="CEffect.h" />
+    <ClInclude Include="CGameOver.h">
+      <Filter>001 : ENGINE\Scene\04 : GameOver</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameClear.h">
+      <Filter>001 : ENGINE\Scene\05 : GameClear</Filter>
+    </ClInclude>
+    <ClInclude Include="CStage01.h">
+      <Filter>001 : ENGINE\Scene\01 : Stage01</Filter>
+    </ClInclude>
+    <ClInclude Include="CStage02.h">
+      <Filter>001 : ENGINE\Scene\02 : Stage02</Filter>
+    </ClInclude>
+    <ClInclude Include="CStageClear.h">
+      <Filter>001 : ENGINE\Scene\03 : StageClear</Filter>
+    </ClInclude>
+    <ClInclude Include="CTitleScene.h">
+      <Filter>001 : ENGINE\Scene\00 : Title</Filter>
+    </ClInclude>
+    <ClInclude Include="CRigidBody.h">
+      <Filter>001 : ENGINE\Component\Components\RigidBody</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy.h">
+      <Filter>002 : GAME\Component\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="CPlayerMovement.h">
+      <Filter>002 : GAME\Component\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="CScrollMap.h">
+      <Filter>002 : GAME\Component\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="CEffect.h">
+      <Filter>002 : GAME\Component\Effect</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

@@ -13,6 +13,8 @@ private:
 
 public:
 	void Update();
+	Vector2 GetDeltaMousePos();
+	Vector2 GetMousePos();
 	bool KeyDown(int _Key);
 	bool KeyPress(int _Key);
 	bool KeyUp(int _Key);

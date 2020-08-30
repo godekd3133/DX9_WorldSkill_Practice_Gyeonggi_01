@@ -84,23 +84,23 @@ void CGraphicsManager::AddSprite(string _Key, string _Path)
 
 void CGraphicsManager::AddMesh(string _Key, string _Path, string _MapPath)
 {
-	CMeshLoader * pLoader = new CMeshLoader();
-	wstring wPath;
-	wPath.assign(_Path.begin(), _Path.end());
-	pLoader->Create(g_Device, wPath.c_str(), _MapPath);
+		CMeshLoader * pLoader = new CMeshLoader();
+		wstring wPath;
+		wPath.assign(_Path.begin(), _Path.end());
+		pLoader->Create(g_Device, wPath.c_str(), _MapPath);
 
-	if (pLoader->GetMesh() != nullptr)
-	{
-		CMesh * pMesh = new CMesh();
-		pMesh->m_pMesh = pLoader->GetMesh();
-		for (int i = 0; i < pLoader->GetNumMaterials(); i++)
+		if (pLoader->GetMesh() != nullptr)
 		{
-			pMesh->m_vecMaterial.push_back(pLoader->GetMaterial(i));
+			CMesh * pMesh = new CMesh();
+			pMesh->m_pMesh = pLoader->GetMesh();
+			for (int i = 0; i < pLoader->GetNumMaterials(); i++)
+			{
+				pMesh->m_vecMaterial.push_back(pLoader->GetMaterial(i));
+			}
+			m_mapMesh.insert(make_pair(_Key, pMesh));
+			SAFE_DELETE(pLoader);
 		}
-		m_mapMesh.insert(make_pair(_Key, pMesh));
 		SAFE_DELETE(pLoader);
-	}
-	SAFE_DELETE(pLoader);
 }
 
 void CGraphicsManager::Render_Font(string _Text, Matrix _matWorld, Color _Color, RenderMode _Mode)
@@ -123,7 +123,7 @@ void CGraphicsManager::Render_Font(string _Text, Matrix _matWorld, Color _Color,
 
 void CGraphicsManager::Render_Sprite(CSprite * _pSprite, Matrix _matWorld, Vector2 _vCenter, Vector2 _vFillAmount, Color _Color, RenderMode _Mode)
 {
-
+	_pSprite->m_vAnchor = _vCenter;
 	if (_Mode == RenderMode::RM_UI)
 	{
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
@@ -136,7 +136,7 @@ void CGraphicsManager::Render_Sprite(CSprite * _pSprite, Matrix _matWorld, Vecto
 	{
 		m_pSprite->SetWorldViewLH(nullptr, &CAMERA.m_matView);
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_BILLBOARD | D3DXSPRITE_OBJECTSPACE); 
-		//	g_Device->SetRenderState(D3DRS_ZENABLE, false);
+		g_Device->SetRenderState(D3DRS_ZENABLE, false);
 	}
 
 	m_pSprite->SetTransform(&_matWorld);

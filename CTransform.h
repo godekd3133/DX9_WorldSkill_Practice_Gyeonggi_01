@@ -21,6 +21,12 @@ public:
 	Quaternion m_quatRotation;
 
 public:
+	Vector3 GetWorldPos() {
+		Vector3 vWorldPos = m_vPos;
+		if (go->m_pParent)
+			vWorldPos += go->m_pParent->tf->GetWorldPos();
+		return vWorldPos;
+	}
 	Vector3 GetRotation();
 	void SetRotation(Vector3 _vRot);
 	bool LerpRotation(Vector3 _vTarget, float _fTime);

@@ -19,5 +19,12 @@ public:
 	float Direction = 0.f;
 	void OnLanding();
 	bool TriggerAttackCombo = false;
+	bool ChargingSkill01 = false;
+	float ChargingTime = 0.f;
+
+	CGameObject * HandEffect = nullptr;
+	CGameObject * Skill01Prepare = nullptr;
+
+	void OnStopSkill01Rush();
 };
 

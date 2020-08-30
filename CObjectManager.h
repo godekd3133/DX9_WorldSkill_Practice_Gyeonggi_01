@@ -21,6 +21,8 @@ public:
 	void Render();
 	CGameObject* Create(string _Name = "go", Tag _Tag = Tag::Untagged);
 
+	bool IsCollision();
+
 };
 
 #define OBJ (*CObjectManager::GetInstance())

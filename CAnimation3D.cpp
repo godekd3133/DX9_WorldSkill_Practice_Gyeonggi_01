@@ -14,6 +14,8 @@ CAnimation3D::~CAnimation3D()
 
 void CAnimation3D::Update()
 { 
+	if(m_bEnable == true)
+
 	m_fTime += dt;
 
 	if (m_fTime > m_fDelay)

@@ -10,6 +10,8 @@
 #include <functional>
 #include <set>
 #include <thread>
+#include <future>
+#include <mutex>
 
 using namespace std;
 

@@ -16,5 +16,7 @@ public:
 
 	void AddSprite(string _Key, string _Path, int _Count = 0 );
 	void AddMesh(string _Key, string _Path, string _MapPath, int _Count = 0);
+
+	bool Success[4];
 };
 

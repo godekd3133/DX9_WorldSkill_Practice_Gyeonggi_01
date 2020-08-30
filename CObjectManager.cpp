@@ -9,6 +9,21 @@ CObjectManager::CObjectManager()
 
 CObjectManager::~CObjectManager()
 {
+	for (auto iter : m_listGameObject)
+	{
+		for (auto comp : iter->m_listComponent)
+		{
+			comp->OnDestroy();
+		}
+		for (auto comp2 : iter->m_listComponent)
+		{
+			SAFE_DELETE(comp2);
+		}
+		iter->m_listComponent.clear();
+
+		SAFE_DELETE(iter);
+	}
+	m_listGameObject.clear();
 }
 
 void CObjectManager::Update()
@@ -48,12 +63,13 @@ void CObjectManager::Update()
 
 	for (auto iter = m_listGameObject.begin(); iter != m_listGameObject.end(); )
 	{
-		if ((*iter)->m_bDestroy)
+		if ((*iter)->m_bDestroy == true)
 		{
 
 			for (auto comp : (*iter)->m_listComponent)
 			{
 				comp->OnDestroy();
+			
 			}
 			SAFE_DELETE(*iter);
 			iter = m_listGameObject.erase(iter);

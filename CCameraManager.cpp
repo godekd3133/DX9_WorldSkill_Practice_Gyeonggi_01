@@ -32,8 +32,22 @@ void CCameraManager::Update()
 
 	if (m_pFollowObject)
 	{
-		m_vLookAt.x = Lerp(m_vLookAt.x, m_pFollowObject->tf->m_vPos.x, dt * 2);
-		m_vPos = m_vLookAt + Vector3(0,80,-400);
+		m_vLookAt = m_pFollowObject->tf->m_vPos + Vector3(0, 175, 0);
+		Vector2 dtPos = INPUT.GetDeltaMousePos();
+		
+		m_vRotation.y += dtPos.x * dt * m_fSensitivity;
+		m_vRotation.x += dtPos.y * dt * m_fSensitivity;
+
+		Matrix matRot, matRotX, matRotY;
+		D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_vRotation.y));
+		D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_vRotation.x));
+		D3DXVec3TransformNormal(&m_vFoward, &Vector3(0,0,1), &(matRotX* matRotY));
+		D3DXVec3TransformNormal(&m_vCharactorForward, &Vector3(0, 0, 1), &(matRotY));
+
+		m_vPos = m_vLookAt - m_vFoward * m_fDistance;
+
+		//m_vLookAt.x = Lerp(m_vLookAt.x, m_pFollowObject->tf->m_vPos.x, dt * 2);
+		//m_vPos = m_vLookAt + Vector3(0,80,-400);
 	}
 
 	D3DXMatrixLookAtLH(&m_matView, &(m_vPos + m_vShakePos), &(m_vLookAt + m_vShakePos), &m_vUp);

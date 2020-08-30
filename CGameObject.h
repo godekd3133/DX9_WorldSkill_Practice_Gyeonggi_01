@@ -17,8 +17,24 @@ public:
 	bool m_bDestroy = false;
 public:
 	CGameObject * m_pParent = nullptr;
-	vector<CGameObject*>  m_pChild;
-	void Destroy() { m_bDestroy = true; }
+	list<CGameObject*>  m_listChild;
+	void Destroy() {
+		for (auto iter : m_listChild)
+		{
+			iter->Destroy();
+			iter->m_pParent = nullptr;
+		}
+			m_listChild.clear();
+			if (m_pParent)
+				m_pParent->m_listChild.remove(this);
+		m_bDestroy = true;
+	}
+
+	void AddChild(CGameObject * _Child)
+	{
+		m_listChild.push_back(_Child);
+		_Child->m_pParent = this;
+	}
 public:
 	list <CComponent*> m_listComponent;
 
