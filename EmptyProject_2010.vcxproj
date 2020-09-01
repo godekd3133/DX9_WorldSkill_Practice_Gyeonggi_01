@@ -393,6 +393,7 @@
     <ClCompile Include="CAnimation3D.cpp" />
     <ClCompile Include="CAnimator2D.cpp" />
     <ClCompile Include="CAnimator3D.cpp" />
+    <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CEffect.cpp" />
     <ClCompile Include="CEnemy.cpp" />
@@ -409,6 +410,7 @@
     <ClCompile Include="CStage01.cpp" />
     <ClCompile Include="CStage02.cpp" />
     <ClCompile Include="CStageClear.cpp" />
+    <ClCompile Include="CStageMap.cpp" />
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTitleScene.cpp" />
     <ClCompile Include="CTransform.cpp" />
@@ -417,6 +419,7 @@
     <ClInclude Include="CAnimation3D.h" />
     <ClInclude Include="CAnimator2D.h" />
     <ClInclude Include="CAnimator3D.h" />
+    <ClInclude Include="CBullet.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CEffect.h" />
@@ -441,6 +444,7 @@
     <ClInclude Include="CStage01.h" />
     <ClInclude Include="CStage02.h" />
     <ClInclude Include="CStageClear.h" />
+    <ClInclude Include="CStageMap.h" />
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTitleScene.h" />
     <ClInclude Include="CTransform.h" />

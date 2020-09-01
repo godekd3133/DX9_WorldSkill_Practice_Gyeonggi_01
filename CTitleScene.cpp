@@ -14,14 +14,11 @@ CTitleScene::~CTitleScene()
 void CTitleScene::Init()
 {
 	CGameObject * pMap = OBJ.Create("Map",Tag::Map);
-	pMap->ac<CMeshRenderer>()->Init(MESH("MAP_STAGE01"));
-	pMap->tf->m_vScale = Vector3(-0.5f, 0.5f, 0.5f);
-	pMap->tf->m_quatRotation = QuatEular(Vector3(0, 180, 0));
-	pMap->tf->m_vPos = Vector3(0,0, 400);
+	pMap->ac<CStageMap>()->Init(MESH("MAP_STAGE01"), nullptr, SPRITE("MAP_STAGE01_COLISIONMAP"));
 
-	CGameObject * pPlayer = OBJ.Create();
+	CGameObject * pPlayer = OBJ.Create("Player",Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
-	pPlayer->tf->m_vPos = Vector3(0, 0, 500);
+	pPlayer->tf->m_vPos = Vector3(0, 0, 0);
 }
 
 void CTitleScene::Update()

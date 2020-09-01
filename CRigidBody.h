@@ -20,7 +20,7 @@ public:
 	bool m_bGravity = true;
 public:
 	void AddForce(Vector3 _vVelocitiy);
-
+	CStageMap * m_pMap = nullptr;
 	list < function<void()>> OnLanding;
 };
 

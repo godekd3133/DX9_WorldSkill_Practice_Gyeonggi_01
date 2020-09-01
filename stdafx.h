@@ -54,6 +54,17 @@ namespace my
 
 		return Vector3(vDir.x, 0.f, vDir.y);
 	}
+	static Vector3 GetRotatedDir(Vector3 _vDir, float _fRot)
+	{
+		Vector3 vDir = _vDir;
+
+		Matrix matRot;
+		D3DXMatrixRotationY(&matRot, D3DXToRadian(_fRot));
+
+		D3DXVec3TransformNormal(&vDir, &vDir, &matRot);
+
+		return Vector3(vDir.x, 0.f, vDir.y);
+	}
 	static float GetDirAngle(Vector2 _vDir)
 	{
 		float angle = atan2f(_vDir.y, _vDir.x);
@@ -62,7 +73,7 @@ namespace my
 	}
 	static float GetDirAngle(Vector3 _vDir)
 	{
-		float angle = atan2f(_vDir.z, _vDir.x);
+		float angle = atan2f(_vDir.x, _vDir.z);
 
 		return D3DXToDegree(angle);
 	}
@@ -95,7 +106,7 @@ using namespace my;
 enum class RenderMode {RM_Default , RM_UI, RM_Billboard};
 enum class SortingLayer { SR_Default,SR_Effect};
 
-enum class Tag {Untagged,Map};
+enum class Tag {Untagged,Map,Player};
 #include "CScheduleAdmin.h"
 #include "CSprite.h"
 #include "CScene.h"
@@ -111,6 +122,7 @@ enum class Tag {Untagged,Map};
 #include "CEffect.h"
 #include "CText.h"
 
+#include "CStageMap.h"
 #include "CRigidBody.h"
 #include "CAnimation2D.h"
 #include "CAnimation3D.h"

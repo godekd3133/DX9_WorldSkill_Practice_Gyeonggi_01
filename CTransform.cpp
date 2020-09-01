@@ -38,6 +38,17 @@ void CTransform::OnCollision()
 {
 }
 
+Vector3 CTransform::GetFoward()
+{
+	Vector3 Forward(0, 0, 1);
+
+	D3DXMATRIX matRot;
+	D3DXMatrixRotationQuaternion(&matRot, &m_quatRotation);
+	
+	D3DXVec3TransformNormal(&Forward, &Forward, &matRot);
+	return Forward;
+}
+
 Vector3 CTransform::GetRotation()
 {
 	Vector3 vRot;
@@ -49,6 +60,8 @@ Vector3 CTransform::GetRotation()
 	vRot.x = D3DXToDegree(vRot.x);
 	vRot.y = D3DXToDegree(vRot.y);
 	vRot.z = D3DXToDegree(vRot.z);
+	
+
 
 	return vRot;
 }

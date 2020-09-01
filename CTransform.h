@@ -27,6 +27,7 @@ public:
 			vWorldPos += go->m_pParent->tf->GetWorldPos();
 		return vWorldPos;
 	}
+	Vector3 GetFoward();
 	Vector3 GetRotation();
 	void SetRotation(Vector3 _vRot);
 	bool LerpRotation(Vector3 _vTarget, float _fTime);

@@ -227,7 +227,7 @@ HRESULT CMeshLoader::LoadGeometryFromOBJ(const WCHAR* strFileName)
 			// Vertex TexCoord
 			float u, v;
 			InFile >> u >> v;
-			TexCoords.Add(D3DXVECTOR2(u, v));
+			TexCoords.Add(D3DXVECTOR2(u, 1.F-v ));
 		}
 		else if (0 == wcscmp(strCommand, L"vn"))
 		{

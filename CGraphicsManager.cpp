@@ -66,7 +66,7 @@ void CGraphicsManager::AddSprite(string _Key, string _Path)
 		D3DX_DEFAULT_NONPOW2,
 		0,
 		0,
-		D3DFMT_UNKNOWN,
+		D3DFMT_A8B8G8R8,
 		D3DPOOL_MANAGED,
 		D3DX_DEFAULT,
 		D3DX_DEFAULT,

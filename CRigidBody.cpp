@@ -18,6 +18,7 @@ void CRigidBody::Awake()
 
 void CRigidBody::Start()
 {
+	m_pMap = OBJ.Find(Tag::Map)->gc<CStageMap>();
 }
 
 void CRigidBody::Update()
@@ -26,7 +27,21 @@ void CRigidBody::Update()
 
 void CRigidBody::LateUpdate()
 {
-	if (tf->m_vPos.y > 0)
+	float FloorY = 0.f;
+
+	if (m_pMap)
+	{
+		if (m_pMap->GetCollisionInfoByCollisionMap(tf->GetWorldPos()) == MapCollision::FirstFloor)
+		{
+			FloorY = -800;
+		}
+		else 		if (m_pMap->GetCollisionInfoByCollisionMap(tf->GetWorldPos()) == MapCollision::SecondFloor)
+		{
+			FloorY = -400;
+		}
+	}
+
+	if (tf->m_vPos.y > FloorY)
 		m_vVelocity.y -= 3000.f * dt;
 
 	m_vVelocity.x *= 0.94f;
@@ -36,7 +51,7 @@ void CRigidBody::LateUpdate()
 	
 	if (m_vVelocity.y < 0.f)
 	{
-		if (tf->m_vPos.y < 0)
+		if (tf->m_vPos.y < FloorY)
 		{
 			for (auto iter : OnLanding)
 			{
@@ -44,7 +59,7 @@ void CRigidBody::LateUpdate()
 			}
 			m_vVelocity.y = 0.f;
 			m_vVelocity.x = 0.f;
-			tf->m_vPos.y = 0.f;
+			tf->m_vPos.y = FloorY;
 
 		}
 	}
