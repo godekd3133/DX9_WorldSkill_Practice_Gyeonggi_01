@@ -27,43 +27,48 @@ void CRigidBody::Update()
 
 void CRigidBody::LateUpdate()
 {
-	float FloorY = 0.f;
 
-	if (m_pMap)
-	{
-		if (m_pMap->GetCollisionInfoByCollisionMap(tf->GetWorldPos()) == MapCollision::FirstFloor)
-		{
-			FloorY = -800;
-		}
-		else 		if (m_pMap->GetCollisionInfoByCollisionMap(tf->GetWorldPos()) == MapCollision::SecondFloor)
-		{
-			FloorY = -400;
-		}
-	}
-
-	if (tf->m_vPos.y > FloorY)
-		m_vVelocity.y -= 3000.f * dt;
-
+	float FloorY = -1200.f;
+	Vector3 vMovePos = tf->m_vPos + m_vVelocity * dt;
 	m_vVelocity.x *= 0.94f;
 	m_vVelocity.y *= 0.98f;
+	m_vVelocity.z *= 0.94f;
 
-	tf->m_vPos += m_vVelocity * dt;
-	
+	FloorY = m_pMap->GetFloorY(vMovePos);
+	//이동할 위치에 충돌했다면
+
 	if (m_vVelocity.y < 0.f)
 	{
-		if (tf->m_vPos.y < FloorY)
+		CollisionInfo info;
+		if (m_pMap->GetCollisionInfoByRay(vMovePos, Vector3(0, -1, 0), 10, info) == true)
 		{
+			tf->m_vPos.y = FloorY;
 			for (auto iter : OnLanding)
 			{
 				iter();
 			}
 			m_vVelocity.y = 0.f;
 			m_vVelocity.x = 0.f;
-			tf->m_vPos.y = FloorY;
-
 		}
 	}
+	if (vMovePos.y > FloorY+1)
+	{
+		tf->m_vPos.y = vMovePos.y;
 
+		m_vVelocity.y -= 3000.f * dt;
+	}
+	else
+	{
+		tf->m_vPos.y = FloorY;
+	}
+
+	tf->m_vPos.x = vMovePos.x;
+	tf->m_vPos.z = vMovePos.z;
+
+
+
+
+	m_vOldPos = tf->m_vPos;
 }
 
 void CRigidBody::OnDestroy()

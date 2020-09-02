@@ -18,7 +18,6 @@ void CTitleScene::Init()
 
 	CGameObject * pPlayer = OBJ.Create("Player",Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
-	pPlayer->tf->m_vPos = Vector3(0, 0, 0);
 }
 
 void CTitleScene::Update()

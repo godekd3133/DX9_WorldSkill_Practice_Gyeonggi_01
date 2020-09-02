@@ -17,6 +17,7 @@ public:
 	
 public:
 	Vector3 m_vVelocity;
+	Vector3 m_vOldPos;
 	bool m_bGravity = true;
 public:
 	void AddForce(Vector3 _vVelocitiy);

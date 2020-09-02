@@ -22,6 +22,8 @@ public:
 	bool ChargingSkill01 = false;
 	float ChargingTime = 0.f;
 	int ZoomDir = 1;
+
+	CStageMap * m_pMap;
 	CGameObject * HandEffect = nullptr;
 	CGameObject * Skill01Prepare = nullptr;
 

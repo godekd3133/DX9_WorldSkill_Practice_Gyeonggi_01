@@ -27,6 +27,8 @@ public:
 	CGameObject * Find(Tag _Tag);
 	list <CGameObject * >Finds(string _Name);
 	list <CGameObject * >Finds(Tag _Tag);
+
+	bool RayCast(CMeshRenderer* _pTarget,Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo& _Info);
 };
 
 #define OBJ (*CObjectManager::GetInstance())

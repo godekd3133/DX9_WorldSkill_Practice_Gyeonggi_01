@@ -8,6 +8,12 @@ enum MapCollision
 	Between,
 	SecondFloor
 };
+
+struct CollisionInfo
+{
+	Vector3 vPos;
+	float distance;
+};
 class CStageMap :
 	public CComponent
 {
@@ -31,5 +37,8 @@ private:
 public:
 	void Init(CMesh * _pMesh, CSprite * _pMinimap, CSprite * _pCollisionMap);
 	MapCollision GetCollisionInfoByCollisionMap(Vector3 _vPos);
+	bool GetCollisionInfoByRay(Vector3 _vPos, Vector3 _vDir, float _Dist, CollisionInfo& Info);
+
+	float GetFloorY(Vector3 _vPos);
 };
 

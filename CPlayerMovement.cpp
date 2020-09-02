@@ -13,7 +13,9 @@ CPlayerMovement::~CPlayerMovement()
 void CPlayerMovement::Awake()
 {
 	ac<CRigidBody>()->OnLanding.push_back([=]() {OnLanding(); });
+	m_pMap = OBJ.Find(Tag::Map)->gc<CStageMap>();
 	tf->m_vScale = Vector3(1, 1, 1);
+	tf->m_vPos = Vector3(-3000,-200, 3000);
 	ac<CMeshRenderer>()->Init(MESH("PLAYER"));
 
 	ac<CAnimator3D>()->AddState("IDLE", "PLAYER_IDLE", 20.f / 1000.f);
@@ -53,6 +55,11 @@ void CPlayerMovement::Update()
 		CGameObject * pBullet = OBJ.Create();
 		pBullet->ac<CBullet>()->Init(tf->m_vPos,tf->GetFoward(), 40.f);
 	}
+	if (INPUT.KeyDown(VK_SPACE))
+	{
+		gc<CRigidBody>()->AddForce(Vector3(0, 2000, 0));
+	}
+
 	if (INPUT.KeyPress(VK_RBUTTON))
 	{
 
@@ -98,7 +105,24 @@ void CPlayerMovement::OnCollision()
 
 void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 {
-	tf->m_vPos += _vDirection * _MoveSpeed * dt;
+	CollisionInfo info;
+	if (
+		
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Foward], _MoveSpeed * dt + 150, info) == false &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Left], _MoveSpeed * dt + 150, info) == false &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Right], _MoveSpeed * dt + 150, info) == false
+		)
+	{
+		if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), Vector3(_vDirection.x, 0, 0), _MoveSpeed * dt + 150, info) == false   )
+		{
+			tf->m_vPos.x += _vDirection.x * _MoveSpeed * dt;
+		}
+		if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), Vector3(0, 0, _vDirection.z), _MoveSpeed * dt + 150, info) == false  )
+		{
+			tf->m_vPos.z += _vDirection.z * _MoveSpeed * dt;
+		}
+	}
+
 }
 
 void CPlayerMovement::OnLanding()

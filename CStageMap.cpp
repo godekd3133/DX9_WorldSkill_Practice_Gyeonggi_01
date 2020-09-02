@@ -97,3 +97,24 @@ MapCollision CStageMap::GetCollisionInfoByCollisionMap(Vector3 _vPos)
 	return MapCollision::FirstFloor;
 }
 
+bool CStageMap::GetCollisionInfoByRay(Vector3 _vPos, Vector3 _vDir, float _Dist, CollisionInfo& Info)
+{
+	return OBJ.RayCast(gc<CMeshRenderer>(), _vPos, _vDir, _Dist, Info);
+}
+
+float CStageMap::GetFloorY(Vector3 _vPos)
+{
+	CollisionInfo info;
+
+	GetCollisionInfoByRay(_vPos - Vector3(0, 10000, 0), Vector3(0, 1, 0), 100000000, info);
+
+
+	//CollisionInfo info2;
+
+	//GetCollisionInfoByRay(_vPos + Vector3(0, 10000, 0), Vector3(0, -1, 0), 100000000, info2);
+
+
+
+	return info.vPos.y;
+}
+
