@@ -18,6 +18,7 @@ void CTitleScene::Init()
 
 	CGameObject * pPlayer = OBJ.Create("Player",Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
+	
 }
 
 void CTitleScene::Update()

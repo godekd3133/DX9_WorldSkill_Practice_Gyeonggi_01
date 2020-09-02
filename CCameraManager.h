@@ -3,6 +3,8 @@
 enum Axis
 {
 	Foward,
+	RF,
+	LF,
 	Back,
 	Right,
 	Left
@@ -16,12 +18,12 @@ public:
 
 public:
 	CScheduleAdmin  * sa;
-
+	Vector3 m_vCharactorDir;
 	Vector3 m_vPos;
 	Vector3 m_vLookAt;
 	Vector3 m_vUp;
 	Vector3 m_vFoward = Vector3(0, 0, 1);
-	Vector3 m_vCharactorAxis[4];
+	Vector3 m_vCharactorAxis[6];
 	Matrix m_matView;
 	Matrix m_matProj;
 

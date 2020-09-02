@@ -19,3 +19,4 @@ public:
 	void Init(string _ResKey, float _Delay, Vector3 _vPos);
 };
 
+#define EFFECT(Pos,resKey) CGameObject * Effect= OBJ.Create(); Effect->ac<CEffect>()->Init(resKey,0.1f,Pos);

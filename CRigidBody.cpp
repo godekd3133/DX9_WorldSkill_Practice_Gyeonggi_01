@@ -37,30 +37,39 @@ void CRigidBody::LateUpdate()
 	FloorY = m_pMap->GetFloorY(vMovePos);
 	//이동할 위치에 충돌했다면
 
-	if (m_vVelocity.y < 0.f)
-	{
-		CollisionInfo info;
-		if (m_pMap->GetCollisionInfoByRay(vMovePos, Vector3(0, -1, 0), 10, info) == true)
-		{
-			tf->m_vPos.y = FloorY;
-			for (auto iter : OnLanding)
-			{
-				iter();
-			}
-			m_vVelocity.y = 0.f;
-			m_vVelocity.x = 0.f;
-		}
-	}
-	if (vMovePos.y > FloorY+1)
-	{
-		tf->m_vPos.y = vMovePos.y;
 
-		m_vVelocity.y -= 3000.f * dt;
+	CollisionInfo info;
+	if (m_pMap->GetCollisionInfoByRay(vMovePos, Vector3(0, -1, 0), 5, info) == true)
+	{
+		if (m_vVelocity.y < 0.f)
+		{
+			// 	tf->m_vPos.y = FloorY;
+			vMovePos.y = FloorY;
+			for (auto iter : OnLanding)
+				iter();
+			m_vVelocity.y = 0.f;
+
+			m_vVelocity.x = 0.f;
+
+		}
 	}
 	else
 	{
-		tf->m_vPos.y = FloorY;
+		if (vMovePos.y > FloorY + 1)
+		{
+			m_vVelocity.y -= 5000.f * dt;
+			tf->m_vPos.y = vMovePos.y;
+		}
+		else
+		{
+
+			m_vVelocity.y = 0.f;
+			tf->m_vPos.y = FloorY;
+
+
+		}
 	}
+
 
 	tf->m_vPos.x = vMovePos.x;
 	tf->m_vPos.z = vMovePos.z;

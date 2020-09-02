@@ -23,6 +23,7 @@ CCameraManager::~CCameraManager()
 
 void CCameraManager::Update()
 {
+	sa->Update();
 	Vector3 Offset = m_vOffset;
 	if (m_fCameraTime > 0.f)
 	{
@@ -33,7 +34,7 @@ void CCameraManager::Update()
 
 	if (m_pFollowObject)
 	{
-		m_vLookAt = m_pFollowObject->tf->m_vPos + Vector3(0, 200, 0);
+		m_vLookAt = m_pFollowObject->tf->m_vPos + Vector3(0, 300, 0);
 		Vector2 dtPos = INPUT.GetDeltaMousePos();
 		
 		m_vRotation.y += dtPos.x * dt * m_fSensitivity;
@@ -50,6 +51,8 @@ void CCameraManager::Update()
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Back], &Vector3(0, 0, -1), &(matRotY));
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Right], &Vector3(1, 0, 0), &(matRotY));
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Left], &Vector3(-1, 0, 0), &(matRotY));
+		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::LF], &Vector3(-0.5, 0, 0.5), &(matRotY));
+		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::RF], &Vector3(0.5, 0, 0.5), &(matRotY));
 
 		m_vPos = m_vLookAt - m_vFoward * m_fDistance;
 

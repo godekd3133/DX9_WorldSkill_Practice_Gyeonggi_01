@@ -106,7 +106,7 @@ float CStageMap::GetFloorY(Vector3 _vPos)
 {
 	CollisionInfo info;
 
-	GetCollisionInfoByRay(_vPos - Vector3(0, 10000, 0), Vector3(0, 1, 0), 100000000, info);
+	GetCollisionInfoByRay(_vPos  - Vector3(0,10000,0), Vector3(0, 1, 0), 100000000, info);
 
 
 	//CollisionInfo info2;

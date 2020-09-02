@@ -14,7 +14,7 @@ void CPlayerMovement::Awake()
 {
 	ac<CRigidBody>()->OnLanding.push_back([=]() {OnLanding(); });
 	m_pMap = OBJ.Find(Tag::Map)->gc<CStageMap>();
-	tf->m_vScale = Vector3(1, 1, 1);
+	tf->m_vScale = Vector3(1.5, 1.5, 1.5);
 	tf->m_vPos = Vector3(-3000,-200, 3000);
 	ac<CMeshRenderer>()->Init(MESH("PLAYER"));
 
@@ -36,7 +36,7 @@ void CPlayerMovement::Awake()
 
 void CPlayerMovement::Start()
 {
-	CAMERA.Follow(go,600.f);
+	CAMERA.Follow(go,500.f);
 }
 
 void CPlayerMovement::Update()
@@ -106,27 +106,96 @@ void CPlayerMovement::OnCollision()
 void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 {
 	CollisionInfo info;
-	if (
-		
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Foward], _MoveSpeed * dt + 150, info) == false &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Left], _MoveSpeed * dt + 150, info) == false &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Right], _MoveSpeed * dt + 150, info) == false
-		)
+	CollisionInfo info2;
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Left], 200, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Left], 150, info2) == true)
 	{
-		if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), Vector3(_vDirection.x, 0, 0), _MoveSpeed * dt + 150, info) == false   )
+		float dis = info.vPos.z - info2.vPos.z;
+		if (abs(dis) > 1)
 		{
-			tf->m_vPos.x += _vDirection.x * _MoveSpeed * dt;
+			tf->m_vPos -= CAMERA.m_vCharactorAxis[Axis::Left] * _MoveSpeed * dt;
+			return;
+
 		}
-		if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), Vector3(0, 0, _vDirection.z), _MoveSpeed * dt + 150, info) == false  )
+	}
+	
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Right], 200, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Right], 150, info2) == true)
+	{
+		float dis = info.vPos.z - info2.vPos.z;
+		if (abs(dis) > 1)
 		{
-			tf->m_vPos.z += _vDirection.z * _MoveSpeed * dt;
+			tf->m_vPos -= CAMERA.m_vCharactorAxis[Axis::Right] * _MoveSpeed * dt;
+			return;
+
 		}
 	}
 
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Foward], 200, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Foward], 150, info2) == true)
+	{
+		float dis = info.vPos.z - info2.vPos.z;
+		if (abs(dis) > 1)
+		{
+			tf->m_vPos -= CAMERA.m_vCharactorAxis[Axis::Foward] * _MoveSpeed * dt;
+			return;
+
+		}
+	}
+
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Back], 200, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Back], 150, info2) == true)
+	{
+		float dis = info.vPos.z - info2.vPos.z;
+		if (abs(dis) > 1)
+		{
+			tf->m_vPos -= CAMERA.m_vCharactorAxis[Axis::Back] * _MoveSpeed * dt;
+			return;
+
+		}
+	}
+
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::LF], 200, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::LF], 150, info2) == true)
+	{
+		float dis = info.vPos.z - info2.vPos.z;
+		if (abs(dis) > 1)
+		{
+			tf->m_vPos -= CAMERA.m_vCharactorAxis[Axis::LF] * _MoveSpeed * dt;
+			return;
+
+		}
+	}
+
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::RF], 200, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::RF], 150, info2) == true)
+	{
+		float dis = info.vPos.z - info2.vPos.z;
+		if (abs(dis) > 1)
+		{
+			tf->m_vPos -= CAMERA.m_vCharactorAxis[Axis::RF] * _MoveSpeed * dt;
+			return;
+
+		}
+	}
+	CAMERA.m_vCharactorDir = Vector3(0,0,0);
+	CollisionInfo info3;
+		if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 100, 0), Vector3(_vDirection.x, 0, 0), _MoveSpeed * dt + 10, info3) == false   )
+		{
+			tf->m_vPos.x += _vDirection.x * _MoveSpeed * dt;
+			CAMERA.m_vCharactorDir.x = _vDirection.x;
+		}
+		if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 100, 0), Vector3(0, 0, _vDirection.z), _MoveSpeed * dt + 10, info3) == false  )
+		{
+			tf->m_vPos.z += _vDirection.z * _MoveSpeed * dt;
+			CAMERA.m_vCharactorDir.z = _vDirection.z;
+		}				
+		
 }
 
 void CPlayerMovement::OnLanding()
 {
+	//EFFECT(Vector3(0, 0, 0), "dsad");
 	/*string CurrentAnimationState = gc<CAnimator3D>()->GetCurrentState()->m_Name;
 	float NormalizeTime = gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime();
 
