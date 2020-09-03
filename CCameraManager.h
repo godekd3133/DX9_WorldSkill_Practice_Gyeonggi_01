@@ -57,6 +57,10 @@ public:
 	bool m_bScrolling = false;
 	float m_fScrollSpeed;
 	float m_fCurSpeed;
+	bool RayCast(CMeshRenderer* _pTarget, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo& _Info);
+
+	bool RayCastAtBox(Vector3 _Radius, Matrix _matWorld, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo& _Info);
+	bool RayCastAtSphere(float _Radius, Matrix _matWorld, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo& _Info);
 
 };
 

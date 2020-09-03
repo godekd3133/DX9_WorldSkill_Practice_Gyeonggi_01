@@ -106,7 +106,7 @@ using namespace my;
 enum class RenderMode {RM_Default , RM_UI, RM_Billboard};
 enum class SortingLayer { SR_Default,SR_Effect};
 
-enum class Tag {Untagged,Map,Player};
+enum class  Tag{Untagged,Map,Player,Enemy};
 #include "CScheduleAdmin.h"
 #include "CSprite.h"
 #include "CScene.h"
@@ -129,6 +129,9 @@ enum class Tag {Untagged,Map,Player};
 #include "CAnimator3D.h"
 #include "CAnimator2D.h"
 #include "CCollider.h"
+#include "CPlayerMovement.h"
+#include "CEnemy.h"
+#include "CEnemy01.h"
 
 #include "CSingleton.h"
 
@@ -137,3 +140,4 @@ enum class Tag {Untagged,Map,Player};
 #include "CInputManager.h"
 #include "CSceneManager.h"
 #include "CObjectManager.h"
+#include "CGameManager.h"

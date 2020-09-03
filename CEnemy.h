@@ -1,5 +1,11 @@
 #pragma once
 #include "CComponent.h"
+
+enum class Enemy_State
+{
+	IDLE, CHASE, ATTACK 
+};
+
 class CEnemy :
 	public CComponent
 {
@@ -13,14 +19,19 @@ public:
 	virtual void Update() override;
 	virtual void LateUpdate() override;
 	virtual void OnDestroy() override;
-	virtual void OnCollision() override;
+	virtual void OnCollision(CGameObject * _pObject) override;
 
 public:
 	int m_iCurHp;
 	int m_iMaxHp;
+	int m_iDamage;
+	int m_Size;
 
 	void OnHit(int _Damage);
-
-
+	bool Correction(Vector3 _vDir);
+	void Init(int _MaxHp, int _Damage, int _Size);
+	void Move(Vector3 _vDirection);
+	Enemy_State m_State;
+	CGameObject * m_pPlayer= nullptr;
 };
 

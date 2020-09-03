@@ -50,6 +50,24 @@ void CObjectManager::Update()
 				}
 			}
 	}
+	for (auto iter = m_listCollider3D.begin(); iter != m_listCollider3D.end(); iter++)
+	{
+		for (auto iter2 = std::next(iter); iter2 != m_listCollider3D.end(); iter2++)
+		{
+			if (IsCollision(*iter, *iter2))
+			{
+				for(auto comp : (*iter)->go->m_listComponent)
+				{
+					comp->OnCollision((*iter2)->go);
+				}
+				for (auto comp : (*iter2)->go->m_listComponent)
+				{
+					comp->OnCollision((*iter)->go);
+				}
+			}
+		}
+	}
+
 
 	for (auto iter : m_listGameObject)
 	{
@@ -154,51 +172,55 @@ list <CGameObject * >CObjectManager::Finds(Tag _Tag)
 	return listFind;
 }
 
-bool CObjectManager::RayCast(CMeshRenderer * _pTarget, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo& _Info)
+list<CGameObject *>  CObjectManager::RayCast(Vector3 _vPos, Vector3 _vDir, float _fDist)
 {
-	D3DXVECTOR3		vPickRayDir = _vDirection;				// Pick ray direction	
-	D3DXVECTOR3		vPickRayOrig = _vPos;				// Pick ray origin
-	D3DXVECTOR3					v;				// Vector used in computation	
-	D3DXMATRIXA16				matProj;		// Retrieved projection matrix	
-	D3DXMATRIXA16				matView, m;		// Retrieved view and computation matrices
-	POINT						ptCursor;		// Cursor position	
-	D3DXVECTOR3					vNear, vDir;
-	D3DXMATRIX					invMat;
-	BOOL						bHit;
-	DWORD						dwIndex;
-	float						uCoord, vCoord;
-	float						dist;
-	//LPDIRECT3DSURFACE9			pBackBuffer = NULL;
-	//D3DSURFACE_DESC				Desc;	// Error check	
-	//g_Device->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
-	//pBackBuffer->GetDesc(&Desc);
-	//pBackBuffer->Release();	// Get the projection matrix
-
-	D3DXMatrixInverse(&invMat, NULL, &_pTarget->tf->ToMatrix());
-	D3DXVec3TransformCoord(&vNear, &vPickRayOrig, &invMat);
-	D3DXVec3TransformNormal(&vDir, &vPickRayDir, &invMat);	// Test for intersection	
-	
-
-	D3DXIntersect(_pTarget->m_pMesh->m_pMesh, &vNear, &vDir, &bHit, &dwIndex, &uCoord, &vCoord, &dist, NULL, NULL);
-	if (bHit == TRUE)
+	CollisionInfo info;
+	list<CGameObject*> CollisionObject;
+	for (auto iter : m_listCollider3D)
 	{
-		if (_fDistance == -1.f)
-		{
-				_Info.distance = dist;
-				_Info.vPos = _vPos + _vDirection * dist;
-
-			return TRUE;
-		}
-		else
-		{
-			if (dist <= _fDistance)
-			{
-				_Info.distance = dist;
-				_Info.vPos = _vPos + _vDirection * dist;
-				return true;
-			}
-		}
-
+		bool res ;
+		if (_fDist == -1.f)
+			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, 1000000000, info);
+		else 
+			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, _fDist, info);
+	
+		if (res == true)
+			CollisionObject.push_back(iter->go);
 	}
-		return FALSE;
+	
+	return CollisionObject;
 }
+
+list<CGameObject *> CObjectManager::RayCast(Vector3 _vPos, Vector3 _vDir, Tag _TagMask, float _fDist)
+{
+	CollisionInfo info;
+	list<CGameObject*> CollisionObject;
+	for (auto iter : m_listCollider3D)
+	{
+		if (_TagMask != iter->go->m_Tag) continue;
+		bool res;
+		if (_fDist == -1.f)
+			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, 1000000000, info);
+		else
+			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, _fDist, info);
+
+		if (res == true)
+			CollisionObject.push_back(iter->go);
+	}
+
+	return CollisionObject;
+}
+
+void CObjectManager::SortByDistance(list<CGameObject*>& _listObject)
+{
+	_listObject.sort([](CGameObject * _Prev, CGameObject * _Next)->bool 
+	{
+		float dist1 = GetLength(_Prev->tf->m_vPos, Vector3(0, 0, 0));
+		float dist2 = GetLength(_Next->tf->m_vPos, Vector3(0, 0, 0));
+
+		return dist1 < dist2;
+	}
+	);
+}
+
+

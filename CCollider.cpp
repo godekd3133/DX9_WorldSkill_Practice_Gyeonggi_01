@@ -33,7 +33,7 @@ void CCollider::OnDestroy()
 {
 }
 
-void CCollider::OnCollision()
+void CCollider::OnCollision(CGameObject * _pObject)
 {
 }
 

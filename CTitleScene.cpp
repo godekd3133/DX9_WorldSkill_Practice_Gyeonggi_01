@@ -19,6 +19,10 @@ void CTitleScene::Init()
 	CGameObject * pPlayer = OBJ.Create("Player",Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
 	
+
+	CGameObject * pEnemy = OBJ.Create();
+	pEnemy->ac<CEnemy01>()->Init(Vector3(-3000,10000,2000));
+	GAME.m_pMap = pMap->gc<CStageMap>();
 }
 
 void CTitleScene::Update()

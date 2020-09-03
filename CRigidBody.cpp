@@ -31,7 +31,7 @@ void CRigidBody::LateUpdate()
 	float FloorY = -1200.f;
 	Vector3 vMovePos = tf->m_vPos + m_vVelocity * dt;
 	m_vVelocity.x *= 0.94f;
-	m_vVelocity.y *= 0.98f;
+	m_vVelocity.y *= 0.965f;
 	m_vVelocity.z *= 0.94f;
 
 	FloorY = m_pMap->GetFloorY(vMovePos);
@@ -57,7 +57,7 @@ void CRigidBody::LateUpdate()
 	{
 		if (vMovePos.y > FloorY + 1)
 		{
-			m_vVelocity.y -= 5000.f * dt;
+			m_vVelocity.y -= 6000.f * dt;
 			tf->m_vPos.y = vMovePos.y;
 		}
 		else
@@ -84,7 +84,7 @@ void CRigidBody::OnDestroy()
 {
 }
 
-void CRigidBody::OnCollision()
+void CRigidBody::OnCollision(CGameObject * _pObject)
 {
 }
 

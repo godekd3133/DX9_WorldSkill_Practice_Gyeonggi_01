@@ -39,7 +39,7 @@ void CStageMap::OnDestroy()
 {
 }
 
-void CStageMap::OnCollision()
+void CStageMap::OnCollision(CGameObject * _pObject)
 {
 }
 
@@ -99,7 +99,7 @@ MapCollision CStageMap::GetCollisionInfoByCollisionMap(Vector3 _vPos)
 
 bool CStageMap::GetCollisionInfoByRay(Vector3 _vPos, Vector3 _vDir, float _Dist, CollisionInfo& Info)
 {
-	return OBJ.RayCast(gc<CMeshRenderer>(), _vPos, _vDir, _Dist, Info);
+	return CAMERA.RayCast(gc<CMeshRenderer>(), _vPos, _vDir, _Dist, Info);
 }
 
 float CStageMap::GetFloorY(Vector3 _vPos)

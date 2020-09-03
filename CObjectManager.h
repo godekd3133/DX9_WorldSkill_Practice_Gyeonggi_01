@@ -28,7 +28,10 @@ public:
 	list <CGameObject * >Finds(string _Name);
 	list <CGameObject * >Finds(Tag _Tag);
 
-	bool RayCast(CMeshRenderer* _pTarget,Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo& _Info);
+	list<CGameObject *> RayCast(Vector3 _vPos, Vector3 _vDir, float _fDist = -1.f);
+	list<CGameObject *> RayCast(Vector3 _vPos, Vector3 _vDir, Tag _TagMask, float _fDist = -1.f);
+
+	void SortByDistance(list<CGameObject*>& _listObject);
 };
 
 #define OBJ (*CObjectManager::GetInstance())

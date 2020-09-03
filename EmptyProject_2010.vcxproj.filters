@@ -128,6 +128,9 @@
     <Filter Include="002 : GAME\Scene\05 : GameClear">
       <UniqueIdentifier>{e08de961-b28e-4a5d-a1e6-212264893311}</UniqueIdentifier>
     </Filter>
+    <Filter Include="002 : GAME\Component\Enemy\Enemys">
+      <UniqueIdentifier>{c1a34803-fd6e-4973-820f-644a90561eca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="DXUT\Optional\directx.ico">
@@ -296,6 +299,10 @@
     </ClCompile>
     <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CStageMap.cpp" />
+    <ClCompile Include="CEnemy01.cpp">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="CGameManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -408,6 +415,10 @@
     </ClInclude>
     <ClInclude Include="CBullet.h" />
     <ClInclude Include="CStageMap.h" />
+    <ClInclude Include="CEnemy01.h">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="CGameManager.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

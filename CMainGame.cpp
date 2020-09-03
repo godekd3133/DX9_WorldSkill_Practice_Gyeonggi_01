@@ -19,6 +19,9 @@ void CMainGame::Init()
 		std::async(launch::async, [=]() {
 		AddMesh("MAP_STAGE01", "Map/Stage01/Stage01", "Map/Stage01");
 		AddMesh("PLAYER_IDLE", "Player/Animation/Attack01/Attack01", "Player",1);
+	
+		AddMesh("ENEMY01_IDLE", "Enemy01/Animation/Idle/Idle", "Enemy01", 1);
+
 		//	AddMesh("MAP_STAGE02", "Map/Stage02/Stage02", "Map/Stage02");
 		AddSprite("MAP_STAGE01_COLISIONMAP", "Map/Stage01/NormalMap copy");
 		AddSprite("MAP_STAGE01_PLAYER", "Map/Stage01/Player");

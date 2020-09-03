@@ -32,7 +32,7 @@ void CBullet::OnDestroy()
 {
 }
 
-void CBullet::OnCollision()
+void CBullet::OnCollision(CGameObject * _pObject)
 {
 }
 

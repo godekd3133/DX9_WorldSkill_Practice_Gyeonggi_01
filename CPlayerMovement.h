@@ -13,7 +13,7 @@ public:
 	virtual void Update() override;
 	virtual void LateUpdate() override;
 	virtual void OnDestroy() override;
-	virtual void OnCollision() override;
+	virtual void OnCollision(CGameObject * _pObject) override;
 
 	void Move(Vector3 _vDirection, float _MoveSpeed);
 	float Direction = 0.f;
