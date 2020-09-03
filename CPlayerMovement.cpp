@@ -107,8 +107,8 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 {
 	CollisionInfo info;
 	CollisionInfo info2;
-	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Left], 200, info) == true &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Left], 120, info2) == true)
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Left], 150, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Left], 100, info2) == true)
 	{
 		float dis = info.vPos.z - info2.vPos.z;
 		if (abs(dis) > 1)
@@ -119,8 +119,8 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 		}
 	}
 	
-	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Right], 200, info) == true &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Right], 120, info2) == true)
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Right], 150, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Right], 100, info2) == true)
 	{
 		float dis = info.vPos.z - info2.vPos.z;
 		if (abs(dis) > 1)
@@ -131,8 +131,8 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 		}
 	}
 
-	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Foward], 200, info) == true &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Foward], 120, info2) == true)
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Foward], 150, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Foward], 100, info2) == true)
 	{
 		float dis = info.vPos.z - info2.vPos.z;
 		if (abs(dis) > 1)
@@ -143,8 +143,8 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 		}
 	}
 
-	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Back], 200, info) == true &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Back], 120, info2) == true)
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Back], 150, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Back], 100, info2) == true)
 	{
 		float dis = info.vPos.z - info2.vPos.z;
 		if (abs(dis) > 1)
@@ -155,8 +155,8 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 		}
 	}
 
-	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::LF], 200, info) == true &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::LF], 120, info2) == true)
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::LF], 150, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::LF], 100, info2) == true)
 	{
 		float dis = info.vPos.z - info2.vPos.z;
 		if (abs(dis) > 1)
@@ -167,8 +167,8 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 		}
 	}
 
-	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::RF], 200, info) == true &&
-		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::RF], 120, info2) == true)
+	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::RF], 150, info) == true &&
+		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::RF], 100, info2) == true)
 	{
 		float dis = info.vPos.z - info2.vPos.z;
 		if (abs(dis) > 1)

@@ -21,6 +21,9 @@ void CMainGame::Init()
 		AddMesh("PLAYER_IDLE", "Player/Animation/Attack01/Attack01", "Player",1);
 	
 		AddMesh("ENEMY01_IDLE", "Enemy01/Animation/Idle/Idle", "Enemy01", 1);
+		AddMesh("ENEMY02_IDLE", "Enemy02/Animation/Idle/Idle", "Enemy02", 1);
+		AddMesh("ENEMY03_IDLE", "Enemy03/Animation/Idle/Idle", "Enemy03", 1);
+		AddMesh("ENEMY04_IDLE", "Enemy04/Animation/Idle/Idle", "Enemy04", 1);
 
 		//	AddMesh("MAP_STAGE02", "Map/Stage02/Stage02", "Map/Stage02");
 		AddSprite("MAP_STAGE01_COLISIONMAP", "Map/Stage01/NormalMap copy");

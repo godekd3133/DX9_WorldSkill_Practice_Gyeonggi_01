@@ -132,6 +132,9 @@ enum class  Tag{Untagged,Map,Player,Enemy};
 #include "CPlayerMovement.h"
 #include "CEnemy.h"
 #include "CEnemy01.h"
+#include "CEnemy02.h"
+#include "CEnemy03.h"
+#include "CEnemy04.h"
 
 #include "CSingleton.h"
 

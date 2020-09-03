@@ -24,11 +24,14 @@ public:
 public:
 	int m_iCurHp;
 	int m_iMaxHp;
+	bool CanMove = false;
 	int m_iDamage;
 	int m_Size;
 
 	void OnHit(int _Damage);
 	bool Correction(Vector3 _vDir);
+	bool Correction_Enemy(Vector3 _vDir);
+
 	void Init(int _MaxHp, int _Damage, int _Size);
 	void Move(Vector3 _vDirection);
 	Enemy_State m_State;

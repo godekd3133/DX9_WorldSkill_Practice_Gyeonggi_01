@@ -20,8 +20,14 @@ void CTitleScene::Init()
 	pPlayer->ac<CPlayerMovement>();
 	
 
-	CGameObject * pEnemy = OBJ.Create();
-	pEnemy->ac<CEnemy01>()->Init(Vector3(-3000,10000,2000));
+	CGameObject * pEnemy = OBJ.Create("SEX",Tag::Enemy);
+	pEnemy->ac<CEnemy01>()->Init(Vector3(-2000,10000,2000));
+	CGameObject * pEnemy1 = OBJ.Create("SEX", Tag::Enemy);
+	pEnemy1->ac<CEnemy02>()->Init(Vector3(-1000, 10000, 2000));
+	CGameObject * pEnemy2 = OBJ.Create("SEX", Tag::Enemy);
+	pEnemy2->ac<CEnemy03>()->Init(Vector3(-4000, 10000, 2000));
+	CGameObject * pEnemy3 = OBJ.Create("SEX", Tag::Enemy);
+	pEnemy3->ac<CEnemy04>()->Init(Vector3(-5000, 10000, 2000));
 	GAME.m_pMap = pMap->gc<CStageMap>();
 }
 

@@ -39,5 +39,5 @@ void CCollider::OnCollision(CGameObject * _pObject)
 
 void CCollider::Init(float _fRadius)
 {
-	m_fRadius = m_fRadius;
+	m_fRadius = _fRadius;
 }

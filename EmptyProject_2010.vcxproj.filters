@@ -303,6 +303,15 @@
       <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
     </ClCompile>
     <ClCompile Include="CGameManager.cpp" />
+    <ClCompile Include="CEnemy03.cpp">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy04.cpp">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="CEnemy02.cpp">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -419,6 +428,15 @@
       <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
     </ClInclude>
     <ClInclude Include="CGameManager.h" />
+    <ClInclude Include="CEnemy04.h">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy02.h">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="CEnemy03.h">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

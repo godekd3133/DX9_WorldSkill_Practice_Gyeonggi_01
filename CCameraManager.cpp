@@ -188,7 +188,7 @@ bool CCameraManager::RayCastAtSphere(float _Radius, Matrix _matWorld, Vector3 _v
 {
 	LPD3DXMESH Box;
 
-	D3DXCreateSphere(g_Device, _Radius, 16, 16, &Box, NULL);
+	D3DXCreateSphere(g_Device, _Radius, 32, 32, &Box, NULL);
 
 
 
