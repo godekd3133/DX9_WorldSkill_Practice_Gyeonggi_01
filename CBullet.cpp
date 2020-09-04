@@ -22,6 +22,7 @@ void CBullet::Start()
 void CBullet::Update()
 {
 	tf->m_vPos += m_vDirection * m_fSpeed * dt;
+
 }
 
 void CBullet::LateUpdate()

@@ -63,10 +63,23 @@ void CEnemy::OnCollision(CGameObject * _pObject)
 {
 
 	//while (OBJ.IsCollision(_pObject->gc<CCollider>(), gc<CCollider>()))
-	//{
-	//	Vector3 _vDir = my::GetDirection(tf->m_vPos, _pObject->tf->m_vPos);
-	//	tf->m_vPos += _vDir;
-	//}
+//	{
+	if (_pObject->m_Tag == Tag::Enemy)
+	{
+
+
+		Vector3 _vDir = my::GetDirection(tf->m_vPos, _pObject->tf->m_vPos);
+		_vDir.y = 0.f;
+
+		if (_vDir.x == 0.f && _vDir.z == 0.f)
+		{
+			_vDir.x = my::RandRange(-100, 100) / 100.f;
+			_vDir.z = my::RandRange(-100, 100) / 100.f;
+		}
+
+		Move(-_vDir);
+	}
+		//	}
 }
 
 void CEnemy::OnHit(int _Damage)

@@ -99,8 +99,17 @@ void CPlayerMovement::OnCollision(CGameObject * _pObject)
 void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 {
 	Vector3 OldPos = tf->m_vPos;
-	tf->m_vPos += _vDirection * _MoveSpeed * dt;
+	tf->m_vPos += Vector3(0.f, 0, _vDirection.z)  * _MoveSpeed * dt;
 
+	if (m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Wall ||
+		tf->m_vPos.y < m_pMap->GetFloorY(tf->m_vPos))
+	{
+		tf->m_vPos = OldPos;
+	}
+
+	 OldPos = tf->m_vPos;
+	tf->m_vPos +=Vector3( _vDirection.x,0,0) * _MoveSpeed * dt;
+	
 	if (m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Wall ||
 		tf->m_vPos.y < m_pMap->GetFloorY(tf->m_vPos))
 	{
