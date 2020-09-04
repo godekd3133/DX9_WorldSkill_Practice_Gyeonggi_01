@@ -75,19 +75,12 @@ void CEnemy::OnHit(int _Damage)
 
 bool CEnemy::Correction(Vector3 _vDir)
 {
-	CollisionInfo info;
-	CollisionInfo info2;
-	if (GAME.m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 50, 0), _vDir, 100, info) == true &&
-		GAME.m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), _vDir, 50, info2) == true)
-	{
-		float dis = info.vPos.z - info2.vPos.z;
-		if (abs(dis) > 0.f)
+	if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos + _vDir * 5) == MapCollision::Wall ||
+		tf->m_vPos.y < GAME.m_pMap->GetFloorY(tf->m_vPos + _vDir * 5))
 		{
-			tf->m_vPos -= _vDir * 400 * dt;
-			return true;
-
+		tf->m_vPos -= _vDir * m_fMoveSpeed * dt;
+		return true;
 		}
-	}
 	return false;
 }
 
@@ -101,35 +94,68 @@ bool CEnemy::Correction_Enemy(Vector3 _vDir)
 	return false;
 }
 
-void CEnemy::Init(int _MaxHp, int _Damage, int _Size)
+void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed)
 {
 	go->m_Tag = Tag::Enemy;
 	ac<CCollider>()->Init(_Size);
 	m_iCurHp = _MaxHp;
+	m_fMoveSpeed = _fMoveSpeed;
 	m_iMaxHp = _MaxHp;
 	m_iDamage = _Damage;
 }
 
 void CEnemy::Move(Vector3 _vDirection)
 {
+	_vDirection.y = 0.f;
+	bool x = false;
+	bool y = false;
 	if (abs(tf->m_vPos.y - m_pPlayer->tf->m_vPos.y) < 250)
-		tf->m_vPos += _vDirection * 400 * dt;
-	if (Correction(_vDirection)||
-	Correction(Vector3(1, 0, 0))||
-	Correction(Vector3(0.5f, 0, 0.5f))||
-	Correction(Vector3(-0.5f, 0, 0.5f)))
 	{
-		if(abs(tf->m_vPos.y - m_pPlayer->tf->m_vPos.y) < 250)
-		gc<CRigidBody>()->m_vVelocity = Vector3(0, 2500, 0);
+		Vector3 OldPos = tf->m_vPos;
+		tf->m_vPos += Vector3(_vDirection.x,0,0)* m_fMoveSpeed * dt;
 
+		if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Wall ||
+			GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Between )
+		{
+			if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Between  && 
+				GAME.m_pMap->GetCollisionInfoByCollisionMap(OldPos) == MapCollision::FirstFloor)
+				gc<CRigidBody>()->m_vVelocity = Vector3(0, 2500, 0);
+
+			if (tf->m_vPos.y < GAME.m_pMap->GetFloorY(tf->m_vPos))
+			{
+				tf->m_vPos.x = OldPos.x;
+				x = true;
+			}
+		}
+
+		OldPos = tf->m_vPos;
+		tf->m_vPos += Vector3(0, 0, _vDirection.z)* m_fMoveSpeed * dt;
+
+		if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Wall ||
+			GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Between)
+		{
+			if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Between  &&
+				GAME.m_pMap->GetCollisionInfoByCollisionMap(OldPos) == MapCollision::FirstFloor)
+				gc<CRigidBody>()->m_vVelocity = Vector3(0, 2500, 0);
+
+			if (tf->m_vPos.y < GAME.m_pMap->GetFloorY(tf->m_vPos))
+			{
+				tf->m_vPos.z = OldPos.z;
+				y = true;
+			}
+		}
 	}
+	//if (x == true)
+	//	Move(Vector3(_vDirection.x, 0, 0));
+	//if(y == true)
+	//	Move(Vector3(0, 0, _vDirection.z));
 
-	Correction_Enemy(_vDirection);
-	Correction_Enemy(Vector3(1, 0, 0));
-	Correction_Enemy(Vector3(-1, 0, 0));
-	Correction_Enemy(Vector3(0.5f, 0, 0.5f));
-	Correction_Enemy(Vector3(-0.5f, 0, 0.5f));
-	Correction_Enemy(Vector3(-0.5f, 0, -0.5f));
-	Correction_Enemy(Vector3(0.f, 0, -1.f));
-	Correction_Enemy(Vector3(0.5f, 0, -0.5f));
+	//Correction_Enemy(_vDirection);
+	//Correction_Enemy(Vector3(1, 0, 0));
+	//Correction_Enemy(Vector3(-1, 0, 0));
+	//Correction_Enemy(Vector3(0.5f, 0, 0.5f));
+	//Correction_Enemy(Vector3(-0.5f, 0, 0.5f));
+	//Correction_Enemy(Vector3(-0.5f, 0, -0.5f));
+	//Correction_Enemy(Vector3(0.f, 0, -1.f));
+	//Correction_Enemy(Vector3(0.5f, 0, -0.5f));
 }

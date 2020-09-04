@@ -128,14 +128,14 @@ bool CCameraManager::RayCast(CMeshRenderer * _pTarget, Vector3 _vPos, Vector3 _v
 bool CCameraManager::RayCastAtBox(Vector3 _Radius, Matrix _matWorld, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo & _Info)
 {
 	LPD3DXMESH Box;
-
+	
 	D3DXCreateBox(g_Device, _Radius.x, _Radius.y, _Radius.z, &Box, NULL);
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
 	D3DXVECTOR3		vPickRayDir = _vDirection;				// Pick ray direction	
 	D3DXVECTOR3		vPickRayOrig = _vPos;				// Pick ray origin
 	D3DXVECTOR3					v;				// Vector used in computation	
@@ -153,21 +153,20 @@ bool CCameraManager::RayCastAtBox(Vector3 _Radius, Matrix _matWorld, Vector3 _vP
 	//g_Device->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
 	//pBackBuffer->GetDesc(&Desc);
 	//pBackBuffer->Release();	// Get the projection matrix
-
+	
 	D3DXMatrixInverse(&invMat, NULL, &_matWorld);
 	D3DXVec3TransformCoord(&vNear, &vPickRayOrig, &invMat);
 	D3DXVec3TransformNormal(&vDir, &vPickRayDir, &invMat);	// Test for intersection	
-
-
+	
+	
 	D3DXIntersect(Box, &vNear, &vDir, &bHit, &dwIndex, &uCoord, &vCoord, &dist, NULL, NULL);
-	SAFE_RELEASE(Box);
 	if (bHit == TRUE)
 	{
 		if (_fDistance == -1.f)
 		{
 			_Info.distance = dist;
 			_Info.vPos = _vPos + _vDirection * dist;
-
+	
 			return TRUE;
 		}
 		else
@@ -179,21 +178,15 @@ bool CCameraManager::RayCastAtBox(Vector3 _Radius, Matrix _matWorld, Vector3 _vP
 				return true;
 			}
 		}
-
+	
 	}
 	return FALSE;
 }
 
-bool CCameraManager::RayCastAtSphere(float _Radius, Matrix _matWorld, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo & _Info)
+bool CCameraManager::RayCastAtSphere(LPD3DXMESH _Sphere, Matrix _matWorld, Vector3 _vPos, Vector3 _vDirection, float _fDistance, CollisionInfo & _Info)
 {
-	LPD3DXMESH Box;
-
-	D3DXCreateSphere(g_Device, _Radius, 32, 32, &Box, NULL);
-
-
-
-
-
+	if (_Sphere == NULL)
+		return false;
 	D3DXVECTOR3		vPickRayDir = _vDirection;				// Pick ray direction	
 	D3DXVECTOR3		vPickRayOrig = _vPos;				// Pick ray origin
 	D3DXVECTOR3					v;				// Vector used in computation	
@@ -211,21 +204,20 @@ bool CCameraManager::RayCastAtSphere(float _Radius, Matrix _matWorld, Vector3 _v
 	//g_Device->GetBackBuffer(0, 0, D3DBACKBUFFER_TYPE_MONO, &pBackBuffer);
 	//pBackBuffer->GetDesc(&Desc);
 	//pBackBuffer->Release();	// Get the projection matrix
-
+	
 	D3DXMatrixInverse(&invMat, NULL, &_matWorld);
 	D3DXVec3TransformCoord(&vNear, &vPickRayOrig, &invMat);
 	D3DXVec3TransformNormal(&vDir, &vPickRayDir, &invMat);	// Test for intersection	
-
-
-	D3DXIntersect(Box, &vNear, &vDir, &bHit, &dwIndex, &uCoord, &vCoord, &dist, NULL, NULL);
-	SAFE_RELEASE(Box);
+	
+	
+	D3DXIntersect(_Sphere, &vNear, &vDir, &bHit, &dwIndex, &uCoord, &vCoord, &dist, NULL, NULL);
 	if (bHit == TRUE)
 	{
 		if (_fDistance == -1.f)
 		{
 			_Info.distance = dist;
 			_Info.vPos = _vPos + _vDirection * dist;
-
+	
 			return TRUE;
 		}
 		else
@@ -237,7 +229,7 @@ bool CCameraManager::RayCastAtSphere(float _Radius, Matrix _matWorld, Vector3 _v
 				return true;
 			}
 		}
-
+	
 	}
 	return FALSE;
 }

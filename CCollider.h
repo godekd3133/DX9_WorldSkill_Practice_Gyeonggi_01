@@ -19,5 +19,7 @@ public:
 	void Init(float _fRadius);
 	float m_fRadius;	
 
+	LPD3DXMESH Sphere;
+
 };
 

@@ -50,8 +50,9 @@ void CStageMap::Init(CMesh * _pMesh, CSprite * _pMinimap, CSprite * _pCollisionM
 	m_pCollisionMap = _pCollisionMap;
 	ac<CMeshRenderer>()->Init(m_pMesh);
 	CGameObject * pMinimap = OBJ.Create();
-	//pMinimap->ac<CSpriteRenderer>()->Init(_pCollisionMap, SortingLayer::SR_Default, RenderMode::RM_UI);
-	//pMinimap->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0, 0);
+	pMinimap->ac<CSpriteRenderer>()->Init(_pMinimap, SortingLayer::SR_Default, RenderMode::RM_UI);
+	pMinimap->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0, 0);
+	pMinimap->tf->m_vScale = Vector3(0.25f, 0.25f, 0.25f);
 	tf->m_vScale = Vector3(-1.f, 1.f, 1.f);
 	tf->m_vPos = Vector3(0, 0, 0);
 }
@@ -75,8 +76,8 @@ MapCollision CStageMap::GetCollisionInfoByCollisionMap(Vector3 _vPos)
 
 	D3DXCOLOR color = dwColor[(PosY * m_pCollisionMap->m_Info.Width ) + PosX];
 //	dwColor[(PosY * m_pCollisionMap->m_Info.Width) + PosX] = Color(1, 1, 1, 1);
-	OutputDebugStringA(("r : " + to_string(color.r) + " g : "  + to_string(color.g) + " b : " + to_string(color.b) + " a : " + to_string(color.a) + "\n").c_str());
-	OutputDebugStringA(("X : " + to_string(PosX) + "Y" + to_string(PosY) +  "\n").c_str());
+	//OutputDebugStringA(("r : " + to_string(color.r) + " g : "  + to_string(color.g) + " b : " + to_string(color.b) + " a : " + to_string(color.a) + "\n").c_str());
+	//OutputDebugStringA(("X : " + to_string(PosX) + "Y" + to_string(PosY) +  "\n").c_str());
 
 	if (color == Color(1, 0, 1, 1))
 	{
@@ -99,14 +100,18 @@ MapCollision CStageMap::GetCollisionInfoByCollisionMap(Vector3 _vPos)
 
 bool CStageMap::GetCollisionInfoByRay(Vector3 _vPos, Vector3 _vDir, float _Dist, CollisionInfo& Info)
 {
-	return CAMERA.RayCast(gc<CMeshRenderer>(), _vPos, _vDir, _Dist, Info);
+	return true;//CAMERA.RayCast(gc<CMeshRenderer>(), _vPos, _vDir, _Dist, Info);
 }
 
 float CStageMap::GetFloorY(Vector3 _vPos)
 {
-	CollisionInfo info;
+	//CollisionInfo info;
 
-	GetCollisionInfoByRay(_vPos  - Vector3(0,10000,0), Vector3(0, 1, 0), 100000000, info);
+	if (GAME.m_pMap->GetCollisionInfoByCollisionMap(_vPos) == MapCollision::FirstFloor) return -800;
+	if (GAME.m_pMap->GetCollisionInfoByCollisionMap(_vPos) == MapCollision::SecondFloor) return -600;
+	if (GAME.m_pMap->GetCollisionInfoByCollisionMap(_vPos) == MapCollision::Between) return -700;
+
+	//GetCollisionInfoByRay(_vPos  - Vector3(0,10000,0), Vector3(0, 1, 0), 100000000, info);
 
 
 	//CollisionInfo info2;
@@ -115,6 +120,6 @@ float CStageMap::GetFloorY(Vector3 _vPos)
 
 
 
-	return info.vPos.y;
+	return 0;
 }
 

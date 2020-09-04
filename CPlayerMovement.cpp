@@ -15,22 +15,15 @@ void CPlayerMovement::Awake()
 	ac<CRigidBody>()->OnLanding.push_back([=]() {OnLanding(); });
 	m_pMap = OBJ.Find(Tag::Map)->gc<CStageMap>();
 	tf->m_vScale = Vector3(1.5, 1.5, 1.5);
-	tf->m_vPos = Vector3(-3000,-200, 3000);
+	tf->m_vPos = Vector3(-2000,-200, 3000);
 	ac<CMeshRenderer>()->Init(MESH("PLAYER"));
 
 	ac<CAnimator3D>()->AddState("IDLE", "PLAYER_IDLE", 20.f / 1000.f);
-//	gc<CAnimator3D>()->AddState("RUN", "PLAYER_RUN", 20.f / 1000.f);
-//	gc<CAnimator3D>()->AddState("JUMP", "PLAYER_JUMP", 20.f / 1000.f, false);
-//	gc<CAnimator3D>()->AddState("ATTACK01", "PLAYER_ATTACK_01", 30.f / 1000.f, false );
-//	gc<CAnimator3D>()->AddState("ATTACK02", "PLAYER_ATTACK_02", 30.f / 1000.f, false );
-//	gc<CAnimator3D>()->AddState("ATTACK03", "PLAYER_ATTACK_03", 30.f / 1000.f, false );
-//	gc<CAnimator3D>()->AddState("SKILL02", "PLAYER_GROUNDPUNCH", 30.f / 1000.f, false);
-//	gc<CAnimator3D>()->AddState("KICK01", "PLAYER_KICK_01", 30.f / 1000.f, false);
-//	gc<CAnimator3D>()->AddState("KICK02", "PLAYER_KICK_02", 30.f / 1000.f, false);
-//	gc<CAnimator3D>()->AddState("HIT", "PLAYER_HIT", 30.f / 1000.f, false);
-//	gc<CAnimator3D>()->AddState("SKILL01", "PLAYER_SKILL01", 30.f / 1000.f, false);
-//
-//
+	gc<CAnimator3D>()->AddState("RUN", "PLAYER_RUN", 20.f / 1000.f);
+	gc<CAnimator3D>()->AddState("ATTACK01", "PLAYER_ATTACK01", 20.f / 1000.f, false);
+	gc<CAnimator3D>()->AddState("ATTACK02", "PLAYER_ATTACK02", 20.f / 1000.f, false);
+
+
 	gc<CAnimator3D>()->SetCurrentState("IDLE");
 }
 
@@ -105,7 +98,16 @@ void CPlayerMovement::OnCollision(CGameObject * _pObject)
 
 void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 {
-	CollisionInfo info;
+	Vector3 OldPos = tf->m_vPos;
+	tf->m_vPos += _vDirection * _MoveSpeed * dt;
+
+	if (m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Wall ||
+		tf->m_vPos.y < m_pMap->GetFloorY(tf->m_vPos))
+	{
+		tf->m_vPos = OldPos;
+	}
+
+	/*CollisionInfo info;
 	CollisionInfo info2;
 	if (m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 150, 0), CAMERA.m_vCharactorAxis[Axis::Left], 150, info) == true &&
 		m_pMap->GetCollisionInfoByRay(tf->GetWorldPos() + Vector3(0, 10, 0), CAMERA.m_vCharactorAxis[Axis::Left], 100, info2) == true)
@@ -190,7 +192,7 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 			tf->m_vPos.z += _vDirection.z * _MoveSpeed * dt;
 			CAMERA.m_vCharactorDir.z = _vDirection.z;
 		}				
-		
+		*/
 }
 
 void CPlayerMovement::OnLanding()

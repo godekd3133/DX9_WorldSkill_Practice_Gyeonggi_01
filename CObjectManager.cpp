@@ -180,9 +180,9 @@ list<CGameObject *>  CObjectManager::RayCast(Vector3 _vPos, Vector3 _vDir, float
 	{
 		bool res ;
 		if (_fDist == -1.f)
-			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, 1000000000, info);
+			res = CAMERA.RayCastAtSphere(iter->Sphere, iter->tf->ToMatrix(), _vPos, _vDir, 1000000000, info);
 		else 
-			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, _fDist, info);
+			res = CAMERA.RayCastAtSphere(iter->Sphere, iter->tf->ToMatrix(), _vPos, _vDir, _fDist, info);
 	
 		if (res == true)
 			CollisionObject.push_back(iter->go);
@@ -200,9 +200,9 @@ list<CGameObject *> CObjectManager::RayCast(Vector3 _vPos, Vector3 _vDir, Tag _T
 		if (_TagMask != iter->go->m_Tag) continue;
 		bool res;
 		if (_fDist == -1.f)
-			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, 1000000000, info);
+			res = CAMERA.RayCastAtSphere(iter->Sphere, iter->tf->ToMatrix(), _vPos, _vDir, 1000000000, info);
 		else
-			res = CAMERA.RayCastAtSphere(iter->m_fRadius, iter->tf->ToMatrix(), _vPos, _vDir, _fDist, info);
+			res = CAMERA.RayCastAtSphere(iter->Sphere, iter->tf->ToMatrix(), _vPos, _vDir, _fDist, info);
 
 		if (res == true)
 			CollisionObject.push_back(iter->go);

@@ -5,6 +5,7 @@
 CCollider::CCollider()
 {
 	OBJ.m_listCollider3D.push_back(this);
+
 }
 
 
@@ -31,6 +32,7 @@ void CCollider::LateUpdate()
 
 void CCollider::OnDestroy()
 {
+	SAFE_RELEASE(Sphere);
 }
 
 void CCollider::OnCollision(CGameObject * _pObject)
@@ -40,4 +42,6 @@ void CCollider::OnCollision(CGameObject * _pObject)
 void CCollider::Init(float _fRadius)
 {
 	m_fRadius = _fRadius;
+	D3DXCreateSphere(g_Device, m_fRadius, 32, 32, &Sphere, NULL);
+
 }

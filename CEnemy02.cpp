@@ -39,7 +39,7 @@ void CEnemy02::Init(Vector3 _vPos)
 {
 	tf->m_vScale = Vector3(1.5f, 1.5f, 1.5f);
 	tf->m_vPos = _vPos;
-	ac<CEnemy>()->Init(1000, 30, 100);
+	ac<CEnemy>()->Init(1000, 30, 100, 800);
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
 	ac<CAnimator3D>()->AddState("IDLE", "ENEMY02_IDLE", 30.F / 1000.F);

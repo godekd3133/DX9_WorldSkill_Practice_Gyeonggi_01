@@ -171,6 +171,22 @@ void CGraphicsManager::Render_Mesh(CMesh * _pMesh, Matrix _matWorld, Color _Colo
 	}
 }
 
+Matrix CGraphicsManager::ToMatrix(Vector3 _vPos, Vector3 _vScale, Vector3 _vRotation)
+{
+	Matrix matTrans, matRotX, matRotY, matRotZ, matScale;
+
+	D3DXMatrixTranslation(&matTrans, _vPos.x, _vPos.y, _vPos.z);
+	D3DXMatrixRotationX(&matRotX, D3DXToRadian(_vRotation.x));
+
+	D3DXMatrixRotationY(&matRotY, D3DXToRadian(_vRotation.x));
+
+	D3DXMatrixRotationZ(&matRotZ, D3DXToRadian(_vRotation.x));
+
+	D3DXMatrixScaling(&matScale, _vScale.x, _vScale.y, _vScale.z);
+
+	return matScale * matRotX*matRotY * matRotZ * matTrans;
+}
+
 void CGraphicsManager::OnLostDevice()
 {
 	m_pFont->OnLostDevice();

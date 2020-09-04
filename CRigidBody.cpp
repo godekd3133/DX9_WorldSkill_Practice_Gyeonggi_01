@@ -39,7 +39,7 @@ void CRigidBody::LateUpdate()
 
 
 	CollisionInfo info;
-	if (m_pMap->GetCollisionInfoByRay(vMovePos, Vector3(0, -1, 0), 5, info) == true)
+	if (vMovePos.y- Vector3(0,5,0).y < FloorY)
 	{
 		if (m_vVelocity.y < 0.f)
 		{
