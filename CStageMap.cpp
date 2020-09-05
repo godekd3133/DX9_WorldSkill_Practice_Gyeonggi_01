@@ -49,10 +49,10 @@ void CStageMap::Init(CMesh * _pMesh, CSprite * _pMinimap, CSprite * _pCollisionM
 	m_pMinimap = _pMinimap;
 	m_pCollisionMap = _pCollisionMap;
 	ac<CMeshRenderer>()->Init(m_pMesh);
-	CGameObject * pMinimap = OBJ.Create();
-	pMinimap->ac<CSpriteRenderer>()->Init(_pMinimap, SortingLayer::SR_Default, RenderMode::RM_UI);
-	pMinimap->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0, 0);
-	pMinimap->tf->m_vScale = Vector3(0.25f, 0.25f, 0.25f);
+	//CGameObject * pMinimap = OBJ.Create();
+	//pMinimap->ac<CSpriteRenderer>()->Init(_pMinimap, SortingLayer::SR_Default, RenderMode::RM_UI);
+	//pMinimap->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0, 0);
+	//pMinimap->tf->m_vScale = Vector3(0.25f, 0.25f, 0.25f);
 	tf->m_vScale = Vector3(-1.f, 1.f, 1.f);
 	tf->m_vPos = Vector3(0, 0, 0);
 }

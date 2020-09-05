@@ -18,10 +18,10 @@ void CPlayerMovement::Awake()
 	tf->m_vPos = Vector3(-2000,-200, 3000);
 	ac<CMeshRenderer>()->Init(MESH("PLAYER"));
 
-	ac<CAnimator3D>()->AddState("IDLE", "PLAYER_IDLE", 20.f / 1000.f);
-	gc<CAnimator3D>()->AddState("RUN", "PLAYER_RUN", 20.f / 1000.f);
-	gc<CAnimator3D>()->AddState("ATTACK01", "PLAYER_ATTACK01", 20.f / 1000.f, false);
-	gc<CAnimator3D>()->AddState("ATTACK02", "PLAYER_ATTACK02", 20.f / 1000.f, false);
+	ac<CAnimator3D>()->AddState("IDLE", "PLAYER_IDLE",30.f / 1000.f);
+	gc<CAnimator3D>()->AddState("RUN", "PLAYER_RUN", 30.f / 1000.f);
+	gc<CAnimator3D>()->AddState("ATTACK01", "PLAYER_ATTACK01", 30.f / 1000.f, false);
+	gc<CAnimator3D>()->AddState("ATTACK02", "PLAYER_ATTACK02", 30.f / 1000.f, false);
 
 
 	gc<CAnimator3D>()->SetCurrentState("IDLE");
@@ -35,7 +35,9 @@ void CPlayerMovement::Start()
 void CPlayerMovement::Update()
 {
 	//Animation Various;
-	tf->LerpRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]),0), 12.f * dt);
+	bool bMove = false;
+	bool bAttack = false;
+	
 	Vector3 MoveDirection = Vector3(0, 0, 0);
 
 
@@ -43,44 +45,60 @@ void CPlayerMovement::Update()
 		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Foward];
 	else if (INPUT.KeyPress('S'))
 		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Back];
-	if (INPUT.KeyPress(VK_LBUTTON))
-	{
-		CGameObject * pBullet = OBJ.Create();
-		pBullet->ac<CBullet>()->Init(tf->m_vPos,tf->GetFoward(), 40.f);
-	}
+	if (INPUT.KeyPress('A'))
+		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Left];
+	else if (INPUT.KeyPress('D'))
+		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Right];
+
 	if (INPUT.KeyDown(VK_SPACE))
 	{
 		gc<CRigidBody>()->AddForce(Vector3(0, 2000, 0));
 	}
+	if (INPUT.KeyDown(VK_LBUTTON))
+		bAttack =true;
 
-	if (INPUT.KeyPress(VK_RBUTTON))
+
+	if (MoveDirection != Vector3(0, 0, 0))
+		bMove = true;
+
+	CAMERA.m_fDistance = Lerp(CAMERA.m_fDistance, 600.f, 6 * dt);
+	CAMERA.m_vOffset = Lerp(CAMERA.m_vOffset, Vector3(0.f, 0.f, 0.f), 6 * dt);
+
+	if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "IDLE")
 	{
-
-		CAMERA.m_fDistance = Lerp(CAMERA.m_fDistance, 2.f, 6 * dt);
-		CAMERA.m_vOffset = Lerp(CAMERA.m_vOffset, Vector3(0.75f * ZoomDir, 0.f, 0.f), 6 * dt);
-
-		if (INPUT.KeyDown('D'))
+		if (bMove == true)
 		{
-			ZoomDir = 1;
+			gc<CAnimator3D>()->SetCurrentState("RUN");
 		}
-		else if (INPUT.KeyDown('A'))
+		if (bAttack)
 		{
-			ZoomDir = -1;
+			gc<CAnimator3D>()->SetCurrentState("ATTACK01");
 		}
 	}
-	else
+	else if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "RUN")
 	{
-		if (INPUT.KeyPress('A'))
-			MoveDirection += CAMERA.m_vCharactorAxis[Axis::Left];
-		else if (INPUT.KeyPress('D'))
-			MoveDirection += CAMERA.m_vCharactorAxis[Axis::Right];
-
-		CAMERA.m_fDistance = Lerp(CAMERA.m_fDistance, 600.f, 6 * dt);
-		CAMERA.m_vOffset = Lerp(CAMERA.m_vOffset, Vector3(0.f, 0.f, 0.f), 6 * dt);
+		Move(MoveDirection, 1000.F);
+		tf->LerpRotation(Vector3(0, my::GetDirAngle(MoveDirection), 0), 12.f * dt);
+		if (bMove == false)
+		{
+			gc<CAnimator3D>()->SetCurrentState("IDLE");
+		}
+		if (bAttack)
+		{
+			gc<CAnimator3D>()->SetCurrentState("ATTACK01");
+		}
 	}
+	else if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK01")
+	{
+		tf->SetRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]),0)); 
+		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
+		{
+			gc<CAnimator3D>()->SetCurrentState("IDLE");
+		}
 
-	if(MoveDirection != Vector3(0,0,0))
-	Move(MoveDirection, 1000.F);
+	}
+	
+
 
 }
 

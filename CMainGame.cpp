@@ -1,7 +1,7 @@
 #include "DXUT.h"
 #include "CMainGame.h"
 #include "CTitleScene.h"
-
+#include "CStage01.h"
 CMainGame::CMainGame()
 {
 
@@ -23,7 +23,7 @@ void CMainGame::Init()
 		AddMesh("PLAYER_RUN", "Player/Animation/Run/Run", "Player", 15);
 		AddMesh("PLAYER_HIT", "Player/Animation/Hit/Hit", "Player", 11);
 //		AddMesh("PLAYER_DEAD", "Player/Animation/Dead/Dead", "Player",36);
-		AddMesh("PLAYER_ATTACK01", "Player/Animation/Attack01/Attack01", "Player", 17);
+		AddMesh("PLAYER_ATTACK01", "Player/Animation/Attack01/Attack01", "Player", 16);
 		AddMesh("PLAYER_ATTACK02", "Player/Animation/Attack02/Attack02", "Player", 16);
 	//	AddMesh("PLAYER_ATTACK03", "Player/Animation/Attack03/Attack03", "Player", 24);
 	//	AddMesh("PLAYER_ATTACK04", "Player/Animation/Attack04/Attack04", "Player", 28);
@@ -44,7 +44,8 @@ void CMainGame::Init()
 	});
 
 	SCENE.AddScene("S_TITLE", new CTitleScene());
-	SCENE.ChangeScene("S_TITLE");
+	SCENE.AddScene("S_STAGE01", new CStage01());
+	SCENE.ChangeScene("S_STAGE01");
 
 }
 

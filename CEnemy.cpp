@@ -38,7 +38,11 @@ void CEnemy::Update()
 		else if (dist > 2500)
 			m_State = Enemy_State::IDLE;
 		else
+		{
 			Move(my::GetDirection(tf->m_vPos, m_pPlayer->tf->m_vPos));
+			tf->LerpRotation(Vector3(0.f, my::GetDirAngle(my::GetDirection(tf->m_vPos, m_pPlayer->tf->m_vPos)),0), 12.f * dt);
+
+		}
 		break;
 	case Enemy_State::ATTACK:
 		if (dist <= 200)
@@ -77,7 +81,7 @@ void CEnemy::OnCollision(CGameObject * _pObject)
 			_vDir.z = my::RandRange(-100, 100) / 100.f;
 		}
 
-		Move(-_vDir);
+		Move(-_vDir*dt*20);
 	}
 		//	}
 }
@@ -132,7 +136,7 @@ void CEnemy::Move(Vector3 _vDirection)
 		{
 			if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Between  && 
 				GAME.m_pMap->GetCollisionInfoByCollisionMap(OldPos) == MapCollision::FirstFloor)
-				gc<CRigidBody>()->m_vVelocity = Vector3(0, 2500, 0);
+				gc<CRigidBody>()->m_vVelocity = Vector3(0, 1400, 0);
 
 			if (tf->m_vPos.y < GAME.m_pMap->GetFloorY(tf->m_vPos))
 			{
@@ -149,7 +153,7 @@ void CEnemy::Move(Vector3 _vDirection)
 		{
 			if (GAME.m_pMap->GetCollisionInfoByCollisionMap(tf->m_vPos) == MapCollision::Between  &&
 				GAME.m_pMap->GetCollisionInfoByCollisionMap(OldPos) == MapCollision::FirstFloor)
-				gc<CRigidBody>()->m_vVelocity = Vector3(0, 2500, 0);
+				gc<CRigidBody>()->m_vVelocity = Vector3(0, 1400, 0);
 
 			if (tf->m_vPos.y < GAME.m_pMap->GetFloorY(tf->m_vPos))
 			{
@@ -157,18 +161,7 @@ void CEnemy::Move(Vector3 _vDirection)
 				y = true;
 			}
 		}
-	}
-	//if (x == true)
-	//	Move(Vector3(_vDirection.x, 0, 0));
-	//if(y == true)
-	//	Move(Vector3(0, 0, _vDirection.z));
 
-	//Correction_Enemy(_vDirection);
-	//Correction_Enemy(Vector3(1, 0, 0));
-	//Correction_Enemy(Vector3(-1, 0, 0));
-	//Correction_Enemy(Vector3(0.5f, 0, 0.5f));
-	//Correction_Enemy(Vector3(-0.5f, 0, 0.5f));
-	//Correction_Enemy(Vector3(-0.5f, 0, -0.5f));
-	//Correction_Enemy(Vector3(0.f, 0, -1.f));
-	//Correction_Enemy(Vector3(0.5f, 0, -0.5f));
+		
+	}
 }
