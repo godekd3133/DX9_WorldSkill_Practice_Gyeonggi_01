@@ -38,5 +38,9 @@ public:
 	void OnStopSkill01Rush();
 
 	void OnAttack01_Event();
+	void OnAttack02_Event(); 
+	void OnSkill01_Event();
+	void OnSkill02_Event();
+
 };
 

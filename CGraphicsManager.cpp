@@ -136,7 +136,7 @@ void CGraphicsManager::Render_Sprite(CSprite * _pSprite, Matrix _matWorld, Vecto
 	{
 		m_pSprite->SetWorldViewLH(nullptr, &CAMERA.m_matView);
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_BILLBOARD | D3DXSPRITE_OBJECTSPACE); 
-		g_Device->SetRenderState(D3DRS_ZENABLE, false);
+		//g_Device->SetRenderState(D3DRS_ZENABLE, tru);
 	}
 
 	m_pSprite->SetTransform(&_matWorld);

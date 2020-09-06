@@ -31,7 +31,6 @@ void CTitleScene::Update()
 
 void CTitleScene::Render()
 {
-	//GRAPHICS.Render_Font(to_string(DXUTGetFPS()), GRAPHICS.ToMatrix(Vector3(100, 300, 0)),Color(1.f,1.f,1.f,1.f), RenderMode::RM_UI);
 }
 
 void CTitleScene::Release()

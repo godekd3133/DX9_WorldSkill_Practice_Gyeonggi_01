@@ -172,6 +172,54 @@ list <CGameObject * >CObjectManager::Finds(Tag _Tag)
 	return listFind;
 }
 
+list<CGameObject*> CObjectManager::GetCollisionObject (Vector3 _vPos, float _Radius, Tag _Tag)
+{
+	list<CGameObject*> listCollision; 
+
+	CGameObject * pCollision = Create();
+
+	pCollision->ac<CCollider>()->Init(_Radius);
+
+	CCollider* Collider = pCollision->gc<CCollider>();
+
+	pCollision->tf->m_vPos = _vPos;
+	
+	for (auto iter : m_listCollider3D)
+	{
+			if(iter->go->m_Tag == _Tag)
+			if (IsCollision(iter, Collider))
+				listCollision.push_back(iter->go);
+	}
+	pCollision->Destroy();
+
+	return listCollision;
+}
+
+list<CGameObject*> CObjectManager::GetCollisionObject(Vector3 _vPos, float _Radius)
+{
+	list<CGameObject*> listCollision;
+
+	CGameObject * pCollision = Create();
+
+	pCollision->ac<CCollider>()->Init(_Radius);
+
+	CCollider* Collider = pCollision->gc<CCollider>();
+
+	pCollision->tf->m_vPos = _vPos;
+
+	for (auto iter : m_listCollider3D)
+	{
+		if (iter->go != pCollision )
+		{
+			if (IsCollision(iter, Collider))
+				listCollision.push_back(iter->go);
+		}
+	}
+	pCollision->Destroy();
+
+	return listCollision;
+}
+
 list<CGameObject *>  CObjectManager::RayCast(Vector3 _vPos, Vector3 _vDir, float _fDist)
 {
 	CollisionInfo info;

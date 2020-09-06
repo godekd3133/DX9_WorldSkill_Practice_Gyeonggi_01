@@ -25,11 +25,11 @@ void CMainGame::Init()
 //		AddMesh("PLAYER_DEAD", "Player/Animation/Dead/Dead", "Player",36);
 		AddMesh("PLAYER_ATTACK01", "Player/Animation/Attack01/Attack01", "Player", 16);
 		AddMesh("PLAYER_ATTACK02", "Player/Animation/Attack02/Attack02", "Player", 16);
-	//	AddMesh("PLAYER_ATTACK03", "Player/Animation/Attack03/Attack03", "Player", 24);
-	//	AddMesh("PLAYER_ATTACK04", "Player/Animation/Attack04/Attack04", "Player", 28);
-	//	AddMesh("PLAYER_ATTACK05", "Player/Animation/Attack05/Attack05", "Player", 51);
-	//	AddMesh("PLAYER_ATTACK06", "Player/Animation/Attack06/Attack06", "Player", 31);
-	//	AddMesh("PLAYER_ATTACK07", "Player/Animation/Attack07/Attack07", "Player", 32);
+		AddMesh("PLAYER_ATTACK03", "Player/Animation/Attack03/Attack03", "Player", 24);
+		AddMesh("PLAYER_ATTACK04", "Player/Animation/Attack04/Attack04", "Player", 28);
+		AddMesh("PLAYER_ATTACK05", "Player/Animation/Attack05/Attack05", "Player", 51);
+		AddMesh("PLAYER_ATTACK06", "Player/Animation/Attack06/Attack06", "Player", 31);
+		AddMesh("PLAYER_ATTACK07", "Player/Animation/Attack07/Attack07", "Player", 32);
 
 
 		AddMesh("ENEMY01_IDLE", "Enemy01/Animation/Idle/Idle", "Enemy01", 1);
@@ -41,6 +41,11 @@ void CMainGame::Init()
 		AddSprite("MAP_STAGE01_COLISIONMAP", "Map/Stage01/NormalMap copy");
 		AddSprite("MAP_STAGE01_MINIMAP", "Map/Stage01/NormalMap");
 		AddSprite("MAP_STAGE01_PLAYER", "Map/Stage01/Player");
+
+
+		AddSprite("EFFECT_PLAYERATTACK01", "Effect/PlayerAttack01/PlayerAttack01", 5);
+		AddSprite("EFFECT_PLAYERATTACK02", "Effect/PlayerAttack02/PlayerAttack02", 5);
+		AddSprite("EFFECT_PLAYERSKILL02", "Effect/PlayerSkill02/PlayerSkill02", 7);
 	});
 
 	SCENE.AddScene("S_TITLE", new CTitleScene());
