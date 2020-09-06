@@ -16,7 +16,7 @@ public:
 	virtual void OnDestroy() PURE;
 	virtual void OnCollision(CGameObject * _pObject) PURE;
 
-
+	bool LerpColor(Color _Target, float _Speed);
 public:
 	Color m_Color;
 	SortingLayer m_SortingLayer;

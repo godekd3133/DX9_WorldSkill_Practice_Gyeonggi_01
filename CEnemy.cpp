@@ -88,6 +88,17 @@ void CEnemy::OnCollision(CGameObject * _pObject)
 
 void CEnemy::OnHit(int _Damage)
 {
+	m_iCurHp -= _Damage;
+
+	if (m_iCurHp <= 0.f)
+		go->Destroy();
+
+	gc<CMeshRenderer>()->sa->Add([=]()->bool {
+		return gc<CMeshRenderer>()->LerpColor(Color(1.f, 0.f, 0.f, 1.f), 24.f * dt);
+	});
+	gc<CMeshRenderer>()->sa->Add([=]()->bool {
+		return gc<CMeshRenderer>()->LerpColor(Color(1.f, 1.f, 1.f, 1.f), 24.f * dt);
+	});
 }
 
 bool CEnemy::Correction(Vector3 _vDir)

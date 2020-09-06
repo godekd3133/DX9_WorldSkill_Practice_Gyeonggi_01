@@ -16,17 +16,27 @@ public:
 	virtual void OnCollision(CGameObject * _pObject) override;
 
 	void Move(Vector3 _vDirection, float _MoveSpeed);
+
+private:
+
 	float Direction = 0.f;
+	float m_fAttackDamage = 200.f;
+
+public:
 	void OnLanding();
 	bool TriggerAttackCombo = false;
 	bool ChargingSkill01 = false;
 	float ChargingTime = 0.f;
 	int ZoomDir = 1;
 
+	Vector3 m_vMoveDirection = Vector3(0,0,0);
+	
 	CStageMap * m_pMap;
 	CGameObject * HandEffect = nullptr;
 	CGameObject * Skill01Prepare = nullptr;
 
 	void OnStopSkill01Rush();
+
+	void OnAttack01_Event();
 };
 

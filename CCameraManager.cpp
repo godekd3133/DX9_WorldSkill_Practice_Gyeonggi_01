@@ -45,8 +45,8 @@ void CCameraManager::Update()
 		D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_vRotation.x));
 		D3DXVec3TransformNormal(&m_vFoward, &Vector3(0,0,1), &(matRotX* matRotY));
 		
-		D3DXVec3TransformNormal(&Offset, &m_vOffset, &(matRotY));
-
+		D3DXVec3Tr
+			 1111
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Foward], &Vector3(0, 0, 1), &(matRotY));
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Back], &Vector3(0, 0, -1), &(matRotY));
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Right], &Vector3(1, 0, 0), &(matRotY));

@@ -25,6 +25,10 @@ void CPlayerMovement::Awake()
 
 
 	gc<CAnimator3D>()->SetCurrentState("IDLE");
+
+
+	gc<CAnimator3D>()->GetState("ATTACK01")->AddEvent(1, [=]() {OnAttack01_Event();});
+	gc<CAnimator3D>()->GetState("ATTACK01")->AddEvent(11, [=]() {OnAttack01_Event(); });
 }
 
 void CPlayerMovement::Start()
@@ -40,7 +44,6 @@ void CPlayerMovement::Update()
 	
 	Vector3 MoveDirection = Vector3(0, 0, 0);
 
-
 	if (INPUT.KeyPress('W'))
 		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Foward];
 	else if (INPUT.KeyPress('S'))
@@ -49,6 +52,8 @@ void CPlayerMovement::Update()
 		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Left];
 	else if (INPUT.KeyPress('D'))
 		MoveDirection += CAMERA.m_vCharactorAxis[Axis::Right];
+	
+
 
 	if (INPUT.KeyDown(VK_SPACE))
 	{
@@ -90,9 +95,18 @@ void CPlayerMovement::Update()
 	}
 	else if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK01")
 	{
+		if (bAttack == true)
+			TriggerAttackCombo = true;
+
 		tf->SetRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]),0)); 
 		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
 		{
+			//if (TriggerAttackCombo == true)
+			//{
+			//	TriggerAttackCombo = false;
+			//	gc<CAnimator3D>()->SetCurrentState("ATTACK02");
+			//}
+			//else 
 			gc<CAnimator3D>()->SetCurrentState("IDLE");
 		}
 
@@ -285,4 +299,21 @@ void CPlayerMovement::OnStopSkill01Rush()
 {
 	HandEffect->Destroy();
 	HandEffect = nullptr;
+}
+
+void CPlayerMovement::OnAttack01_Event()
+{
+	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
+	float fDistance = 200;
+	float fFinalDamage = m_fAttackDamage * my::RandRange(90,110)/ 100.f;
+
+
+
+
+	list<CGameObject *> listHitObject = OBJ.RayCast(this->tf->m_vPos + Vector3(0, 50, 0), vDir, Tag::Enemy,fDistance);
+
+	for (auto iter : listHitObject)
+	{
+		iter->gc<CEnemy>()->OnHit((int)fFinalDamage);
+	}
 }
