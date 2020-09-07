@@ -297,7 +297,6 @@
     <ClCompile Include="CEffect.cpp">
       <Filter>002 : GAME\Component\Effect</Filter>
     </ClCompile>
-    <ClCompile Include="CBullet.cpp" />
     <ClCompile Include="CStageMap.cpp" />
     <ClCompile Include="CEnemy01.cpp">
       <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
@@ -312,6 +311,8 @@
     <ClCompile Include="CEnemy02.cpp">
       <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
     </ClCompile>
+    <ClCompile Include="CPlayerUI.cpp" />
+    <ClCompile Include="CDamageFont.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -422,7 +423,6 @@
     <ClInclude Include="CEffect.h">
       <Filter>002 : GAME\Component\Effect</Filter>
     </ClInclude>
-    <ClInclude Include="CBullet.h" />
     <ClInclude Include="CStageMap.h" />
     <ClInclude Include="CEnemy01.h">
       <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
@@ -437,6 +437,8 @@
     <ClInclude Include="CEnemy03.h">
       <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
     </ClInclude>
+    <ClInclude Include="CPlayerUI.h" />
+    <ClInclude Include="CDamageFont.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

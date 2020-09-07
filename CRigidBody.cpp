@@ -42,12 +42,13 @@ void CRigidBody::LateUpdate()
 
 
 	CollisionInfo info;
-	if (vMovePos.y < FloorY)
+	if (vMovePos.y < FloorY + 1)
 	{
 		if (m_vVelocity.y < 0.f)
 		{
 			m_vVelocity.x = 0.f;
-			m_vVelocity.z = 0.f;			vMovePos.y = FloorY;
+			m_vVelocity.z = 0.f;			
+			vMovePos.y = FloorY;
 			for (auto iter : OnLanding)
 				iter(); 
 			m_vVelocity.y = 0.f;

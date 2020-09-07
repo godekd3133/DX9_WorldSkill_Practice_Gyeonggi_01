@@ -18,10 +18,10 @@ public:
 	void Move(Vector3 _vDirection, float _MoveSpeed);
 
 private:
-
+	int Jump = 0;
 	float Direction = 0.f;
 	float m_fAttackDamage = 200.f;
-
+	float m_fDistance = 1400.f;
 public:
 	void OnLanding();
 	bool TriggerAttackCombo = false;
@@ -34,7 +34,7 @@ public:
 	CStageMap * m_pMap;
 	CGameObject * HandEffect = nullptr;
 	CGameObject * Skill01Prepare = nullptr;
-
+	CGameObject * m_pShadow = nullptr;
 	void OnStopSkill01Rush();
 
 	void OnAttack01_Event();

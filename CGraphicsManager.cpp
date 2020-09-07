@@ -136,7 +136,14 @@ void CGraphicsManager::Render_Sprite(CSprite * _pSprite, Matrix _matWorld, Vecto
 	{
 		m_pSprite->SetWorldViewLH(nullptr, &CAMERA.m_matView);
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_BILLBOARD | D3DXSPRITE_OBJECTSPACE); 
-		//g_Device->SetRenderState(D3DRS_ZENABLE, tru);
+
+		
+		g_Device->SetRenderState(D3DRS_ZENABLE, false);
+	}
+	else if (_Mode == RenderMode::RM_BillboardNonUI)
+	{
+		m_pSprite->SetWorldViewLH(nullptr, &CAMERA.m_matView);
+		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_BILLBOARD | D3DXSPRITE_OBJECTSPACE);
 	}
 
 	m_pSprite->SetTransform(&_matWorld);

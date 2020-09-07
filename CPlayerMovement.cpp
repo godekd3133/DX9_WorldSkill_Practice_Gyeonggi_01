@@ -1,6 +1,5 @@
 #include "DXUT.h"
 #include "CPlayerMovement.h"
-#include "CBullet.h"
 CPlayerMovement::CPlayerMovement()
 {
 }
@@ -38,7 +37,12 @@ void CPlayerMovement::Awake()
 
 void CPlayerMovement::Start()
 {
-	CAMERA.Follow(go,500.f);
+	CAMERA.Follow(go,1200.f);
+
+
+	m_pShadow = OBJ.Create();
+	m_pShadow->ac<CSpriteRenderer>()->Init(SPRITE("UI_SHADOW"), SortingLayer::SR_UI, RenderMode::RM_Default);
+	m_pShadow->tf->SetRotation(Vector3(90, 0, 0));
 }
 
 void CPlayerMovement::Update()
@@ -61,22 +65,28 @@ void CPlayerMovement::Update()
 	
 
 
-	if (INPUT.KeyDown(VK_SPACE))
+	if (INPUT.KeyDown(VK_SPACE) && Jump == 0)
 	{
-		gc<CRigidBody>()->AddForce(Vector3(0, 2000, 0));
+		if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "IDLE" ||
+			gc<CAnimator3D>()->GetCurrentState()->m_Name == "RUN")
+		{
+			gc<CRigidBody>()->AddForce(Vector3(0, 2000, 0));
+			Jump++;
+		}
+
 	}
 	if (INPUT.KeyDown(VK_LBUTTON))
 		bAttack =true;
-	if (INPUT.KeyDown('Q'))
+	if (INPUT.KeyDown('Q') && Jump == 0)
 		bSkill02 = true;
-	if (INPUT.KeyDown(VK_LSHIFT))
+	if (INPUT.KeyDown(VK_LSHIFT) && Jump == 0)
 		bSkill01 = true;
 
 	if (MoveDirection != Vector3(0, 0, 0))
 		bMove = true;
 
-	CAMERA.m_fDistance = Lerp(CAMERA.m_fDistance, 600.f, 6 * dt);
-	CAMERA.m_vOffset = Lerp(CAMERA.m_vOffset, Vector3(0.f, 0.f, 0.f), 6 * dt);
+	CAMERA.m_fDistance = Lerp(CAMERA.m_fDistance, m_fDistance, 6 * dt);
+	CAMERA.m_vOffset = Lerp(CAMERA.m_vOffset, Vector3(0.f, 0.f, 600.f), 6 * dt);
 
 	if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "IDLE")
 	{
@@ -117,7 +127,6 @@ void CPlayerMovement::Update()
 		}
 		if (bSkill01)
 		{
-
 			go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
 			gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 2000) + (Vector3(0, 1, 0) * 1000));
 			gc<CAnimator3D>()->SetCurrentState("SKILL01");
@@ -178,7 +187,10 @@ void CPlayerMovement::Update()
 	}
 
 
+	m_pShadow->tf->m_vPos = Vector3(tf->m_vPos.x, GAME.m_pMap->GetFloorY(tf->m_vPos) + 1, tf->m_vPos.z);
 
+	float scale = 100.f / max(abs(GAME.m_pMap->GetFloorY(tf->m_vPos) - tf->m_vPos.y), 100);
+	m_pShadow->tf->m_vScale = Vector3(scale, scale, 1.f);
 }
 
 void CPlayerMovement::LateUpdate()
@@ -187,6 +199,7 @@ void CPlayerMovement::LateUpdate()
 
 void CPlayerMovement::OnDestroy()
 {
+	m_pShadow->Destroy();
 }
 
 void CPlayerMovement::OnCollision(CGameObject * _pObject)
@@ -303,61 +316,7 @@ void CPlayerMovement::Move(Vector3 _vDirection, float _MoveSpeed)
 
 void CPlayerMovement::OnLanding()
 {
-	//EFFECT(Vector3(0, 0, 0), "dsad");
-	/*string CurrentAnimationState = gc<CAnimator3D>()->GetCurrentState()->m_Name;
-	float NormalizeTime = gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime();
-
-	if (CurrentAnimationState == "SKILL02")
-	{
-		CGameObject *  GROUND01 = OBJ.Create();
-		GROUND01->tf->m_vScale = Vector3(0.5f, 0.5f, 0.5f);
-		GROUND01->ac<CEffect>()->Init("EFFECT_SKILL02_GROUND01", 0.08f,Vector3( tf->m_vPos.x + Direction * 50, -100.f, tf->m_vPos.z));
-		GROUND01->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f, 0.f);
-
-		CGameObject *  GROUND02 = OBJ.Create();
-		GROUND02->tf->m_vScale = Vector3(0.5f, 0.5f, 0.5f);
-		GROUND02->ac<CEffect>()->Init("EFFECT_SKILL02_GROUND02", 0.08f, Vector3(tf->m_vPos.x + Direction * 50, -100.f, tf->m_vPos.z));
-		GROUND02->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f, 0.f);
-
-
-		CGameObject *  Effecter = OBJ.Create();
-		Effecter->tf->sa->Add([=]()->bool
-		{
-			CGameObject *  Effect = OBJ.Create();
-			Effect->tf->m_vScale = Vector3(0.75f, -0.8f, 0.5f);
-			Effect->ac<CEffect>()->Init("EFFECT_SKILL02_SPLASH", 0.04f, tf->m_vPos + Vector3(100 *	Direction, -50, 0));
-			Effect->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f, 1.f);
-			return false;
-		}
-		);
-		Effecter->tf->sa->Delay(0.15f);
-		Effecter->tf->sa->Add([=]()->bool
-		{
-			CGameObject *  Effect = OBJ.Create();
-			Effect->tf->m_vScale = Vector3(0.75f, -0.8f, 0.5f);
-			Effect->ac<CEffect>()->Init("EFFECT_SKILL02_SPLASH", 0.04f, tf->m_vPos + Vector3(220 * Direction, -50, 0));
-			Effect->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f,1.f);
-			return false;
-		}
-		);
-		Effecter->tf->sa->Delay(0.15f);
-		Effecter->tf->sa->Add([=]()->bool
-		{
-			CGameObject *  Effect = OBJ.Create();
-			Effect->tf->m_vScale = Vector3(0.75f, -0.8f, 0.5f);
-			Effect->ac<CEffect>()->Init("EFFECT_SKILL02_SPLASH", 0.04f, tf->m_vPos + Vector3(340 * Direction, -50, 0));
-			Effect->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f,1.f);
-			return false;
-		}
-		);
-
-		Effecter->tf->sa->Add([=]()->bool
-		{
-			Effecter->Destroy();
-			return false;
-		}
-		);
-	}*/
+	Jump = 0;
 }
 
 void CPlayerMovement::OnStopSkill01Rush()
@@ -372,16 +331,20 @@ void CPlayerMovement::OnAttack01_Event()
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90,110)/ 100.f;
 	
-	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 750;
-	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 750;
-	go->gc<CRigidBody>()->m_vImpulse = Vector3(10.f, 0.f, 10.f);
+	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 1500;
+	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 1500;
+	go->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
 
 	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(this->tf->m_vPos + vDir * 50, 150, Tag::Enemy);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
 
 	for (auto iter : listHitObject)
 	{
-		iter->gc<CEnemy>()->OnHit((int)fFinalDamage);
-		EFFECT(iter->tf->m_vPos + Vector3(0, 100,0), Vector3(0.25f,0.25f,0.25f), "EFFECT_PLAYERATTACK01");
+		if (iter->gc<CEnemy>()->m_bIsDead == false)
+		{
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 500 + vDir * 4000;
+			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
+			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK01");
+		}
 	}
 }
 
@@ -390,24 +353,28 @@ void CPlayerMovement::OnAttack02_Event()
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
-	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 1400;
-	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 1400;
-	go->gc<CRigidBody>()->m_vImpulse = Vector3(10.f, 0.f, 10.f);
 
-
+	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2000;
+	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z *2000;
+	go->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
 
 
 	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(this->tf->m_vPos + vDir * 50, 150, Tag::Enemy);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
 
 	for (auto iter : listHitObject)
 	{
-		iter->gc<CEnemy>()->OnHit((int)fFinalDamage);
-		EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
+		if (iter->gc<CEnemy>()->m_bIsDead == false)
+		{
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 500 + vDir * 500  + my::RandRange(5, 9);
+			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
+			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
+		}
 	}
 }
 
 void CPlayerMovement::OnSkill01_Event()
 {
+	gc<CRigidBody>()->m_vVelocity = Vector3(0, 0, 0);
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
@@ -416,9 +383,12 @@ void CPlayerMovement::OnSkill01_Event()
 
 	for (auto iter : listHitObject)
 	{
-		iter->gc<CEnemy>()->OnHit((int)fFinalDamage);
-		EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
-
+		if (iter->gc<CEnemy>()->m_bIsDead == false)
+		{
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) *400 + my::GetDirection(tf->m_vPos, iter->tf->m_vPos) * 2000;
+			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
+			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
+		}
 	}
 	CGameObject * Effect = OBJ.Create();
 	Effect->tf->m_vScale = Vector3(0.5f, 0.5f, 0.5f);
@@ -430,6 +400,7 @@ void CPlayerMovement::OnSkill01_Event()
 
 void CPlayerMovement::OnSkill02_Event()
 {
+	gc<CRigidBody>()->m_vVelocity = Vector3(0, 0, 0);
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
@@ -441,9 +412,14 @@ void CPlayerMovement::OnSkill02_Event()
 
 	for (auto iter : listHitObject)
 	{
-		iter->gc<CEnemy>()->OnHit((int)fFinalDamage);
-		EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
+		if (iter->gc<CEnemy>()->m_bIsDead == false)
+		{
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 900 + my::GetDirection(tf->m_vPos, iter->tf->m_vPos) * 5000;
 
+
+			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
+			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
+		}
 	}
 	CGameObject * Effect = OBJ.Create(); 
 	Effect->tf->m_vScale = Vector3(0.5f,0.5f,0.5f);

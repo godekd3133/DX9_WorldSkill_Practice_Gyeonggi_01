@@ -27,10 +27,10 @@ void CCameraManager::Update()
 	Vector3 Offset = m_vOffset;
 	if (m_fCameraTime > 0.f)
 	{
-		m_fCameraTime -= dt;
+		m_fCameraTime -= udt;
 		ShakeCamera();
 	}
-	m_vShakePos = Lerp(m_vShakePos, Vector3(0,0,0), dt * 8);
+	m_vShakePos = Lerp(m_vShakePos, Vector3(0,0,0), udt * 8);
 
 	if (m_pFollowObject)
 	{
@@ -44,6 +44,7 @@ void CCameraManager::Update()
 		D3DXMatrixRotationY(&matRotY, D3DXToRadian(m_vRotation.y));
 		D3DXMatrixRotationX(&matRotX, D3DXToRadian(m_vRotation.x));
 		D3DXVec3TransformNormal(&m_vFoward, &Vector3(0,0,1), &(matRotX* matRotY));
+		D3DXVec3TransformCoord(&Offset, &Offset, &(matRotX* matRotY));
 		
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Foward], &Vector3(0, 0, 1), &(matRotY));
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::Back], &Vector3(0, 0, -1), &(matRotY));
@@ -52,13 +53,13 @@ void CCameraManager::Update()
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::LF], &Vector3(-0.5, 0, 0.5), &(matRotY));
 		D3DXVec3TransformNormal(&m_vCharactorAxis[Axis::RF], &Vector3(0.5, 0, 0.5), &(matRotY));
 
-		m_vPos = m_vLookAt - m_vFoward * m_fDistance;
+		m_vPos = m_vLookAt - m_vFoward * m_fDistance + Offset;
 
 		//m_vLookAt.x = Lerp(m_vLookAt.x, m_pFollowObject->tf->m_vPos.x, dt * 2);
 		//m_vPos = m_vLookAt + Vector3(0,80,-400);
 	}
 
-	D3DXMatrixLookAtLH(&m_matView, &(m_vPos + m_vShakePos + Offset), &(m_vLookAt + m_vShakePos + Offset), &m_vUp);
+	D3DXMatrixLookAtLH(&m_matView, &(m_vPos + m_vShakePos ), &(m_vLookAt + m_vShakePos ), &m_vUp);
 	D3DXMatrixPerspectiveFovLH(&m_matProj, D3DX_PI / 4.f, 16.f / 9.f, 1.f, 1000000);
 }
 

@@ -3,7 +3,7 @@
 
 enum class Enemy_State
 {
-	IDLE, CHASE, ATTACK 
+	IDLE, CHASE, ATTACK_PREPARE ,ATTACK
 };
 
 class CEnemy :
@@ -26,16 +26,22 @@ public:
 	int m_iMaxHp;
 	bool CanMove = false;
 	int m_iDamage;
+	bool m_bIsDead = false;
 	float m_fMoveSpeed;
 	int m_Size;
 
-	void OnHit(int _Damage);
+	bool m_bStance = false;
+	void OnHit(int _Damage, Vector3 _vDir);
 	bool Correction(Vector3 _vDir);
 	bool Correction_Enemy(Vector3 _vDir);
-
-	void Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed);
+	float m_fHeight = 0.f;
+	void Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _fHeight);
 	void Move(Vector3 _vDirection);
-	Enemy_State m_State;
 	CGameObject * m_pPlayer= nullptr;
+
+	CGameObject * m_pHpGague  = nullptr;
+	CGameObject * m_pHpGagueYellow = nullptr;
+	CGameObject * m_pShadow = nullptr;
+
 };
 
