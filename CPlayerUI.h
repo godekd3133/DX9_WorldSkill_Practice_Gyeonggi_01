@@ -29,5 +29,12 @@ public:
 
 	CGameObject * m_pExpBar;
 	CGameObject * m_pExpBar_Bg;
+
+	CGameObject * m_pSkill01;
+	CGameObject * m_pSkill02;
+	
+	CGameObject * m_pQuest;
+	CGameObject * m_pQuestText;
+
 };
 

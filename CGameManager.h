@@ -31,7 +31,15 @@ public:
 
 	int SkillPoint = 10;
 	int SkillLevel[8] = { 0, };
-
+	int Quest=0;
+	int Count = 0;
+	string QuestString[4] =
+	{
+		"적을 100 마리 처치하세요. [ %d / 100 ]",
+		"보스를 처치하세요. [ %d / 1 ]",
+		"적을 100 마리 처치하세요. [ %d / 100 ]",
+		"보스를 처치하세요. [ %d / 1 ]"
+	};
 	string SkillName[8] = {
 		"무술 숙련",
 		"아크로바틱 크래쉬",

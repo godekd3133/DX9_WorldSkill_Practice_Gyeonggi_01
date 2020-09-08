@@ -30,6 +30,39 @@ void CPlayerUI::Awake()
 	PlayerStatusBG03->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0, 0);
 	PlayerStatusBG03->tf->m_vPos = Vector3(50, 0, 0);
 
+	CGameObject * Skill01BG = OBJ.Create("UI", Tag::UI);
+	Skill01BG->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON_BG"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	Skill01BG->tf->m_vPos = Vector3(1500, 840, 0);
+
+	CGameObject * Skill02BG = OBJ.Create("UI", Tag::UI);
+	Skill02BG->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON_BG"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	Skill02BG->tf->m_vPos = Vector3(1680, 840, 0);
+
+	CGameObject * Skill01CoolTime = OBJ.Create("UI", Tag::UI);
+	Skill01CoolTime->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON_COOLTIME"), SortingLayer::SR_UI, RenderMode::RM_UI, Color(1, 1, 1, 1.f));
+	Skill01CoolTime->tf->m_vPos = Vector3(1500, 840, 0);
+
+	CGameObject * Skill02CoolTime = OBJ.Create("UI", Tag::UI);
+	Skill02CoolTime->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON_COOLTIME"), SortingLayer::SR_UI, RenderMode::RM_UI, Color(1, 1, 1, 1.f));
+	Skill02CoolTime->tf->m_vPos = Vector3(1680, 840, 0);
+
+
+	m_pSkill01 = OBJ.Create("UI", Tag::UI);
+	m_pSkill01->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON01"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	m_pSkill01->tf->m_vPos = Vector3(1500, 840, 0);
+	
+	m_pSkill02 = OBJ.Create("UI", Tag::UI);
+	m_pSkill02->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON02"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	m_pSkill02->tf->m_vPos = Vector3(1680, 840, 0);
+
+	CGameObject * Skill01Key = OBJ.Create("UI", Tag::UI);
+	Skill01Key->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON01_KEY"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	Skill01Key->tf->m_vPos = Vector3(1500, 915, 0);
+
+	CGameObject * Skill02Key = OBJ.Create("UI", Tag::UI);
+	Skill02Key->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON02_KEY"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	Skill02Key->tf->m_vPos = Vector3(1690, 915, 0);
+
 	m_pHpBar_Bg = OBJ.Create("UI", Tag::UI);
 	m_pHpBar_Bg->ac<CSpriteRenderer>()->Init(SPRITE("UI_PLAYERSTATUS_HPBAR_BG"), SortingLayer::SR_UI, RenderMode::RM_UI);
 	m_pHpBar_Bg->tf->m_vPos = Vector3(450, 120, 0);
@@ -49,6 +82,15 @@ void CPlayerUI::Awake()
 	m_pExpBar = OBJ.Create("UI", Tag::UI);
 	m_pExpBar->ac<CSpriteRenderer>()->Init(SPRITE("UI_PLAYERSTATUS_EXPBAR"), SortingLayer::SR_UI, RenderMode::RM_UI);
 	m_pExpBar->tf->m_vPos = Vector3(430,150, 0);
+
+	m_pQuest = OBJ.Create("UI", Tag::UI);
+	m_pQuest->ac<CSpriteRenderer>()->Init(SPRITE("UI_QUEST"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	m_pQuest->tf->m_vPos = Vector3(1753, 161, 0);
+
+	m_pQuestText = OBJ.Create();
+	m_pQuestText->ac<CText>()->Init("", SortingLayer::SR_UI, RenderMode::RM_UI, Color(1, 1, 1, 1));
+	m_pQuestText->tf->m_vPos = Vector3(1530, 120, 0);
+	m_pQuestText->tf->m_vScale = Vector3(0.4f, 0.4f, 0.4f);
 
 	m_pLevelText = OBJ.Create();
 	m_pLevelText->ac<CText>()->Init("", SortingLayer::SR_UI, RenderMode::RM_UI, Color(1,1,0
@@ -81,6 +123,26 @@ void CPlayerUI::Update()
 
 	m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurExp / (float)GAME.CurExp, 1.f), dt  * 2.f);
 	m_pLevelText->gc<CText>()->m_Text = "Lv. " + to_string(GAME.Level);
+
+	char str[100];
+	sprintf(str, GAME.QuestString[GAME.Quest].c_str(), GAME.Count);
+	m_pQuestText->gc<CText>()->m_Text = str;
+
+
+	if (GAME.Skill02Timer <= GAME.Skill02CoolTime)
+		GAME.Skill02Timer += dt;
+	
+	if (GAME.SkillLevel[3] > 0)
+	{
+		if (GAME.Skill01Timer <= GAME.Skill01CoolTime)
+			GAME.Skill01Timer += dt;
+		m_pSkill01->gc<CSpriteRenderer>()->m_vFillAmount = Vector2(1.f,GAME.Skill01Timer / GAME.Skill01CoolTime);
+
+	}
+	else 
+		m_pSkill01->gc<CSpriteRenderer>()->m_vFillAmount = Vector2(1.f,0.f);
+
+	m_pSkill02->gc<CSpriteRenderer>()->m_vFillAmount = Vector2(1.f,GAME.Skill02Timer / GAME.Skill02CoolTime);
 }
 
 void CPlayerUI::LateUpdate()

@@ -29,6 +29,26 @@ void CStage01::Init()
 
 void CStage01::Update()
 {
+
+	if (GAME.Quest == 0)
+	{
+		if (GAME.Count >= 100)
+		{
+			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
+			pEnemy->ac<CBoss01>()->Init(Vector3(-2000, 10000, 2000));
+			GAME.Quest++;
+			GAME.Count = 0;
+		}
+	}
+	if (GAME.Quest == 1)
+	{
+		if (GAME.Count >= 1)
+		{
+			GAME.Quest++;
+			GAME.Count = 0;
+			SCENE.ChangeScene("S_STAGECLEAR");
+		}
+	}
 	if (INPUT.KeyDown('1'))
 	{
 		for (int i = 0; i < 10; i++)
@@ -64,6 +84,14 @@ void CStage01::Update()
 			pEnemy->ac<CEnemy04>()->Init(Vector3(-2000, 10000, 2000));
 		}
 	}
+
+	if (INPUT.KeyDown('5'))
+	{
+	}
+	if (INPUT.KeyDown('6'))
+	{
+	}
+
 }
 
 void CStage01::Render()

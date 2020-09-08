@@ -1,28 +1,29 @@
 #include "DXUT.h"
-#include "CEnemy03.h"
+#include "CBoss01.h"
 
 
-CEnemy03::CEnemy03()
+CBoss01::CBoss01()
 {
 }
 
 
-CEnemy03::~CEnemy03()
+CBoss01::~CBoss01()
 {
 }
 
-void CEnemy03::Awake()
+void CBoss01::Awake()
 {
 }
 
-void CEnemy03::Start()
+void CBoss01::Start()
 {
 	m_pPlayer = OBJ.Find(Tag::Player);
 	m_pEnemy = gc<CEnemy>();
 	m_State = Enemy_State::IDLE;
+
 }
 
-void CEnemy03::Update()
+void CBoss01::Update()
 {
 	if (gc<CAnimator3D>()->GetCurrentState()->m_Name != "DEAD")
 	{
@@ -57,7 +58,7 @@ void CEnemy03::Update()
 				if (m_fAttackTime > m_fAttackDelay)
 				{
 					m_fAttackTime = 0.f;
-					gc<CAnimator3D>()->SetCurrentState("ATTACK");
+					gc<CAnimator3D>()->SetCurrentState("ATTACK0" + to_string(my::RandRange(1,5)));
 					m_pEnemy->m_bStance = true;
 					m_State = Enemy_State::ATTACK;
 				}
@@ -67,7 +68,10 @@ void CEnemy03::Update()
 			break;
 		case Enemy_State::ATTACK:
 		{
-			if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK")
+			if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK01" || 
+				gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK02" || 
+				gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK03" || 
+				gc<CAnimator3D>()->GetCurrentState()->m_Name == "ATTACK04")
 			{
 				if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
 				{
@@ -85,35 +89,39 @@ void CEnemy03::Update()
 		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
 		{
 			sa->Delay(0.5f);
-			sa->Add([=]()->bool {go->Destroy(); GAME.Count++;  return false; });
-			
+			sa->Add([=]()->bool {go->Destroy(); GAME.Count++; return false; });
+
 		}
 	}
+
 }
 
-void CEnemy03::LateUpdate()
+void CBoss01::LateUpdate()
 {
 }
 
-void CEnemy03::OnDestroy()
+void CBoss01::OnDestroy()
 {
 }
 
-void CEnemy03::OnCollision(CGameObject * _pObject)
+void CBoss01::OnCollision(CGameObject * _pObject)
 {
 }
 
-void CEnemy03::Init(Vector3 _vPos)
+void CBoss01::Init(Vector3 _vPos)
 {
-	tf->m_vScale = Vector3(1.5f, 1.5f, 1.5f);
+	tf->m_vScale = Vector3(150.f, 150.f, 150.f);
 	tf->m_vPos = _vPos;
-	ac<CEnemy>()->Init(1000, 30, 100, 900, 300);
+	ac<CEnemy>()->Init(1000, 30, 100, 1000, 200,true);
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
-	ac<CAnimator3D>()->AddState("ATTACK", "ENEMY03_ATTACK", 30.F / 1000.F, FALSE);
-	gc<CAnimator3D>()->AddState("DEAD", "ENEMY03_DEAD", 30.F / 1000.F, FALSE);
-	gc<CAnimator3D>()->AddState("HIT", "ENEMY03_HIT", 30.F / 1000.F, FALSE);
-	gc<CAnimator3D>()->AddState("IDLE", "ENEMY03_IDLE", 30.F / 1000.F);
-	gc<CAnimator3D>()->AddState("RUN", "ENEMY03_RUN", 30.F / 1000.F);
+	ac<CAnimator3D>()->AddState("ATTACK01", "BOSS01_ATTACK01", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("ATTACK02", "BOSS01_ATTACK02", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("ATTACK03", "BOSS01_ATTACK03", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("ATTACK04", "BOSS01_ATTACK04", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("DEAD", "BOSS01_DEAD", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("HIT",  "BOSS01_HIT", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("IDLE", "BOSS01_IDLE", 30.F / 1000.F);
+	gc<CAnimator3D>()->AddState("RUN",  "BOSS01_RUN", 30.F / 1000.F);
 	gc<CAnimator3D>()->SetCurrentState("IDLE");
 }

@@ -50,7 +50,7 @@ void CPlayerMovement::Update()
 	//Animation Various;
 	bool bMove = false;
 	bool bAttack = false;
-	bool bSkill01 = false;;
+	bool bSkill01 = false;
 	bool bSkill02 = false;
 	Vector3 MoveDirection = Vector3(0, 0, 0);
 
@@ -78,10 +78,14 @@ void CPlayerMovement::Update()
 	if (INPUT.KeyDown(VK_LBUTTON))
 		bAttack =true;
 	if (INPUT.KeyDown('Q') && Jump == 0)
-		bSkill02 = true;
-	if (INPUT.KeyDown(VK_LSHIFT) && Jump == 0)
-		bSkill01 = true;
+	{
 
+			bSkill02 = true;
+	}
+	if (INPUT.KeyDown(VK_LSHIFT) && Jump == 0)
+	{
+			bSkill01 = true;
+	}
 	if (MoveDirection != Vector3(0, 0, 0))
 		bMove = true;
 
@@ -100,17 +104,25 @@ void CPlayerMovement::Update()
 		}
 		if (bSkill01)
 		{
-			go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
-			gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 2000) + (Vector3(0, 1, 0) * 1000));
-			
-
-			gc<CAnimator3D>()->SetCurrentState("SKILL01");
+		//	if (GAME.Skill01Timer >GAME.Skill01CoolTime)
+			{
+			//	GAME.Skill01Timer = 0.f;
+				go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
+				gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 2000) + (Vector3(0, 1, 0) * 1000));
+				gc<CAnimator3D>()->SetCurrentState("SKILL01");
+			}
 		}
 		if (bSkill02)
 		{
-			go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
-			gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 1000) + (Vector3(0, 1, 0) * 2000));
-			gc<CAnimator3D>()->SetCurrentState("SKILL02");
+		//	if (GAME.Skill02Timer > GAME.Skill02CoolTime)
+			{
+			//	GAME.Skill02Timer = 0.f;
+				go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
+				gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 1000) + (Vector3(0, 1, 0) * 2000));
+
+
+				gc<CAnimator3D>()->SetCurrentState("SKILL02");
+			}
 		}
 	}
 	else if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "RUN")
@@ -127,17 +139,25 @@ void CPlayerMovement::Update()
 		}
 		if (bSkill01)
 		{
-			go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
-			gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 2000) + (Vector3(0, 1, 0) * 1000));
-			gc<CAnimator3D>()->SetCurrentState("SKILL01");
+			if (GAME.Skill01Timer >GAME.Skill01CoolTime)
+			{
+				GAME.Skill01Timer = 0.f;	
+				go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
+				gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 2000) + (Vector3(0, 1, 0) * 1000));
+				gc<CAnimator3D>()->SetCurrentState("SKILL01");
+			}
 		}
 		if (bSkill02)
 		{
-			go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
-			gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 1000) + (Vector3(0, 1, 0) * 2000));
+ 			if (GAME.Skill02Timer >GAME.Skill02CoolTime)
+			{
+				GAME.Skill02Timer = 0.f;
+				go->gc<CRigidBody>()->m_vImpulse = Vector3(0.35f, 0.f, 0.35f);
+				gc<CRigidBody>()->m_vVelocity = ((CAMERA.m_vCharactorAxis[Axis::Foward] * 1000) + (Vector3(0, 1, 0) * 2000));
 
 
-			gc<CAnimator3D>()->SetCurrentState("SKILL02");
+				gc<CAnimator3D>()->SetCurrentState("SKILL02");
+			}
 		}
 
 	}
@@ -170,20 +190,22 @@ void CPlayerMovement::Update()
 	
 	else if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "SKILL01")
 	{
-		tf->SetRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]), 0));
-		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
-		{
-			gc<CAnimator3D>()->SetCurrentState("IDLE");
-		}
+	
+			tf->SetRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]), 0));
+			if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
+			{
+				gc<CAnimator3D>()->SetCurrentState("IDLE");
+			}
 	}
 
 	else if (gc<CAnimator3D>()->GetCurrentState()->m_Name == "SKILL02")
 	{
-		tf->SetRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]), 0));
-		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
-		{
-			gc<CAnimator3D>()->SetCurrentState("IDLE");
-		}
+
+			tf->SetRotation(Vector3(0, my::GetDirAngle(CAMERA.m_vCharactorAxis[Axis::Foward]), 0));
+			if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
+			{
+				gc<CAnimator3D>()->SetCurrentState("IDLE");
+			}
 	}
 
 
@@ -331,8 +353,8 @@ void CPlayerMovement::OnAttack01_Event()
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90,110)/ 100.f;
 	
-	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2000;
-	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 2000;
+	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2400;
+	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 2400;
 	go->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
 
 	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(this->tf->m_vPos + vDir * 50, 150, Tag::Enemy);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
@@ -354,8 +376,8 @@ void CPlayerMovement::OnAttack02_Event()
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
 
-	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2400;
-	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z *2400;
+	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2800;
+	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z *2800;
 	go->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
 
 

@@ -31,7 +31,7 @@
     <ProjectGuid>{D3D09108-96D0-4629-88B8-122C0256058C}</ProjectGuid>
     <RootNamespace>EmptyProject</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -394,6 +394,8 @@
     <ClCompile Include="CAnimation3D.cpp" />
     <ClCompile Include="CAnimator2D.cpp" />
     <ClCompile Include="CAnimator3D.cpp" />
+    <ClCompile Include="CBoss01.cpp" />
+    <ClCompile Include="CBoss02.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CDamageFont.cpp" />
@@ -428,6 +430,8 @@
     <ClInclude Include="CAnimation3D.h" />
     <ClInclude Include="CAnimator2D.h" />
     <ClInclude Include="CAnimator3D.h" />
+    <ClInclude Include="CBoss01.h" />
+    <ClInclude Include="CBoss02.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollider.h" />

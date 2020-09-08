@@ -85,7 +85,7 @@ void CEnemy02::Update()
 		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
 		{
 			sa->Delay(0.5f);
-			sa->Add([=]()->bool {go->Destroy(); return false; });
+			sa->Add([=]()->bool {go->Destroy(); GAME.Count++; return false; });
 
 		}
 	} 

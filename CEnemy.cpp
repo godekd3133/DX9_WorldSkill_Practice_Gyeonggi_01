@@ -23,37 +23,7 @@ void CEnemy::Start()
 	m_pShadow->ac<CSpriteRenderer>()->Init(SPRITE("UI_SHADOW"), SortingLayer::SR_UI, RenderMode::RM_Default);
 	m_pShadow->tf->SetRotation(Vector3(90, 0, 0));
 
-	auto HpGaugeBG = OBJ.Create();
-	HpGaugeBG->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR_BG"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
-	go->AddChild(HpGaugeBG);
-	HpGaugeBG->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
-	HpGaugeBG->tf->m_vScale.y = -HpGaugeBG->tf->m_vScale.y;
-	HpGaugeBG->tf->m_vPos = Vector3(0, m_fHeight, 0);
 
-	m_pHpGagueYellow = OBJ.Create();
-	m_pHpGagueYellow->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR_YELLOW"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
-	go->AddChild(m_pHpGagueYellow);
-	m_pHpGagueYellow->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
-	m_pHpGagueYellow->tf->m_vScale.y = -m_pHpGagueYellow->tf->m_vScale.y;
-	m_pHpGagueYellow->tf->m_vPos = Vector3(0, m_fHeight, 0);
-
-	m_pHpGague = OBJ.Create();
-	m_pHpGague->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
-	go->AddChild(m_pHpGague);
-	m_pHpGague->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
-	m_pHpGague->tf->m_vScale.y = -m_pHpGague->tf->m_vScale.y;
-	m_pHpGague->tf->m_vPos = Vector3(0, m_fHeight, 0);
-
-
-
-
-	auto EnemyIcon = OBJ.Create();
-	EnemyIcon->ac<CSpriteRenderer>()->Init(SPRITE("UI_MONSTER_HPICON"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
-	go->AddChild(EnemyIcon);
-	EnemyIcon->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
-	EnemyIcon->tf->m_vScale.y = -EnemyIcon->tf->m_vScale.y;
-	EnemyIcon->tf->m_vPos = Vector3(0, m_fHeight, 0);
-	EnemyIcon->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f + 99.f/77.f, 0.5f);
 
 }
 
@@ -107,7 +77,7 @@ void CEnemy::OnHit(int _Damage, Vector3 _vDir)
 		}
 		else
 		{
-			if (m_bStance == false)
+			if (m_bStance == false && m_bBoss == false)
 			{
 				gc<CAnimator3D>()->SetCurrentState("HIT");
 				gc<CAnimator3D>()->GetCurrentState()->m_bEnable = true;
@@ -157,8 +127,9 @@ bool CEnemy::Correction_Enemy(Vector3 _vDir)
 	return false;
 }
 
-void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _fHeight)
+void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _fHeight,bool _bBoss)
 {
+	m_bBoss = _bBoss;
 	go->m_Tag = Tag::Enemy;
 	ac<CCollider>()->Init(_Size);
 	m_fHeight = _fHeight;
@@ -166,6 +137,57 @@ void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _
 	m_fMoveSpeed = _fMoveSpeed;
 	m_iMaxHp = _MaxHp;
 	m_iDamage = _Damage;
+
+	auto HpGaugeBG = OBJ.Create();
+	if (m_bBoss == false)
+		HpGaugeBG->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR_BG"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+	else
+		HpGaugeBG->ac<CSpriteRenderer>()->Init(SPRITE("UI_BOSSHPBAR_BG"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+
+		go->AddChild(HpGaugeBG);
+	HpGaugeBG->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
+	HpGaugeBG->tf->m_vScale.y = -HpGaugeBG->tf->m_vScale.y;
+	HpGaugeBG->tf->m_vPos = Vector3(0, m_fHeight, 0);
+
+	m_pHpGagueYellow = OBJ.Create();
+	if (m_bBoss == false)
+		m_pHpGagueYellow->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR_YELLOW"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+	else
+		m_pHpGagueYellow->ac<CSpriteRenderer>()->Init(SPRITE("UI_BOSSHPBAR_YELLOW"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+	go->AddChild(m_pHpGagueYellow);
+	m_pHpGagueYellow->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
+	m_pHpGagueYellow->tf->m_vScale.y = -m_pHpGagueYellow->tf->m_vScale.y;
+	m_pHpGagueYellow->tf->m_vPos = Vector3(0, m_fHeight, 0);
+
+	m_pHpGague = OBJ.Create();
+	if(m_bBoss== false)
+	m_pHpGague->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+	else
+		m_pHpGague->ac<CSpriteRenderer>()->Init(SPRITE("UI_BOSSHPBAR"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+
+
+	go->AddChild(m_pHpGague);
+	m_pHpGague->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
+	m_pHpGague->tf->m_vScale.y = -m_pHpGague->tf->m_vScale.y;
+	m_pHpGague->tf->m_vPos = Vector3(0, m_fHeight, 0);
+
+	auto EnemyIcon = OBJ.Create();
+	if (m_bBoss == false)
+	{
+	EnemyIcon->ac<CSpriteRenderer>()->Init(SPRITE("UI_MONSTER_HPICON"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+	EnemyIcon->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f + 99.f / 77.f, 0.5f);
+
+	}
+	else
+	{
+		EnemyIcon->ac<CSpriteRenderer>()->Init(SPRITE("UI_BOSS_HPICON"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+		EnemyIcon->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f + 199.f / 99.f, 0.5f);
+
+	}
+	go->AddChild(EnemyIcon);
+	EnemyIcon->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
+	EnemyIcon->tf->m_vScale.y = -EnemyIcon->tf->m_vScale.y;
+	EnemyIcon->tf->m_vPos = Vector3(0, m_fHeight, 0);
 }
 
 void CEnemy::Move(Vector3 _vDirection)

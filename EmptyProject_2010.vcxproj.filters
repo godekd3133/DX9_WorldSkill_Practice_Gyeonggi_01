@@ -315,6 +315,12 @@
     <ClCompile Include="CDamageFont.cpp" />
     <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CSkillTree.cpp" />
+    <ClCompile Include="CBoss01.cpp">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClCompile>
+    <ClCompile Include="CBoss02.cpp">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -443,6 +449,12 @@
     <ClInclude Include="CDamageFont.h" />
     <ClInclude Include="CButton.h" />
     <ClInclude Include="CSkillTree.h" />
+    <ClInclude Include="CBoss02.h">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClInclude>
+    <ClInclude Include="CBoss01.h">
+      <Filter>002 : GAME\Component\Enemy\Enemys</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">

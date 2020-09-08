@@ -32,7 +32,7 @@ public:
 	Vector3 m_vOffset = Vector3(0, 0, 0);
 	float m_fCameraTime;
 	float m_fShakePower;
-	float m_fSensitivity = 100.f;
+	float m_fSensitivity = 50.f;
 public:
 	void Update();
 	void SetTransform();

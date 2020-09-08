@@ -2,6 +2,8 @@
 #include "CMainGame.h"
 #include "CTitleScene.h"
 #include "CStage01.h"
+#include "CStageClear.h"
+#include "CStage02.h"
 CMainGame::CMainGame()
 {
 
@@ -28,60 +30,60 @@ void CMainGame::Init()
 		AddMesh("PLAYER_RUN", "Player/Animation/Run/Run", "Player", 15);
 		AddMesh("PLAYER_HIT", "Player/Animation/Hit/Hit", "Player", 11);
 		AddMesh("PLAYER_DEAD", "Player/Animation/Dead/Dead", "Player",36);
-		AddMesh("PLAYER_ATTACK01", "Player/Animation/Attack01/Attack01", "Player", 16);
-		AddMesh("PLAYER_ATTACK02", "Player/Animation/Attack02/Attack02", "Player", 16);
-		AddMesh("PLAYER_ATTACK03", "Player/Animation/Attack03/Attack03", "Player", 24);
-		AddMesh("PLAYER_ATTACK04", "Player/Animation/Attack04/Attack04", "Player", 28);
-		AddMesh("PLAYER_ATTACK05", "Player/Animation/Attack05/Attack05", "Player", 51);
-		AddMesh("PLAYER_ATTACK06", "Player/Animation/Attack06/Attack06", "Player", 31);
-		AddMesh("PLAYER_ATTACK07", "Player/Animation/Attack07/Attack07", "Player", 32);
-		
-		//BOSS01
-		AddMesh("BOSS01_ATTACK01", "BOSS01/Animation/Attack01/Attack01", "Boss01",31);
-		AddMesh("BOSS01_ATTACK02", "BOSS01/Animation/Attack02/Attack02", "Boss01", 41);
-		AddMesh("BOSS01_ATTACK03", "BOSS01/Animation/Attack03/Attack03", "Boss01", 41);
-		AddMesh("BOSS01_ATTACK04", "BOSS01/Animation/Attack04/Attack04", "Boss01", 51);
-		AddMesh("BOSS01_DEAD", "BOSS01/Animation/Dead/Dead", "Boss01", 61);
-		AddMesh("BOSS01_HIT", "BOSS01/Animation/Hit/Hit", "Boss01", 16);
-		AddMesh("BOSS01_IDLE", "BOSS01/Animation/Idle/Idle", "Boss01", 31);// 41);
-		AddMesh("BOSS01_RUN", "BOSS01/Animation/Run/Run", "Boss01", 31);
-		
-		//BOSS02
-		AddMesh("BOSS02_ATTACK01", "BOSS02/Animation/Attack01/Attack01", "Boss02", 41);
-		AddMesh("BOSS02_ATTACK02", "BOSS02/Animation/Attack02/Attack02", "Boss02", 38);
-		AddMesh("BOSS02_ATTACK03", "BOSS02/Animation/Attack03/Attack03", "Boss02", 41);
-		AddMesh("BOSS02_DEAD", "BOSS02/Animation/Dead/Dead", "Boss02", 36);
-		AddMesh("BOSS02_HIT", "BOSS02/Animation/Hit/Hit", "Boss02", 11);
-		AddMesh("BOSS02_IDLE", "BOSS02/Animation/Idle/Idle", "Boss02", 61);// 41);
-		AddMesh("BOSS02_RUN", "BOSS02/Animation/Run/Run", "Boss02", 25);
-		
-		//ENEMY01
-		AddMesh("ENEMY01_ATTACK", "Enemy01/Animation/Attack/Attack", "Enemy01", 16);
-		AddMesh("ENEMY01_DEAD", "Enemy01/Animation/Dead/Dead", "Enemy01", 31);
-		AddMesh("ENEMY01_HIT", "Enemy01/Animation/Hit/Hit", "Enemy01", 11);
-		AddMesh("ENEMY01_IDLE", "Enemy01/Animation/Idle/Idle", "Enemy01",41);// 41);
-		AddMesh("ENEMY01_RUN", "Enemy01/Animation/Run/Run", "Enemy01", 16);
-		
-		//ENEMY02
-		AddMesh("ENEMY02_ATTACK", "Enemy02/Animation/Attack01/Attack01", "Enemy02", 36);
-		AddMesh("ENEMY02_DEAD", "Enemy02/Animation/Dead/Dead", "Enemy02", 36);
-		AddMesh("ENEMY02_HIT", "Enemy02/Animation/Hit/Hit", "Enemy02", 11);
-		AddMesh("ENEMY02_IDLE", "Enemy02/Animation/Idle/Idle", "Enemy02", 61);// 41);
-		AddMesh("ENEMY02_RUN", "Enemy02/Animation/Run/Run", "Enemy02", 29);
+		AddMesh("PLAYER_ATTACK01", "Player/Animation/Attack01/Attack01", "Player",16);
+		AddMesh("PLAYER_ATTACK02", "Player/Animation/Attack02/Attack02", "Player",16);
+		AddMesh("PLAYER_ATTACK03", "Player/Animation/Attack03/Attack03", "Player",24);
+		AddMesh("PLAYER_ATTACK04", "Player/Animation/Attack04/Attack04", "Player",28);
+		AddMesh("PLAYER_ATTACK05", "Player/Animation/Attack05/Attack05", "Player",51);
+		AddMesh("PLAYER_ATTACK06", "Player/Animation/Attack06/Attack06", "Player",31);
+		AddMesh("PLAYER_ATTACK07", "Player/Animation/Attack07/Attack07", "Player",32);
+																					
+		//BOSS01																	
+		AddMesh("BOSS01_ATTACK01", "BOSS01/Animation/Attack01/Attack01", "Boss01"	,31);
+		AddMesh("BOSS01_ATTACK02", "BOSS01/Animation/Attack02/Attack02", "Boss01"	,41);
+		AddMesh("BOSS01_ATTACK03", "BOSS01/Animation/Attack03/Attack03", "Boss01"	,41);
+		AddMesh("BOSS01_ATTACK04", "BOSS01/Animation/Attack04/Attack04", "Boss01"	,51);
+		AddMesh("BOSS01_DEAD", "BOSS01/Animation/Dead/Dead", "Boss01"				,61);
+		AddMesh("BOSS01_HIT", "BOSS01/Animation/Hit/Hit", "Boss01"					,16);
+		AddMesh("BOSS01_IDLE", "BOSS01/Animation/Idle/Idle", "Boss01"				,31);// 41);
+		AddMesh("BOSS01_RUN", "BOSS01/Animation/Run/Run", "Boss01"					,31);
+																					
+		//BOSS02																	
+		AddMesh("BOSS02_ATTACK01", "BOSS02/Animation/Attack01/Attack01", "Boss02"	, 41);
+		AddMesh("BOSS02_ATTACK02", "BOSS02/Animation/Attack02/Attack02", "Boss02"	, 38);
+		AddMesh("BOSS02_ATTACK03", "BOSS02/Animation/Attack03/Attack03", "Boss02"	, 41);
+		AddMesh("BOSS02_DEAD", "BOSS02/Animation/Dead/Dead", "Boss02"				, 36);
+		AddMesh("BOSS02_HIT", "BOSS02/Animation/Hit/Hit", "Boss02"					, 11);
+		AddMesh("BOSS02_IDLE", "BOSS02/Animation/Idle/Idle", "Boss02"				, 61);// 41);
+		AddMesh("BOSS02_RUN", "BOSS02/Animation/Run/Run", "Boss02"					, 25);
+																					
+		//ENEMY01																	
+		AddMesh("ENEMY01_ATTACK", "Enemy01/Animation/Attack/Attack", "Enemy01"		, 16);
+		AddMesh("ENEMY01_DEAD", "Enemy01/Animation/Dead/Dead", "Enemy01"			, 31);
+		AddMesh("ENEMY01_HIT", "Enemy01/Animation/Hit/Hit", "Enemy01"				, 11);
+		AddMesh("ENEMY01_IDLE", "Enemy01/Animation/Idle/Idle", "Enemy01"			, 41);// 41);
+		AddMesh("ENEMY01_RUN", "Enemy01/Animation/Run/Run", "Enemy01"				, 16);
+																					
+		//ENEMY02																	
+		AddMesh("ENEMY02_ATTACK", "Enemy02/Animation/Attack01/Attack01", "Enemy02"	, 36);
+		AddMesh("ENEMY02_DEAD", "Enemy02/Animation/Dead/Dead", "Enemy02"			, 36);
+		AddMesh("ENEMY02_HIT", "Enemy02/Animation/Hit/Hit", "Enemy02"				, 11);
+		AddMesh("ENEMY02_IDLE", "Enemy02/Animation/Idle/Idle", "Enemy02"			, 61);// 41);
+		AddMesh("ENEMY02_RUN", "Enemy02/Animation/Run/Run", "Enemy02"				, 29);
 		
 		//ENEMY03
-		AddMesh("ENEMY03_ATTACK", "Enemy03/Animation/Attack/Attack", "Enemy03", 41);
-		AddMesh("ENEMY03_DEAD", "Enemy03/Animation/Dead/Dead", "Enemy03", 82);
-		AddMesh("ENEMY03_HIT", "Enemy03/Animation/Hit/Hit", "Enemy03", 12);
-		AddMesh("ENEMY03_IDLE", "Enemy03/Animation/Idle/Idle", "Enemy03", 61);// 41);
-		AddMesh("ENEMY03_RUN", "Enemy03/Animation/Run/Run", "Enemy03", 31);
-		
-		//ENEMY04
-		AddMesh("ENEMY04_ATTACK", "Enemy04/Animation/Attack/Attack", "Enemy04", 16);
-		AddMesh("ENEMY04_DEAD", "Enemy04/Animation/Dead/Dead", "Enemy04", 61);
-		AddMesh("ENEMY04_HIT", "Enemy04/Animation/Hit/Hit", "Enemy04", 11);
-		AddMesh("ENEMY04_IDLE", "Enemy04/Animation/Idle/Idle", "Enemy04", 51);// 41);
-		AddMesh("ENEMY04_RUN", "Enemy04/Animation/Run/Run", "Enemy04", 15);
+		AddMesh("ENEMY03_ATTACK", "Enemy03/Animation/Attack/Attack", "Enemy03"		,41);
+		AddMesh("ENEMY03_DEAD", "Enemy03/Animation/Dead/Dead", "Enemy03"			,82);
+		AddMesh("ENEMY03_HIT", "Enemy03/Animation/Hit/Hit", "Enemy03"				,12);
+		AddMesh("ENEMY03_IDLE", "Enemy03/Animation/Idle/Idle", "Enemy03"			,61);// 41);
+		AddMesh("ENEMY03_RUN", "Enemy03/Animation/Run/Run", "Enemy03"				,31);
+																					
+		//ENEMY04																	
+		AddMesh("ENEMY04_ATTACK", "Enemy04/Animation/Attack/Attack", "Enemy04"		,16);
+		AddMesh("ENEMY04_DEAD", "Enemy04/Animation/Dead/Dead", "Enemy04"			,61);
+		AddMesh("ENEMY04_HIT", "Enemy04/Animation/Hit/Hit", "Enemy04"				,11);
+		AddMesh("ENEMY04_IDLE", "Enemy04/Animation/Idle/Idle", "Enemy04"			,51);// 41);
+		AddMesh("ENEMY04_RUN", "Enemy04/Animation/Run/Run", "Enemy04"				,15);
 
 		//MAP
 		AddSprite("MAP_STAGE01_COLISIONMAP", "Map/Stage01/NormalMap copy");
@@ -103,6 +105,12 @@ void CMainGame::Init()
 		AddSprite("UI_HPBAR_BG", "UI/hp_ui_1");
 		AddSprite("UI_HPBAR", "UI/enemy_hpbar");
 		AddSprite("UI_HPBAR_YELLOW", "UI/enemy_hpbar_yellow");
+
+		AddSprite("UI_BOSSHPBAR_BG", "UI/boss_hp_ui_2");
+		AddSprite("UI_BOSSHPBAR", "UI/boss_hp_bar");
+		AddSprite("UI_BOSSHPBAR_YELLOW", "UI/boss_hp_bar_Yelllow");
+		AddSprite("UI_BOSS_HPICON", "UI/boss_hp_ui_1");
+
 		AddSprite("UI_MONSTER_HPICON", "UI/enemy_hp");
 		AddSprite("UI_SHADOW", "UI/Shadow");
 
@@ -115,8 +123,8 @@ void CMainGame::Init()
 		AddSprite("UI_PLAYERSTATUS_EXPBAR", "UI/exp_bar");
 		AddSprite("UI_PLAYERSTATUS_EXPBAR_BG", "UI/ExpBarBackground");
 
-
-
+		AddSprite("UI_QUEST", "UI/quest");
+		AddSprite("UI_TIMER", "UI/time");
 
 		AddSprite("UI_ST_BACKGROUND", "UI/SkillTree/ST_Background");
 		AddSprite("UI_ST_BT_CLOSE", "UI/SkillTree/ST_BtClose");
@@ -145,11 +153,13 @@ void CMainGame::Init()
 		AddSprite("UI_ST_SELECT_BACKGROUND", "UI/SkillTree/ST_SelectBackground");
 		AddSprite("UI_ST_SELECT_NAME", "UI/SkillTree/ST_Name");
 		AddSprite("UI_ST_SELECT_TOOLTIP", "UI/SkillTree/ST_Tooltip");
+
 		AddSprite("UI_SKILLICON_BG", "UI/icon_background");
-		AddSprite("UI_SKILLICON01", "UI/icon_1");
-		AddSprite("UI_SKILLICON02", "UI/icon_2");
-		AddSprite("UI_SKILLICON_COOLTIME", "UI/icon_2");
-		AddSprite("UI_SKILLICON02", "UI/icon_2");
+		AddSprite("UI_SKILLICON01", "UI/icon_2");
+		AddSprite("UI_SKILLICON02", "UI/icon_1");
+		AddSprite("UI_SKILLICON_COOLTIME", "UI/icon_Cooltime");
+		AddSprite("UI_SKILLICON01_KEY", "UI/key_Shift");
+		AddSprite("UI_SKILLICON02_KEY", "UI/key_Q");
 
 		AddSprite("TITLE_BACKGROUND", "Title/Background");
 		AddSprite("TITLE_BT_START", "Title/BtGameStart");
@@ -163,6 +173,8 @@ void CMainGame::Init()
 
 	SCENE.AddScene("S_TITLE", new CTitleScene());
 	SCENE.AddScene("S_STAGE01", new CStage01());
+	SCENE.AddScene("S_STAGECLEAR", new CStageClear());
+	SCENE.AddScene("S_STAGE02", new CStage02());
 	SCENE.ChangeScene("S_TITLE");
 
 }
