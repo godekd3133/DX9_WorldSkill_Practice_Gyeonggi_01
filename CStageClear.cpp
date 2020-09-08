@@ -21,7 +21,7 @@ void CStageClear::Init()
 void CStageClear::Update()
 {
 	if (INPUT.KeyDown(VK_RETURN))
-		SCENE.ChangeScene("S_STAGE01");
+		SCENE.ChangeScene("S_STAGE02");
 }
 
 void CStageClear::Render()
