@@ -13,12 +13,13 @@ CStage01::~CStage01()
 
 void CStage01::Init()
 {
+	GAME.Reset();
 	CGameObject * pMap = OBJ.Create("Map", Tag::Map);
-	pMap->ac<CStageMap>()->Init(MESH("MAP_STAGE02"), SPRITE("MAP_STAGE02_MINIMAP"), SPRITE("MAP_STAGE02_COLISIONMAP"));
-
+	pMap->ac<CStageMap>()->Init(MESH("MAP_STAGE01"), SPRITE("UI_MINIMAP_STAGE01"), SPRITE("MAP_STAGE01_COLISIONMAP"));
+	GAME.m_pMap = pMap->gc<CStageMap>();
 	CGameObject * pPlayer = OBJ.Create("Player", Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
-
+	GAME.m_pPlayer = pPlayer;
 	CGameObject * pUI = OBJ.Create("UI");
 	pUI->ac<CPlayerUI>();
 

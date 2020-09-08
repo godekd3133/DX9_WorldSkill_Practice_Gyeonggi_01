@@ -17,6 +17,7 @@ private:
 	list<CCollider * > m_listCollider3D;
 
 public:
+	void Clear();
 	void Update();
 	void Render();
 	CGameObject* Create(string _Name = "go", Tag _Tag = Tag::Untagged);

@@ -25,6 +25,7 @@ void CDamageFont::Update()
 	{
 		m_vecFontObject[i]->tf->m_vScale = tf->m_vScale;
 		m_vecFontObject[i]->tf->m_vScale.y = -m_vecFontObject[i]->tf->m_vScale.y;
+
 	}
 	SetTransform();
 }
@@ -41,7 +42,7 @@ void CDamageFont::OnCollision(CGameObject * _pObject)
 {
 }
 
-void CDamageFont::Init(Vector3 _vPos, int _Damage)
+void CDamageFont::Init(string _Key, Vector3 _vPos, int _Damage)
 {
 	string strDamage = to_string(_Damage);
 	tf->m_vPos = _vPos;
@@ -50,7 +51,7 @@ void CDamageFont::Init(Vector3 _vPos, int _Damage)
 	{
 		CGameObject * pFontObject = OBJ.Create();
 		pFontObject->ac<CSpriteRenderer>()->Init(
-			SPRITE("UI_DAMAGEFONT (" + to_string(strDamage[i] - '0' + 1) + ")"),
+			SPRITE(_Key + " (" + to_string(strDamage[i] - '0' + 1) + ")"),
 			SortingLayer::SR_UI,
 			RenderMode::RM_Billboard
 		);
@@ -58,7 +59,7 @@ void CDamageFont::Init(Vector3 _vPos, int _Damage)
 	}
 
 
-	m_vSize = Vector2(SPRITE("UI_DAMAGEFONT (1)")->m_Info.Width, SPRITE("UI_DAMAGEFONT (1)")->m_Info.Height);
+	m_vSize = Vector2(SPRITE(_Key + " (1)")->m_Info.Width, SPRITE(_Key+" (1)")->m_Info.Height);
 	for (int i = 0; i < m_vecFontObject.size(); i++)
 	{
 		m_vecFontObject[i]->tf->m_vPos = tf->m_vPos;

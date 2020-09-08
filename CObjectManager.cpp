@@ -26,6 +26,25 @@ CObjectManager::~CObjectManager()
 	m_listGameObject.clear();
 }
 
+void CObjectManager::Clear()
+{
+	for (auto iter : m_listGameObject)
+	{
+		for (auto comp : iter->m_listComponent)
+		{
+			comp->OnDestroy();
+		}
+		for (auto comp2 : iter->m_listComponent)
+		{
+			SAFE_DELETE(comp2);
+		}
+		iter->m_listComponent.clear();
+
+		SAFE_DELETE(iter);
+	}
+	m_listGameObject.clear();
+}
+
 void CObjectManager::Update()
 {
 	for (auto iter : m_listGameObject)

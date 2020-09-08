@@ -36,6 +36,7 @@ void CSceneManager::Update()
 	{
 		if (m_pCurScene)
 			m_pCurScene->Release();
+		OBJ.Clear();
 		m_pNextScene->Init();
 
 		m_pCurScene = m_pNextScene;

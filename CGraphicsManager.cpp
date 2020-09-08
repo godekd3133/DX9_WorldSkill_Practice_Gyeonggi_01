@@ -5,7 +5,7 @@
 CGraphicsManager::CGraphicsManager()
 {
 	D3DXCreateSprite(g_Device, &m_pSprite);
-	D3DXCreateFont(g_Device, 80, 0, 0, 1, false, HANGUL_CHARSET, 0, 0, 0, L"¸¼Àº °íµñ Bold", &m_pFont);
+	D3DXCreateFont(g_Device, 80, 0, 0, 1, false, HANGUL_CHARSET, 0, 0, 0, L"Noto Sans KR Bold", &m_pFont);
 }
 
 
@@ -56,7 +56,6 @@ void CGraphicsManager::AddSprite(string _Key, string _Path)
 
 	string Key = _Key;
 	string Path =  _Path;
-	
 	LPDIRECT3DTEXTURE9 pTexture;
 	D3DXIMAGE_INFO info;
 	if (S_OK == D3DXCreateTextureFromFileExA(
@@ -116,7 +115,7 @@ void CGraphicsManager::Render_Font(string _Text, Matrix _matWorld, Color _Color,
 	else if (_Mode == RenderMode::RM_UI)
 		m_pSprite->Begin(D3DXSPRITE_ALPHABLEND);
 	m_pSprite->SetTransform(&_matWorld);
-	m_pFont->DrawTextA(m_pSprite, _Text.c_str(), _Text.size(), NULL, DT_CENTER | DT_NOCLIP, _Color);
+	m_pFont->DrawTextA(m_pSprite, _Text.c_str(), _Text.size(), NULL, DT_CENTER | DT_NOCLIP , _Color);
 	m_pSprite->End();
 	g_Device->SetRenderState(D3DRS_ZENABLE, true);
 }

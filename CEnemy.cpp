@@ -125,7 +125,7 @@ void CEnemy::OnHit(int _Damage, Vector3 _vDir)
 
 			auto DamageFont = OBJ.Create();
 			DamageFont->tf->m_vScale = Vector3(0.4f, 0.4f, 0.f);
-			DamageFont->ac<CDamageFont>()->Init(tf->m_vPos + Vector3(my::RandRange(-50, 50), my::RandRange(170, 280), 0), _Damage);
+			DamageFont->ac<CDamageFont>()->Init("UI_DAMAGEFONT",tf->m_vPos + Vector3(my::RandRange(-50, 50), my::RandRange(170, 280), 0), _Damage);
 			DamageFont->gc<CDamageFont>()->SetTransform();
 			gc<CMeshRenderer>()->sa->Add([=]()->bool {
 				return gc<CMeshRenderer>()->LerpColor(Color(1.f, 0.f, 0.f, 1.f), 24.f * dt);

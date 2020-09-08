@@ -394,6 +394,7 @@
     <ClCompile Include="CAnimation3D.cpp" />
     <ClCompile Include="CAnimator2D.cpp" />
     <ClCompile Include="CAnimator3D.cpp" />
+    <ClCompile Include="CButton.cpp" />
     <ClCompile Include="CCollider.cpp" />
     <ClCompile Include="CDamageFont.cpp" />
     <ClCompile Include="CEffect.cpp" />
@@ -412,6 +413,7 @@
     <ClCompile Include="CRenderer3D.cpp" />
     <ClCompile Include="CRigidBody.cpp" />
     <ClCompile Include="CScrollMap.cpp" />
+    <ClCompile Include="CSkillTree.cpp" />
     <ClCompile Include="CSprite.cpp" />
     <ClCompile Include="CSpriteRenderer.cpp" />
     <ClCompile Include="CStage01.cpp" />
@@ -426,6 +428,7 @@
     <ClInclude Include="CAnimation3D.h" />
     <ClInclude Include="CAnimator2D.h" />
     <ClInclude Include="CAnimator3D.h" />
+    <ClInclude Include="CButton.h" />
     <ClInclude Include="CCameraManager.h" />
     <ClInclude Include="CCollider.h" />
     <ClInclude Include="CDamageFont.h" />
@@ -452,6 +455,7 @@
     <ClInclude Include="CScheduleAdmin.h" />
     <ClInclude Include="CScrollMap.h" />
     <ClInclude Include="CSingleton.h" />
+    <ClInclude Include="CSkillTree.h" />
     <ClInclude Include="CSprite.h" />
     <ClInclude Include="CSpriteRenderer.h" />
     <ClInclude Include="CStage01.h" />

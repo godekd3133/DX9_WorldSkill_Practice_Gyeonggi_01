@@ -331,8 +331,8 @@ void CPlayerMovement::OnAttack01_Event()
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90,110)/ 100.f;
 	
-	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 1500;
-	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 1500;
+	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2000;
+	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 2000;
 	go->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
 
 	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(this->tf->m_vPos + vDir * 50, 150, Tag::Enemy);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
@@ -341,7 +341,7 @@ void CPlayerMovement::OnAttack01_Event()
 	{
 		if (iter->gc<CEnemy>()->m_bIsDead == false)
 		{
-			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 500 + vDir * 4000;
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 500 + vDir *500* my::RandRange(4, 6);
 			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
 			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK01");
 		}
@@ -354,8 +354,8 @@ void CPlayerMovement::OnAttack02_Event()
 	float fDistance = 200;
 	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
 
-	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2000;
-	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z *2000;
+	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2400;
+	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z *2400;
 	go->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
 
 
@@ -365,7 +365,7 @@ void CPlayerMovement::OnAttack02_Event()
 	{
 		if (iter->gc<CEnemy>()->m_bIsDead == false)
 		{
-			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 500 + vDir * 500  + my::RandRange(5, 9);
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 800 + vDir * 500 * my::RandRange(5, 9);
 			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
 			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
 		}

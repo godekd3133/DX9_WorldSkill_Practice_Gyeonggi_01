@@ -313,6 +313,8 @@
     </ClCompile>
     <ClCompile Include="CPlayerUI.cpp" />
     <ClCompile Include="CDamageFont.cpp" />
+    <ClCompile Include="CButton.cpp" />
+    <ClCompile Include="CSkillTree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CGraphicsManager.h">
@@ -439,6 +441,8 @@
     </ClInclude>
     <ClInclude Include="CPlayerUI.h" />
     <ClInclude Include="CDamageFont.h" />
+    <ClInclude Include="CButton.h" />
+    <ClInclude Include="CSkillTree.h" />
   </ItemGroup>
   <ItemGroup>
     <CLInclude Include="resource.h">
