@@ -20,7 +20,7 @@ void CStage01::Init()
 	CGameObject * pPlayer = OBJ.Create("Player", Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
 	GAME.m_pPlayer = pPlayer;
-	CGameObject * pUI = OBJ.Create("UI");
+	CGameObject * pUI = OBJ.Create("PLAYERUI");
 	pUI->ac<CPlayerUI>();
 
 

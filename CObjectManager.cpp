@@ -103,11 +103,7 @@ void CObjectManager::Update()
 		if ((*iter)->m_bDestroy == true)
 		{
 
-			for (auto comp : (*iter)->m_listComponent)
-			{
-				comp->OnDestroy();
-			
-			}
+
 			SAFE_DELETE(*iter);
 			iter = m_listGameObject.erase(iter);
 		}

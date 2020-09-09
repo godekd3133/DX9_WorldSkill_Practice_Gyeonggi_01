@@ -2,6 +2,7 @@
 #include "CStage02.h"
 #include "CPlayerUI.h"
 
+#include "CGameClear.h"
 
 CStage02::CStage02()
 {
@@ -13,14 +14,15 @@ CStage02::~CStage02()
 }
 
 void CStage02::Init()
-{
+{   
+	GAME.MaxCombo = 0;
 	CGameObject * pMap = OBJ.Create("Map", Tag::Map);
 	pMap->ac<CStageMap>()->Init(MESH("MAP_STAGE02"), SPRITE("UI_MINIMAP_STAGE02"), SPRITE("MAP_STAGE02_COLISIONMAP"));
 	GAME.m_pMap = pMap->gc<CStageMap>();
 	CGameObject * pPlayer = OBJ.Create("Player", Tag::Player);
 	pPlayer->ac<CPlayerMovement>();
 	GAME.m_pPlayer = pPlayer;
-	CGameObject * pUI = OBJ.Create("UI");
+	CGameObject * pUI = OBJ.Create("PLAYERUI");
 	pUI->ac<CPlayerUI>();
 
 

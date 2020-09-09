@@ -16,6 +16,9 @@ public:
 
 public:
 	void Init(string _Key, Vector3 _vPos, int _Damage);
+	void InitCombo(string _Key, Vector3 _vPos, int _Combo);
+	void SetAlpha(float _Alpha);
+	float GetAlpha();
 	void SetTransform();
 	Vector2 m_vSize;
 private:

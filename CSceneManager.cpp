@@ -11,7 +11,7 @@ CSceneManager::~CSceneManager()
 {
 	for (auto iter : m_mapScene)
 	{
-		iter.second->Release();
+ 		iter.second->Release();
 		SAFE_DELETE(iter.second);
 	}
 	m_mapScene.clear();

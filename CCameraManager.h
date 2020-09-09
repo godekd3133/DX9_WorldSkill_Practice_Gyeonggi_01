@@ -42,6 +42,7 @@ public:
 	void Shake(float _fTime, float _fPower);
 	void Follow(CGameObject * _Follow, float _Distance)
 	{
+		m_bScrolling = true;
 		m_pFollowObject = _Follow;
 		m_fDistance = _Distance;
 	}

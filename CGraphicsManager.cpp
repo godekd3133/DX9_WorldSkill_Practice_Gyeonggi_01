@@ -16,6 +16,13 @@ CGraphicsManager::~CGraphicsManager()
 		SAFE_DELETE(iter.second);
 	}
 	m_mapSprite.clear();
+	for (auto iter : m_mapSound)
+	{
+		SAFE_DELETE(iter.second);
+	}
+	m_mapSound.clear();
+
+	SAFE_DELETE(m_pSoundManager);
 
 	for (auto iter : m_mapMesh)
 	{
@@ -39,15 +46,12 @@ CSprite * CGraphicsManager::FindSprite(string _Key)
 
 CMesh * CGraphicsManager::FindMesh(string _Key)
 {
-	/*auto find = m_mapMesh.find(_Key);
+	auto find = m_mapMesh.find(_Key);
 	if (find != m_mapMesh.end())
 	{
 		return find->second;
 	}
-	return nullptr;*/
-
-	bool a = _Key == (*m_mapMesh.begin()).first;
-	return m_mapMesh[_Key];
+	return nullptr;
 }
 
 void CGraphicsManager::AddSprite(string _Key, string _Path)
@@ -100,6 +104,41 @@ void CGraphicsManager::AddMesh(string _Key, string _Path, string _MapPath)
 			SAFE_DELETE(pLoader);
 		}
 		SAFE_DELETE(pLoader);
+}
+
+CSound * CGraphicsManager::AddSound(string _Key, wstring _Path)
+{
+	CSound * pSound = nullptr;
+	m_pSoundManager->Create(&pSound, (LPWSTR)_Path.c_str());
+	if (pSound != nullptr)
+	{
+		m_mapSound[_Key] = pSound;
+		return pSound;
+	}
+	return nullptr;
+}
+
+void CGraphicsManager::Play(string _Key, bool _bLoop)
+{
+	if (m_mapSound[_Key]->IsSoundPlaying() == false)
+		m_mapSound[_Key]->Play(0, _bLoop);
+}
+
+void CGraphicsManager::dPlay(string _Key)
+{
+	LPDIRECTSOUNDBUFFER buf;
+
+	m_pSoundManager->GetDirectSound()->DuplicateSoundBuffer(m_mapSound[_Key]->GetBuffer(0), &buf);
+
+	buf->SetCurrentPosition(0);
+
+	buf->Play(0, 0, 0);
+}
+
+void CGraphicsManager::Stop(string _Key)
+{
+	if (m_mapSound[_Key]->IsSoundPlaying())
+		m_mapSound[_Key]->Stop();
 }
 
 void CGraphicsManager::Render_Font(string _Text, Matrix _matWorld, Color _Color, RenderMode _Mode)

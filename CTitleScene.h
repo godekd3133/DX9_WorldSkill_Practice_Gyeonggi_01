@@ -15,10 +15,14 @@ public:
 	
 	CGameObject * m_pWindowInfo = nullptr;
 	CGameObject * m_pWindowHowto = nullptr;
+	CGameObject * m_pWindowRanking = nullptr;
+
+
 	CGameObject * m_pBlack = nullptr;
 	CGameObject * BT_Start;
 	CGameObject * BT_Info;
 	CGameObject * BT_Howto;
+	CGameObject * BT_Ranking;
 	CGameObject * BT_Exit;
 
 };

@@ -14,10 +14,14 @@ public:
 private:
 	LPD3DXSPRITE m_pSprite = NULL;
 	LPD3DXFONT m_pFont = NULL;
+	CSoundManager * m_pSoundManager = nullptr;
 
 private:
 	map<string, CSprite * > m_mapSprite;
 	map<string, CMesh * > m_mapMesh;
+	map<string, CSound *> m_mapSound;
+
+
 
 public:
 	CSprite * FindSprite(string _Key);
@@ -26,6 +30,11 @@ public:
 public:
 	void  AddSprite( string _Key, string _Path);
 	void  AddMesh(string _Key, string _Path,string _MapPath);
+	CSound * AddSound(string _Key, wstring _Path);
+public:
+	void Play(string _Key, bool _bLoop);
+	void dPlay(string _Key);
+	void Stop(string _Key);
 
 public:
 	void Render_Font(string _Text, Matrix _matWorld,Color _Color, RenderMode _Mode);

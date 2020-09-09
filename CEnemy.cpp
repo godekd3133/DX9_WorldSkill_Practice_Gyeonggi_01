@@ -46,6 +46,26 @@ void CEnemy::LateUpdate()
 
 void CEnemy::OnDestroy()
 {
+	if (my::RandRange(0, 1000) > 800)
+	{
+		CGameObject * Item = OBJ.Create();
+		Item->ac<CItem>()->Init(ItemKind::IK_ITEM, tf->m_vPos);
+	}
+	for (int i = 0; i < my::RandRange(1, 3); i++)
+	{
+		CGameObject * Exp = OBJ.Create();
+		Exp->ac<CItem>()->Init(ItemKind::IK_EXP, tf->m_vPos + Vector3(0, 150, 0));
+		Exp->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
+		Exp->gc<CRigidBody>()->AddForce(Vector3(my::RandRange(-10, 10) / 10.f, 0, my::RandRange(-10, 10) / 10.f) * 3500);
+	}
+
+	for (int i = 0; i < my::RandRange(1, 2 ); i++)
+	{
+		CGameObject * Exp = OBJ.Create();
+		Exp->ac<CItem>()->Init(ItemKind::IK_COIN, tf->m_vPos + Vector3(0,150,0));
+		Exp->gc<CRigidBody>()->m_vImpulse = Vector3(15.f, 0.f, 15.f);
+		Exp->gc<CRigidBody>()->AddForce(Vector3(my::RandRange(-10, 10) / 10.f, 0, my::RandRange(-10, 10) / 10.f) * 3500);
+	}
 	m_pShadow->Destroy();
 }
 
@@ -71,7 +91,7 @@ void CEnemy::OnHit(int _Damage, Vector3 _vDir)
 		m_iCurHp -= _Damage;
 		if (m_iCurHp <= 0.f)
 		{
-			go->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 1500 + _vDir * 1000 * my::RandRange(6,14) ;
+			go->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 1500 + _vDir * 1000 * my::RandRange(4,8) ;
 			go->gc<CAnimator3D>()->SetCurrentState("DEAD");
 			m_bIsDead =true;
 		}

@@ -113,7 +113,7 @@ void CBoss02::Init(Vector3 _vPos)
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
 	ac<CAnimator3D>()->AddState("ATTACK01", "BOSS02_ATTACK01", 30.F / 1000.F, FALSE);
-	gc<CAnimator3D>()->AddState("ATTACK02", "BOSS01_ATTACK02", 30.F / 1000.F, FALSE);
+	gc<CAnimator3D>()->AddState("ATTACK02", "BOSS02_ATTACK02", 30.F / 1000.F, FALSE);
 	gc<CAnimator3D>()->AddState("ATTACK03", "BOSS02_ATTACK03", 30.F / 1000.F, FALSE);
 	gc<CAnimator3D>()->AddState("DEAD", "BOSS02_DEAD", 30.F / 1000.F, FALSE);
 	gc<CAnimator3D>()->AddState("HIT",  "BOSS02_HIT", 30.F / 1000.F, FALSE);

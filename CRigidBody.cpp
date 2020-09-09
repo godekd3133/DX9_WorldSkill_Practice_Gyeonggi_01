@@ -37,7 +37,7 @@ void CRigidBody::LateUpdate()
 //	m_vVelocity.z-= m_vVelocity.z / m_vVelocity.z * 3000.f * dt;
 //	m_vVelocity.x -= m_vVelocity.x / m_vVelocity.x * 3000.f * dt;
 
-	FloorY = m_pMap->GetFloorY(vMovePos);
+	FloorY = m_pMap->GetFloorY(vMovePos ) + Offset;
 	//이동할 위치에 충돌했다면
 
 

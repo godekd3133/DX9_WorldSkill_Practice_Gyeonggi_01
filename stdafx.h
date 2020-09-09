@@ -6,6 +6,7 @@
 #include <map>
 #include <functional>
 #include <queue>
+#include <fstream>
 #include <algorithm>
 #include <functional>
 #include <set>
@@ -107,7 +108,11 @@ using namespace my;
 enum class RenderMode {RM_Default , RM_UI, RM_Billboard, RM_BillboardNonUI};
 enum class SortingLayer { SR_Default,SR_Effect, SR_UI,SR_UI2,SR_SCREEEN};
 
-enum class  Tag{Untagged,Map,Player,Enemy,UI};
+enum class  Tag{Untagged,Map,Player,Enemy,Item,UI};
+#include "DXUT/Optional/SDKsound.h"
+#include "DXUT/Optional/SDKwavefile.h"
+#pragma comment(lib, "dsound.lib")
+
 #include "CScheduleAdmin.h"
 #include "CSprite.h"
 #include "CScene.h"
@@ -132,6 +137,7 @@ enum class  Tag{Untagged,Map,Player,Enemy,UI};
 #include "CCollider.h"
 #include "CPlayerMovement.h"
 #include "CDamageFont.h"
+
 #include "CEnemy.h"
 #include "CEnemy01.h"
 #include "CEnemy02.h"
@@ -139,9 +145,11 @@ enum class  Tag{Untagged,Map,Player,Enemy,UI};
 #include "CEnemy04.h"
 #include "CBoss01.h"
 #include "CBoss02.h"
-
+ 
 #include "CButton.h"
 #include "CSkillTree.h"
+#include "CPlayerUI.h"
+#include "CItem.h"
 
 #include "CSingleton.h"
 

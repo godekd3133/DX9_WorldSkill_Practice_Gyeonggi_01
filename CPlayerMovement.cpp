@@ -11,6 +11,7 @@ CPlayerMovement::~CPlayerMovement()
 
 void CPlayerMovement::Awake()
 {
+	ac<CCollider>()->Init(50);
 	ac<CRigidBody>()->OnLanding.push_back([=]() {OnLanding(); });
 	m_pMap = OBJ.Find(Tag::Map)->gc<CStageMap>();
 	tf->m_vScale = Vector3(1.5, 1.5, 1.5);
@@ -351,7 +352,7 @@ void CPlayerMovement::OnAttack01_Event()
 {
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
-	float fFinalDamage = m_fAttackDamage * my::RandRange(90,110)/ 100.f;
+	float fFinalDamage = GAME.GetFinalDamage() *my::RandRange(80, 120) / 100.f;
 	
 	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2400;
 	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z * 2400;
@@ -368,13 +369,16 @@ void CPlayerMovement::OnAttack01_Event()
 			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK01");
 		}
 	}
+
+	if(listHitObject.empty() == false)
+	OBJ.Find("PLAYERUI")->gc<CPlayerUI>()->AddCombo(listHitObject.size());
 }
 
 void CPlayerMovement::OnAttack02_Event()
 {
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
-	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
+	float fFinalDamage = GAME.GetFinalDamage() * my::RandRange(80, 120) / 100.f;
 
 	go->gc<CRigidBody>()->m_vVelocity.x = vDir.x * 2800;
 	go->gc<CRigidBody>()->m_vVelocity.z = vDir.z *2800;
@@ -392,6 +396,9 @@ void CPlayerMovement::OnAttack02_Event()
 			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
 		}
 	}
+
+	if (listHitObject.empty() == false)
+		OBJ.Find("PLAYERUI")->gc<CPlayerUI>()->AddCombo(listHitObject.size());
 }
 
 void CPlayerMovement::OnSkill01_Event()
@@ -399,7 +406,7 @@ void CPlayerMovement::OnSkill01_Event()
 	gc<CRigidBody>()->m_vVelocity = Vector3(0, 0, 0);
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
-	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
+	float fFinalDamage = GAME.GetFinalDamage() * (GAME.GetValue(3) / 100.f) * my::RandRange(80, 120) / 100.f;
 
 	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(this->tf->m_vPos + vDir * 50, 150, Tag::Enemy);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
 
@@ -418,6 +425,8 @@ void CPlayerMovement::OnSkill01_Event()
 	Effect->gc<CSpriteRenderer>()->m_RenderMode = RenderMode::RM_Billboard;
 	Effect->tf->SetRotation(Vector3(0, 0, 0));
 
+	if (listHitObject.empty() == false)
+		OBJ.Find("PLAYERUI")->gc<CPlayerUI>()->AddCombo(listHitObject.size());
 }
 
 void CPlayerMovement::OnSkill02_Event()
@@ -425,7 +434,7 @@ void CPlayerMovement::OnSkill02_Event()
 	gc<CRigidBody>()->m_vVelocity = Vector3(0, 0, 0);
 	Vector3 vDir = CAMERA.m_vCharactorAxis[Axis::Foward];
 	float fDistance = 200;
-	float fFinalDamage = m_fAttackDamage * my::RandRange(90, 110) / 100.f;
+	float fFinalDamage = GAME.GetFinalDamage() * (GAME.GetValue(1) / 100.f) *  my::RandRange(80, 120) / 100.f;
 
 
 
@@ -449,5 +458,7 @@ void CPlayerMovement::OnSkill02_Event()
 	Effect->gc<CSpriteRenderer>()->m_RenderMode = RenderMode::RM_Billboard;
 	Effect->tf->SetRotation(Vector3(0, 0, 0));
 
+	if (listHitObject.empty() == false)
+		OBJ.Find("PLAYERUI")->gc<CPlayerUI>()->AddCombo(listHitObject.size());
 }
 

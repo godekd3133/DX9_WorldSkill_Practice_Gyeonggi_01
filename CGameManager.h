@@ -1,5 +1,9 @@
 #pragma once
 #include "CSingleton.h"
+struct UserInfo {
+	string Name;
+		int Score;
+};
 class CGameManager :
 	public CSingleton< CGameManager>
 {
@@ -11,6 +15,12 @@ public:
 	CStageMap * m_pMap = nullptr;
 
 public:
+	void  GainExp(float _Exp);
+	void GainHp(float _Hp);
+	void Hit(float _Damage);
+	void SaveData();
+	void LoadData();
+	bool IsDead = false;
 	void Reset();
 public:
 	int Level;
@@ -21,13 +31,22 @@ public:
 
 	float MoveSpeed;
 	float Damage = 100.f;
+	int Score = 0;
 	float DamageMul = 1.f;
-
+	vector< UserInfo> m_Info;
+	void AddData(UserInfo _Info);
 	float Skill01CoolTime = 7.f;
 	float Skill01Timer = 0.f;
 
+	int Combo = 0;
+	int MaxCombo = 0;
+	int KillCount = 0;
 	float Skill02CoolTime = 12.f;
 	float Skill02Timer = 0.f;
+	int GetFinalDamage()
+	{
+		return Damage + (Damage  * (1.f / GetValue(7))* (DamageMul + GetValue(2) / 100.f));
+	}
 
 	int SkillPoint = 10;
 	int SkillLevel[8] = { 0, };
@@ -84,7 +103,7 @@ public:
 		1,
 		3
 	};
-	float GetValue(int _index)
+	float GetValue (int _index)
 	{
 		if (SkillLevel[_index] == 0) return 0;
 

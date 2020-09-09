@@ -31,7 +31,7 @@
     <ProjectGuid>{D3D09108-96D0-4629-88B8-122C0256058C}</ProjectGuid>
     <RootNamespace>EmptyProject</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -408,6 +408,7 @@
     <ClCompile Include="CGameClear.cpp" />
     <ClCompile Include="CGameManager.cpp" />
     <ClCompile Include="CGameOver.cpp" />
+    <ClCompile Include="CItem.cpp" />
     <ClCompile Include="CMeshRenderer.cpp" />
     <ClCompile Include="CPlayerMovement.cpp" />
     <ClCompile Include="CPlayerUI.cpp" />
@@ -425,6 +426,8 @@
     <ClCompile Include="CText.cpp" />
     <ClCompile Include="CTitleScene.cpp" />
     <ClCompile Include="CTransform.cpp" />
+    <ClCompile Include="DXUT\Optional\SDKsound.cpp" />
+    <ClCompile Include="DXUT\Optional\SDKwavefile.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClInclude Include="CAnimation2D.h" />
     <ClInclude Include="CAnimation3D.h" />
@@ -447,6 +450,7 @@
     <ClInclude Include="CGameOver.h" />
     <ClInclude Include="CGraphicsManager.h" />
     <ClInclude Include="CInputManager.h" />
+    <ClInclude Include="CItem.h" />
     <ClInclude Include="CMeshRenderer.h" />
     <ClInclude Include="CObjectManager.h" />
     <ClInclude Include="CPlayerMovement.h" />
@@ -469,6 +473,8 @@
     <ClInclude Include="CText.h" />
     <ClInclude Include="CTitleScene.h" />
     <ClInclude Include="CTransform.h" />
+    <ClInclude Include="DXUT\Optional\SDKsound.h" />
+    <ClInclude Include="DXUT\Optional\SDKwavefile.h" />
     <ClInclude Include="MeshLoader.h" />
     <ClInclude Include="stdafx.h" />
     <None Include="DXUT\Optional\directx.ico" />

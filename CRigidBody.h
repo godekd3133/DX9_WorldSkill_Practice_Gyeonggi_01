@@ -18,6 +18,7 @@ public:
 public:
 	Vector3 m_vVelocity;
 	Vector3 m_vOldPos;
+	float Offset = 0.f;
 	bool m_bGravity = true;
 	Vector3 m_vImpulse = Vector3(8.f,0.f,8.f);
 public:

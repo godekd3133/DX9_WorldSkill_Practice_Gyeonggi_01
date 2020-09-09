@@ -4,6 +4,7 @@
 #include "CStage01.h"
 #include "CStageClear.h"
 #include "CStage02.h"
+#include "CGameClear.h"
 CMainGame::CMainGame()
 {
 
@@ -21,6 +22,11 @@ void CMainGame::Init()
 		std::async(launch::async, [=]() {
 		AddMesh("MAP_STAGE01", "Map/Stage01/Stage01", "Map/Stage01");
 		AddMesh("MAP_STAGE02", "Map/Stage02/Stage02", "Map/Stage02");
+
+		AddMesh("COIN", "Map/Coin", "Map");
+		AddMesh("ITEM", "Map/ItemBox", "Map");
+		AddMesh("EXP", "Map/Exp", "Map");
+
 		AddSprite("UI_MINIMAP_STAGE01", "UI/Minimap_Stage01");
 		AddSprite("UI_MINIMAP_STAGE02", "UI/Minimap_Stage02");
 		AddSprite("UI_MINIMAP_PLAYER", "UI/Minimap_Player");
@@ -101,6 +107,7 @@ void CMainGame::Init()
 		AddSprite("EFFECT_PLAYERSKILL02", "Effect/PlayerSkill02/PlayerSkill02", 7);
 
 		AddSprite("UI_DAMAGEFONT", "UI/Font/Combo03/Damage",10);
+		AddSprite("UI_COMBOFONT", "UI/Font/Combo02/Combo", 10);
 
 		AddSprite("UI_HPBAR_BG", "UI/hp_ui_1");
 		AddSprite("UI_HPBAR", "UI/enemy_hpbar");
@@ -161,12 +168,20 @@ void CMainGame::Init()
 		AddSprite("UI_SKILLICON01_KEY", "UI/key_Shift");
 		AddSprite("UI_SKILLICON02_KEY", "UI/key_Q");
 
+		AddSprite("UI_COMBO", "UI/ComboText");
+	
+		AddSprite("UI_WINDOW_GAMEOVER", "Title/Window_GameOver");
+		AddSprite("UI_WINDOW_GAMECLEAR", "Title/Window_GameClear");
+		AddSprite("UI_WINDOW_STAGECLEAR", "Title/Window_StageClear");
+
 		AddSprite("TITLE_BACKGROUND", "Title/Background");
 		AddSprite("TITLE_BT_START", "Title/BtGameStart");
 		AddSprite("TITLE_BT_HOWTO", "Title/BtHowto");
 		AddSprite("TITLE_BT_INFO", "Title/BtInfo");
+		AddSprite("TITLE_BT_RANKING", "Title/BtRank");
 		AddSprite("TITLE_BT_EXIT", "Title/BtExit");
 		AddSprite("TITLE_WINDOW_INFO", "Title/Window_Info");
+		AddSprite("TITLE_WINDOW_RANKING", "Title/Window_Ranking");
 		AddSprite("TITLE_WINDOW_HOWTO", "Title/Window_Howto");
 		AddSprite("BLACK", "Black");
 });
@@ -175,6 +190,7 @@ void CMainGame::Init()
 	SCENE.AddScene("S_STAGE01", new CStage01());
 	SCENE.AddScene("S_STAGECLEAR", new CStageClear());
 	SCENE.AddScene("S_STAGE02", new CStage02());
+	SCENE.AddScene("S_GAMECLEAR", new CGameClear());
 	SCENE.ChangeScene("S_TITLE");
 
 }
@@ -197,9 +213,9 @@ void CMainGame::Render()
 
 	CAMERA.SetTransform();
 
-	SCENE.Render();
 
 	OBJ.Render();
+	SCENE.Render();
 }
 
 void CMainGame::Release()

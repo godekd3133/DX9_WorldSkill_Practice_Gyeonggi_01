@@ -55,6 +55,13 @@ void CPlayerUI::Awake()
 	m_pSkill02->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON02"), SortingLayer::SR_UI, RenderMode::RM_UI);
 	m_pSkill02->tf->m_vPos = Vector3(1680, 840, 0);
 
+	m_pComboBG = OBJ.Create("UI", Tag::UI);
+	m_pComboBG->ac<CSpriteRenderer>()->Init(SPRITE("UI_COMBO"), SortingLayer::SR_UI, RenderMode::RM_UI);
+	m_pComboBG->tf->m_vPos = Vector3(1630, 510, 0);
+
+	m_pComboText = OBJ.Create("UI", Tag::UI);
+
+
 	CGameObject * Skill01Key = OBJ.Create("UI", Tag::UI);
 	Skill01Key->ac<CSpriteRenderer>()->Init(SPRITE("UI_SKILLICON01_KEY"), SortingLayer::SR_UI, RenderMode::RM_UI);
 	Skill01Key->tf->m_vPos = Vector3(1500, 915, 0);
@@ -121,7 +128,7 @@ void CPlayerUI::Update()
 	m_pHpBar->gc<CSpriteRenderer>()->m_vFillAmount = Vector2((float)GAME.CurHp / (float)GAME.MaxHp, 1.f);
 	m_pHpBar_Yellow->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pHpBar_Yellow->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurHp / (float)GAME.MaxHp, 1.f), dt  * 2.f);
 
-	m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurExp / (float)GAME.CurExp, 1.f), dt  * 2.f);
+	m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurExp / (float)GAME.MaxExp, 1.f), dt  * 4.f);
 	m_pLevelText->gc<CText>()->m_Text = "Lv. " + to_string(GAME.Level);
 
 	char str[100];
@@ -147,6 +154,11 @@ void CPlayerUI::Update()
 
 void CPlayerUI::LateUpdate()
 {
+	if (m_pComboText != nullptr)
+	{
+		if (m_pComboText->m_bDestroy == true)
+			m_pComboText = nullptr;
+	}
 }
 
 void CPlayerUI::OnDestroy()
@@ -183,5 +195,16 @@ void CPlayerUI::RenderEnemy(CGameObject * _pEnemy)
 		Vector3 EnemyPos = Vector3(-_pEnemy->tf->m_vPos.x / 35.f, _pEnemy->tf->m_vPos.z/35.f,0.f);
 		GRAPHICS.Render_Sprite(SPRITE("UI_MINIMAP_ENEMY"), GRAPHICS.ToMatrix(vPos + EnemyPos + vOffset), Vector2(0.5f, 0.5f), Vector2(1.f, 1.f), Color(1.f, 1.f, 1.f, 1.f), RenderMode::RM_UI);
 
+}
+
+void CPlayerUI::AddCombo(int _Combo)
+{
+	if(m_pComboText != nullptr)
+	m_pComboText->Destroy();
+	m_pComboText = nullptr;
+	m_pComboText = OBJ.Create();
+	GAME.Combo += _Combo;
+	if (GAME.Combo > GAME.MaxCombo) GAME.MaxCombo = GAME.Combo;
+	m_pComboText->ac<CDamageFont>()->InitCombo("UI_COMBOFONT", Vector3(1520, 480, 0), GAME.Combo);
 }
 

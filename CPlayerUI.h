@@ -19,7 +19,7 @@ public:
 	
 	void RenderPlayer(CGameObject * _pPlayer);
 	void RenderEnemy(CGameObject * _pEnemy);
-
+	void AddCombo(int _Combo);
 	CGameObject * m_pSkillTree = nullptr;
 
 	CGameObject * m_pHpBar;
@@ -35,6 +35,9 @@ public:
 	
 	CGameObject * m_pQuest;
 	CGameObject * m_pQuestText;
+
+	CGameObject * m_pComboText;
+	CGameObject * m_pComboBG;
 
 };
 
