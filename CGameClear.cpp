@@ -13,6 +13,7 @@ CGameClear::~CGameClear()
 
 void CGameClear::Init()
 {
+	GRAPHICS.Play("BGM_GAMEEND", true);
 	CAMERA.m_bScrolling = false;
 	CGameObject * TitleBackground = OBJ.Create();
 	TitleBackground->ac<CSpriteRenderer>()->Init(SPRITE("TITLE_BACKGROUND"), SortingLayer::SR_UI, RenderMode::RM_UI);
@@ -54,4 +55,6 @@ void CGameClear::Render()
 
 void CGameClear::Release()
 {
+	GRAPHICS.Stop("BGM_GAMEEND");
+
 }

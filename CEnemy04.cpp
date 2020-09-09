@@ -62,7 +62,7 @@ void CEnemy04::Update()
 					m_State = Enemy_State::ATTACK;
 				}
 			}
-			else if (dist > 400)
+			else if (dist > 200)
 				m_State = Enemy_State::CHASE;
 			break;
 		case Enemy_State::ATTACK:
@@ -107,7 +107,7 @@ void CEnemy04::Init(Vector3 _vPos)
 {
 	tf->m_vScale = Vector3(1.5f, 1.5f, 1.5f);
 	tf->m_vPos = _vPos;
-	ac<CEnemy>()->Init(1000, 30, 100, 600, 400);
+	ac<CEnemy>()->Init(1500, 150, 70, 1200, 250,0.f,1.1f,2);
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
 	ac<CAnimator3D>()->AddState("ATTACK", "ENEMY04_ATTACK", 30.F / 1000.F, FALSE);
@@ -116,4 +116,10 @@ void CEnemy04::Init(Vector3 _vPos)
 	gc<CAnimator3D>()->AddState("IDLE", "ENEMY04_IDLE", 30.F / 1000.F);
 	gc<CAnimator3D>()->AddState("RUN", "ENEMY04_RUN", 30.F / 1000.F);
 	gc<CAnimator3D>()->SetCurrentState("IDLE");
+	gc<CAnimator3D>()->GetState("ATTACK")->AddEvent(5, [=]() {gc<CEnemy>()->Attack(); });
+}
+
+void CEnemy04::OnAttack()
+{
+
 }

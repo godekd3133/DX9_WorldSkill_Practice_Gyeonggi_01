@@ -6,6 +6,8 @@ CGraphicsManager::CGraphicsManager()
 {
 	D3DXCreateSprite(g_Device, &m_pSprite);
 	D3DXCreateFont(g_Device, 80, 0, 0, 1, false, HANGUL_CHARSET, 0, 0, 0, L"Noto Sans KR Bold", &m_pFont);
+	m_pSoundManager = new CSoundManager();
+	m_pSoundManager->Initialize(DXUTGetHWND(), 2);
 }
 
 
@@ -18,6 +20,7 @@ CGraphicsManager::~CGraphicsManager()
 	m_mapSprite.clear();
 	for (auto iter : m_mapSound)
 	{
+		iter.second->Stop();
 		SAFE_DELETE(iter.second);
 	}
 	m_mapSound.clear();
@@ -112,7 +115,7 @@ CSound * CGraphicsManager::AddSound(string _Key, wstring _Path)
 	m_pSoundManager->Create(&pSound, (LPWSTR)_Path.c_str());
 	if (pSound != nullptr)
 	{
-		m_mapSound[_Key] = pSound;
+		m_mapSound.insert(make_pair(_Key, pSound));
 		return pSound;
 	}
 	return nullptr;

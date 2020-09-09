@@ -62,7 +62,7 @@ void CBoss02::Update()
 					m_State = Enemy_State::ATTACK;
 				}
 			}
-			else if (dist > 400)
+			else if (dist > 200)
 				m_State = Enemy_State::CHASE;
 			break;
 		case Enemy_State::ATTACK:
@@ -86,7 +86,7 @@ void CBoss02::Update()
 	{
 		if (gc<CAnimator3D>()->GetCurrentState()->GetNormalizeTime() >= 0.99f)
 		{
-			sa->Delay(0.5f);
+			sa->Delay(1.5f);
 			sa->Add([=]()->bool {go->Destroy(); GAME.Count++; return false; });
 
 		}
@@ -107,9 +107,9 @@ void CBoss02::OnCollision(CGameObject * _pObject)
 
 void CBoss02::Init(Vector3 _vPos)
 {
-	tf->m_vScale = Vector3(1.5f, 1.5f, 1.5f);
+	tf->m_vScale = Vector3(2.5f,2.5f, 2.5f);
 	tf->m_vPos = _vPos;
-	ac<CEnemy>()->Init(1000, 30, 100, 1000, 200, true);
+	ac<CEnemy>()->Init(15000, 30, 100, 1000, 500,25.f,0.15f, true);
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
 	ac<CAnimator3D>()->AddState("ATTACK01", "BOSS02_ATTACK01", 30.F / 1000.F, FALSE);
@@ -120,4 +120,8 @@ void CBoss02::Init(Vector3 _vPos)
 	gc<CAnimator3D>()->AddState("IDLE", "BOSS02_IDLE", 30.F / 1000.F);
 	gc<CAnimator3D>()->AddState("RUN",  "BOSS02_RUN", 30.F / 1000.F);
 	gc<CAnimator3D>()->SetCurrentState("IDLE");
+	gc<CAnimator3D>()->GetState("ATTACK01")->AddEvent(17, [=]() {gc<CEnemy>()->Attack(); });
+	gc<CAnimator3D>()->GetState("ATTACK02")->AddEvent(16, [=]() {gc<CEnemy>()->Attack(); });
+	gc<CAnimator3D>()->GetState("ATTACK03")->AddEvent(18, [=]() {gc<CEnemy>()->Attack(); });
+
 }

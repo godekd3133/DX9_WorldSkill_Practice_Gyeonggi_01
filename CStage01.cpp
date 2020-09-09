@@ -13,6 +13,7 @@ CStage01::~CStage01()
 
 void CStage01::Init()
 {
+	GRAPHICS.Play("BGM_STAGE01",true);
 	GAME.Reset();
 	CGameObject * pMap = OBJ.Create("Map", Tag::Map);
 	pMap->ac<CStageMap>()->Init(MESH("MAP_STAGE01"), SPRITE("UI_MINIMAP_STAGE01"), SPRITE("MAP_STAGE01_COLISIONMAP"));
@@ -29,13 +30,47 @@ void CStage01::Init()
 
 void CStage01::Update()
 {
-
+	if (GAME.IsDead)
+		SCENE.ChangeScene("S_GAMEOVER");
 	if (GAME.Quest == 0)
 	{
-		if (GAME.Count >= 100)
+		Vector3 vPos[5] =
 		{
+			Vector3(-2400,-800, 2343),
+			Vector3(-4090,-800, 4930),
+			Vector3(-6739,-800, 5100),
+			Vector3(-9832,-800, 4100),
+			Vector3(-9630,-800, 1650),
+		};
+
+
+
+		m_fTime += dt;
+		if (m_fTime >= 2.f)
+		{
+			m_fTime = 0.f;
+			if (OBJ.Finds(Tag::Enemy).empty() == true)
+			{
+				for (int i = 0; i < 8; i++)
+				{
+					CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
+					pEnemy->ac<CEnemy01>()->Init(vPos[idx]);
+				}
+				for (int i = 0; i < 2; i++)
+				{
+					CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
+					pEnemy->ac<CEnemy02>()->Init(vPos[idx]);
+				}
+				idx++;
+				if (idx > 5) idx = 0;
+			}
+		}
+
+		if (GAME.Count >= 200)
+		{
+			GRAPHICS.dPlay("VFX_BOSS");
 			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
-			pEnemy->ac<CBoss01>()->Init(Vector3(-2000, 10000, 2000));
+			pEnemy->ac<CBoss02>()->Init(Vector3(-2387,1000, 2343));
 			GAME.Quest++;
 			GAME.Count = 0;
 		}
@@ -49,57 +84,18 @@ void CStage01::Update()
 			SCENE.ChangeScene("S_STAGECLEAR");
 		}
 	}
-	if (INPUT.KeyDown('1'))
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
-			pEnemy->ac<CEnemy01>()->Init(Vector3(-2000, 10000, 2000));
-		}
-	}
-	if (INPUT.KeyDown('2'))
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
-			pEnemy->ac<CEnemy02>()->Init(Vector3(-2000, 10000, 2000));
-		}
-	}
 
-	if (INPUT.KeyDown('3'))
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
-			pEnemy->ac<CEnemy03>()->Init(Vector3(-2000, 10000, 2000));
-		
-		}
-	}
-
-	if (INPUT.KeyDown('4'))
-	{
-		for (int i = 0; i < 10; i++)
-		{
-			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
-			pEnemy->ac<CEnemy04>()->Init(Vector3(-2000, 10000, 2000));
-		}
-	}
-
-	if (INPUT.KeyDown('5'))
-	{
-	}
-	if (INPUT.KeyDown('6'))
-	{
-	}
 
 }
 
 void CStage01::Render()
 {
-	GRAPHICS.Render_Font(to_string((INT)DXUTGetFPS()), GRAPHICS.ToMatrix(Vector3(100, 300, 0)), Color(1.f, 1.f, 1.f, 1.f), RenderMode::RM_UI);
+//	GRAPHICS.Render_Font("X : "  + to_string(GAME.m_pPlayer->tf->m_vPos.x) + "  Y : " + to_string(GAME.m_pPlayer->tf->m_vPos.y)  +"  Z : " + to_string(GAME.m_pPlayer->tf->m_vPos.z), GRAPHICS.ToMatrix(Vector3(100, 300, 0)), Color(1.f, 1.f, 1.f, 1.f), RenderMode::RM_UI);
 
 }
 
 void CStage01::Release()
 {
+	GRAPHICS.Stop("BGM_STAGE01");
+
 }

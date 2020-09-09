@@ -12,5 +12,7 @@ public:
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void Release() override;
+	float m_fTime = 0.f;
+	int idx = 0;
 };
 

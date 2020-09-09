@@ -46,12 +46,12 @@ void CEnemy::LateUpdate()
 
 void CEnemy::OnDestroy()
 {
-	if (my::RandRange(0, 1000) > 800)
+	if (my::RandRange(0, 1000) > 900)
 	{
 		CGameObject * Item = OBJ.Create();
 		Item->ac<CItem>()->Init(ItemKind::IK_ITEM, tf->m_vPos);
 	}
-	for (int i = 0; i < my::RandRange(1, 3); i++)
+	for (int i = 0; i < my::RandRange(0, m_fExp); i++)
 	{
 		CGameObject * Exp = OBJ.Create();
 		Exp->ac<CItem>()->Init(ItemKind::IK_EXP, tf->m_vPos + Vector3(0, 150, 0));
@@ -71,7 +71,7 @@ void CEnemy::OnDestroy()
 
 void CEnemy::OnCollision(CGameObject * _pObject)
 {
-	if (_pObject->m_Tag == Tag::Enemy && m_bIsDead == false)
+	if (_pObject->m_Tag == Tag::Enemy && m_bIsDead == false && m_bStance == false)
 	{
 		Vector3 _vDir = my::GetDirection(tf->m_vPos, _pObject->tf->m_vPos);
 		_vDir.y = 0.f;
@@ -82,16 +82,18 @@ void CEnemy::OnCollision(CGameObject * _pObject)
 			_vDir.z = my::RandRange(-100, 100) / 100.f;
 		}
 
-		Move(-_vDir*dt*20);
+		Move(-_vDir*dt*50);
 	}
 }
 
 void CEnemy::OnHit(int _Damage, Vector3 _vDir)
 {
+	GRAPHICS.dPlay("VFX_HIT0" + to_string(RandRange(1,3)));
+	_Damage = (float)_Damage * min(100.f, (100.f - (m_fShield - (float)GAME.GetValue(5))))/100.f;
 		m_iCurHp -= _Damage;
 		if (m_iCurHp <= 0.f)
 		{
-			go->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 1500 + _vDir * 1000 * my::RandRange(4,8) ;
+			go->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 1200 * m_fMass  + _vDir * 600 * m_fMass * my::RandRange(4,8) ;
 			go->gc<CAnimator3D>()->SetCurrentState("DEAD");
 			m_bIsDead =true;
 		}
@@ -147,8 +149,13 @@ bool CEnemy::Correction_Enemy(Vector3 _vDir)
 	return false;
 }
 
-void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _fHeight,bool _bBoss)
+
+
+void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _fHeight, float _Shield, float _Mass,int _Exp, bool _bBoss)
 {
+	m_fExp = _Exp;
+	m_fMass = _Mass;
+	m_fShield = _Shield;
 	m_bBoss = _bBoss;
 	go->m_Tag = Tag::Enemy;
 	ac<CCollider>()->Init(_Size);
@@ -164,7 +171,7 @@ void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _
 	else
 		HpGaugeBG->ac<CSpriteRenderer>()->Init(SPRITE("UI_BOSSHPBAR_BG"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
 
-		go->AddChild(HpGaugeBG);
+	go->AddChild(HpGaugeBG);
 	HpGaugeBG->tf->m_vScale = Vector3(0.5f, 0.5f, 0.f);
 	HpGaugeBG->tf->m_vScale.y = -HpGaugeBG->tf->m_vScale.y;
 	HpGaugeBG->tf->m_vPos = Vector3(0, m_fHeight, 0);
@@ -180,8 +187,8 @@ void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _
 	m_pHpGagueYellow->tf->m_vPos = Vector3(0, m_fHeight, 0);
 
 	m_pHpGague = OBJ.Create();
-	if(m_bBoss== false)
-	m_pHpGague->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+	if (m_bBoss == false)
+		m_pHpGague->ac<CSpriteRenderer>()->Init(SPRITE("UI_HPBAR"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
 	else
 		m_pHpGague->ac<CSpriteRenderer>()->Init(SPRITE("UI_BOSSHPBAR"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
 
@@ -194,8 +201,8 @@ void CEnemy::Init(int _MaxHp, int _Damage, int _Size, float _fMoveSpeed, float _
 	auto EnemyIcon = OBJ.Create();
 	if (m_bBoss == false)
 	{
-	EnemyIcon->ac<CSpriteRenderer>()->Init(SPRITE("UI_MONSTER_HPICON"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
-	EnemyIcon->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f + 99.f / 77.f, 0.5f);
+		EnemyIcon->ac<CSpriteRenderer>()->Init(SPRITE("UI_MONSTER_HPICON"), SortingLayer::SR_UI, RenderMode::RM_Billboard);
+		EnemyIcon->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0.5f + 99.f / 77.f, 0.5f);
 
 	}
 	else
@@ -216,7 +223,7 @@ void CEnemy::Move(Vector3 _vDirection)
 	bool x = false;
 	bool y = false;
 	if (abs(tf->m_vPos.y - m_pPlayer->tf->m_vPos.y) < 250)
-	{
+	{ 
 		Vector3 OldPos = tf->m_vPos;
 		tf->m_vPos += Vector3(_vDirection.x,0,0)* m_fMoveSpeed * dt;
 
@@ -253,4 +260,30 @@ void CEnemy::Move(Vector3 _vDirection)
 
 		
 	}
+}
+
+void CEnemy::Attack()
+{
+
+	float fFinalDamage = m_iDamage * max(100, (100.f - GAME.GetValue(7))) / 100.f * my::RandRange(80,120) / 100.f;
+
+
+	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(tf->m_vPos + my::GetDirection(this->tf->m_vPos, GAME.m_pPlayer->tf->m_vPos ) * 75, 150, Tag::Player);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
+
+	if (listHitObject.empty() == false)
+	{
+		GRAPHICS.dPlay("VFX_HIT0" + to_string(RandRange(1, 3)));
+		GAME.Hit(fFinalDamage);
+		auto DamageFont = OBJ.Create();
+		DamageFont->tf->m_vScale = Vector3(0.4f, 0.4f, 0.f);
+		DamageFont->ac<CDamageFont>()->Init("UI_HITFONT", GAME.m_pPlayer->tf->m_vPos + Vector3(my::RandRange(-50, 50), my::RandRange(170, 280), 0), (int)fFinalDamage);
+		DamageFont->gc<CDamageFont>()->SetTransform();
+		gc<CMeshRenderer>()->sa->Add([=]()->bool {
+			return gc<CMeshRenderer>()->LerpColor(Color(1.f, 0.f, 0.f, 1.f), 24.f * dt);
+		});
+		gc<CMeshRenderer>()->sa->Add([=]()->bool {
+			return gc<CMeshRenderer>()->LerpColor(Color(1.f, 1.f, 1.f, 1.f), 24.f * dt);
+		});
+	}
+
 }

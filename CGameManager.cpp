@@ -16,9 +16,14 @@ void CGameManager::GainExp(float _Exp)
 	CurExp += _Exp;
 	if (CurExp > MaxExp)
 	{
+		if (m_pPlayer)
+		{
+			EFFECT(m_pPlayer->tf->m_vPos, Vector3(0.25f, 0.25f, 0.25f), "EFFECT_LEVELUP");
+		}
 		CurExp = 0;
+		CurHp = GetMaxHp();
 		Level++;
-		MaxExp *= 1.2f;
+		MaxExp *= 1.1f;
 		SkillPoint += 3;
 	}
 }
@@ -26,13 +31,14 @@ void CGameManager::GainExp(float _Exp)
 void CGameManager::GainHp(float _Hp)
 {
 	CurHp += _Hp;
-	if (CurHp > MaxHp)
-		CurHp = MaxHp;
+	if (CurHp > GetMaxHp())
+		CurHp = GetMaxHp();
 
 }
 
 void CGameManager::Hit(float _Damage)
 {
+	if(God == false)
 	CurHp -= _Damage;
 	if (CurHp <= 0)
 		IsDead = true;
@@ -49,6 +55,10 @@ void CGameManager::LoadData()
 
 void CGameManager::Reset()
 {
+	God = true;
+	m_pPlayer = nullptr;
+	m_pMap = nullptr;
+
 	this->MaxCombo = 0;
 	this->Level = 1;
 	this->Score = 0;
@@ -68,7 +78,7 @@ void CGameManager::Reset()
 	this->MaxHp = 500;
 
 	this->CurExp = 0;
-	this->MaxExp = 15000;
+	this->MaxExp = 3000;
 
 	this->SkillPoint = 10;
 	this->Skill01Timer = 0.f;

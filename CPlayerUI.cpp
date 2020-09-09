@@ -125,8 +125,8 @@ void CPlayerUI::Update()
 	if (INPUT.KeyDown(VK_ESCAPE))
 		m_pSkillTree->gc<CSkillTree>()->Disable();
 
-	m_pHpBar->gc<CSpriteRenderer>()->m_vFillAmount = Vector2((float)GAME.CurHp / (float)GAME.MaxHp, 1.f);
-	m_pHpBar_Yellow->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pHpBar_Yellow->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurHp / (float)GAME.MaxHp, 1.f), dt  * 2.f);
+	m_pHpBar->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pHpBar->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurHp / (float)GAME.GetMaxHp(), 1.f), dt * 32);
+	m_pHpBar_Yellow->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pHpBar_Yellow->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurHp / (float)GAME.GetMaxHp(), 1.f), dt  * 2.f);
 
 	m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount = Lerp(m_pExpBar->gc<CSpriteRenderer>()->m_vFillAmount, Vector2((float)GAME.CurExp / (float)GAME.MaxExp, 1.f), dt  * 4.f);
 	m_pLevelText->gc<CText>()->m_Text = "Lv. " + to_string(GAME.Level);

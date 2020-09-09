@@ -18,7 +18,7 @@ public:
 	void Init(Vector3 _vPos);
 
 	float m_fAttackTime = 0.f;
-	float m_fAttackDelay = 2.f;
+	float m_fAttackDelay =1.f;
 	Enemy_State m_State;
 	CGameObject * m_pPlayer = nullptr;
 	CEnemy * m_pEnemy = nullptr;

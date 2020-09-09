@@ -21,7 +21,8 @@ void CItem::Start()
 
 void CItem::Update()
 {
-	if (my::GetLength(GAME.m_pPlayer->tf->m_vPos, tf->m_vPos) < 900)
+	if(abs(tf->m_vPos.y - GAME.m_pPlayer->tf->m_vPos.y) < 200 )
+	if (my::GetLength(GAME.m_pPlayer->tf->m_vPos, tf->m_vPos) < 700)
 	{
 		tf->MoveToward(Vector3(GAME.m_pPlayer->tf->m_vPos.x,tf->m_vPos.y, GAME.m_pPlayer->tf->m_vPos.z),2000 * dt);
 	}
@@ -42,14 +43,21 @@ void CItem::OnCollision(CGameObject * _pObject)
 
 		if (m_Kind == ItemKind::IK_ITEM)
 		{
-		
+			GRAPHICS.dPlay("ITEM");
+			if(RandRange(0,100) > 50)
+				GAME.GainHp(GAME.GetMaxHp() *0.2f);
+			else
+				GAME.GainExp(GAME.MaxExp *0.2f);
+
 		}
 		else if (m_Kind == ItemKind::IK_EXP)
 		{
-			GAME.GainExp(100 + RandRange(50, 150));
+			GRAPHICS.dPlay("EXP");
+			GAME.GainExp(250+ GAME.MaxExp * RandRange(1, 10)/ 100.f);
 		}
 		else if (m_Kind == ItemKind::IK_COIN)
 		{
+			GRAPHICS.dPlay("COIN");
 			GAME.Score += 400;
 		}
 		go->Destroy();
@@ -69,13 +77,13 @@ void CItem::Init(ItemKind _Kind, Vector3 _vPos)
 		ac<CMeshRenderer>()->Init(MESH("ITEM"));
 	else if (_Kind == ItemKind::IK_EXP)
 	{
-		tf->m_vScale = Vector3(8, 8, 8);
+		tf->m_vScale = Vector3(5, 5, 5);
 		ac<CMeshRenderer>()->Init(MESH("EXP"));
 
 	}
 	else if (_Kind == ItemKind::IK_COIN)
 	{
-		tf->m_vScale = Vector3(8, 8, 8);
+		tf->m_vScale = Vector3(5, 5, 5);
 		ac<CMeshRenderer>()->Init(MESH("COIN"));
 	}
 }

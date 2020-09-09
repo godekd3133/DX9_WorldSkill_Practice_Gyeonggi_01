@@ -20,6 +20,28 @@ void CMainGame::Init()
 
 	std::future<void> a =
 		std::async(launch::async, [=]() {
+		GRAPHICS.AddSound("COIN", L"./resource/sound/Interface and Item Sounds/Items & Collectables/Coins (2).wav");
+		GRAPHICS.AddSound("EXP", L"./resource/sound/Interface and Item Sounds/Items & Collectables/Potion Drink (3).wav");
+		GRAPHICS.AddSound("ITEM", L"./resource/sound/Interface and Item Sounds/Items & Collectables/Special & Powerup (21).wav");
+		GRAPHICS.AddSound("BGM_TITLE", L"./resource/sound/HipHoppy_1.wav");
+		GRAPHICS.AddSound("BGM_GAMEEND", L"./Resource/Sound/MusicMono.wav");
+		GRAPHICS.AddSound("BGM_STAGE01", L"./resource/sound/XACTGameGroove2.wav");
+		GRAPHICS.AddSound("BGM_STAGE02", L"./resource/sound/XACTGameGroove3.wav");
+
+		GRAPHICS.AddSound("VFX_BOSS", L"./resource/sound/base/Victory Fanfare.wav");
+		GRAPHICS.AddSound("VFX_CLICK", L"./resource/sound/Interface and Item Sounds/Clicks/Click (6).wav");
+
+		GRAPHICS.AddSound("VFX_ATTACK01", L"./resource/sound/Punch and Fighting Sounds/Whoosh 1.wav");
+
+		GRAPHICS.AddSound("VFX_ATTACK02", L"./resource/sound/Punch and Fighting Sounds/Whoosh 7.wav");
+		GRAPHICS.AddSound("VFX_HIT01", L"./resource/sound/Punch and Fighting Sounds/Punch 4.wav");
+		GRAPHICS.AddSound("VFX_HIT02", L"./resource/sound/Punch and Fighting Sounds/Punch 7.wav");
+
+		GRAPHICS.AddSound("VFX_SKILL01", L"./resource/sound/Punch and Fighting Sounds/Shadow Punch 1.wav");
+		GRAPHICS.AddSound("VFX_SKILL01_LAND", L"./resource/sound/Fire Bolts/Fire bolt 5.wav");
+
+		GRAPHICS.AddSound("VFX_SKILL02", L"./resource/sound/Magic Impacts/Magical Impact 9.wav");
+		GRAPHICS.AddSound("VFX_SKILL02_LAND", L"./resource/sound/Fire Bolts/Fire bolt 10.wav");
 		AddMesh("MAP_STAGE01", "Map/Stage01/Stage01", "Map/Stage01");
 		AddMesh("MAP_STAGE02", "Map/Stage02/Stage02", "Map/Stage02");
 
@@ -108,6 +130,8 @@ void CMainGame::Init()
 
 		AddSprite("UI_DAMAGEFONT", "UI/Font/Combo03/Damage",10);
 		AddSprite("UI_COMBOFONT", "UI/Font/Combo02/Combo", 10);
+		AddSprite("UI_HITFONT", "UI/Font/DamageNormal/Normal", 10);
+		AddSprite("EFFECT_LEVELUP", "Effect/LevelUp/LevelUp", 23);
 
 		AddSprite("UI_HPBAR_BG", "UI/hp_ui_1");
 		AddSprite("UI_HPBAR", "UI/enemy_hpbar");
@@ -206,6 +230,31 @@ void CMainGame::Update()
 	CAMERA.Update();
 
 	INPUT.TimeScale = Lerp(INPUT.TimeScale, 1.f, udt * 10);
+
+	if (INPUT.KeyDown(VK_F1))
+	{
+		GAME.God = !GAME.God;
+	}
+	if (INPUT.KeyDown(VK_F2))
+	{
+		GAME.SkillPoint++;
+	}
+	if (INPUT.KeyDown(VK_F3))
+	{
+		GAME.GainExp(GAME.MaxExp - GAME.CurExp);
+	}
+	if (INPUT.KeyDown(VK_F4))
+	{
+		SCENE.ChangeScene("S_TITLE");
+	}
+	if (INPUT.KeyDown(VK_F6))
+	{
+		SCENE.ChangeScene("S_STAGE01");
+	}
+	if (INPUT.KeyDown(VK_F6))
+	{
+		SCENE.ChangeScene("S_STAGE02");
+	}
 }
 
 void CMainGame::Render()

@@ -13,6 +13,7 @@ CTitleScene::~CTitleScene()
 
 void CTitleScene::Init()
 {
+	GRAPHICS.Play("BGM_TITLE", true);
 	CGameObject * TitleBackground = OBJ.Create();
 	TitleBackground->ac<CSpriteRenderer>()->Init(SPRITE("TITLE_BACKGROUND"), SortingLayer::SR_UI, RenderMode::RM_UI);
 	TitleBackground->gc<CSpriteRenderer>()->m_vAnchor = Vector2(0, 0);
@@ -114,4 +115,6 @@ void CTitleScene::Render()
 
 void CTitleScene::Release()
 {
+	GRAPHICS.Stop("BGM_TITLE");
+
 }
