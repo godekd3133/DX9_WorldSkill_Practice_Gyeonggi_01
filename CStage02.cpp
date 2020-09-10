@@ -54,12 +54,12 @@ void CStage02::Update()
 			m_fTime = 0.f;
 			if (OBJ.Finds(Tag::Enemy).empty() == true)
 			{
-				for (int i = 0; i <10; i++)
+				for (int i = 0; i <7; i++)
 				{
 					CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
 					pEnemy->ac<CEnemy03>()->Init(vPos[idx]);
 				}
-				for (int i = 0; i < 5; i++)
+				for (int i = 0; i < 3; i++)
 				{
 					CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);
 					pEnemy->ac<CEnemy04>()->Init(vPos[idx]);
