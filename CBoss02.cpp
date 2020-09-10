@@ -109,7 +109,7 @@ void CBoss02::Init(Vector3 _vPos)
 {
 	tf->m_vScale = Vector3(2.5f,2.5f, 2.5f);
 	tf->m_vPos = _vPos;
-	ac<CEnemy>()->Init(15000, 30, 100, 1000, 500,25.f,0.15f, true);
+	ac<CEnemy>()->Init(15000, 500, 100, 1000, 500,25.f,0.15f, true);
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
 	ac<CAnimator3D>()->AddState("ATTACK01", "BOSS02_ATTACK01", 30.F / 1000.F, FALSE);

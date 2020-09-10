@@ -78,14 +78,15 @@ void CPlayerMovement::Update()
 	}
 	if (INPUT.KeyDown(VK_LBUTTON))
 		bAttack =true;
-	if (INPUT.KeyDown('Q') && Jump == 0)
-	{
 
-			bSkill02 = true;
-	}
 
 	if (MoveDirection != Vector3(0, 0, 0))
 		bMove = true;
+	if (INPUT.KeyDown('Q') && Jump == 0 && bMove == true)
+	{
+
+		bSkill02 = true;
+	}
 	if (INPUT.KeyDown(VK_LSHIFT) && Jump == 0 && bMove == true)
 	{
 		bSkill01 = true;
@@ -426,10 +427,10 @@ void CPlayerMovement::OnAttack01_Event()
 	{
 		if (iter->gc<CEnemy>()->m_bIsDead == false)
 		{
-			float fFinalDamage = GAME.GetFinalDamage() * my::RandRange(80, 120) / 100.f; 
+			float fFinalDamage = GAME.GetFinalDamage() *(max(GAME.GetValue(0), 100) / 100)* my::RandRange(80, 120) / 100.f;
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 1100 * iter->gc<CEnemy>()->m_fMass + vDir * 500 * my::RandRange(4, 8)* iter->gc<CEnemy>()->m_fMass;
 			GAME.GainHp(fFinalDamage * (GAME.GetValue(4) / 100.f));
 			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir); 
-			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 400 * iter->gc<CEnemy>()->m_fMass + vDir * 500 * my::RandRange(3, 5) * iter->gc<CEnemy>()->m_fMass;
 			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK01");
 		}
 	}
@@ -455,10 +456,10 @@ void CPlayerMovement::OnAttack02_Event()
 	{
 		if (iter->gc<CEnemy>()->m_bIsDead == false)
 		{
-			float fFinalDamage = GAME.GetFinalDamage() *(max(GAME.GetValue(0), 100) / 100)* my::RandRange(80, 120) / 100.f;
+			float fFinalDamage = GAME.GetFinalDamage() * my::RandRange(80, 120) / 100.f;
+			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 400 * iter->gc<CEnemy>()->m_fMass + vDir * 500 * my::RandRange(3, 5) * iter->gc<CEnemy>()->m_fMass;
 			GAME.GainHp(fFinalDamage * (GAME.GetValue(4) / 100.f));
 
-			iter->gc<CRigidBody>()->m_vVelocity = Vector3(0, 1, 0) * 1100 * iter->gc<CEnemy>()->m_fMass + vDir * 500 * my::RandRange(4, 8)* iter->gc<CEnemy>()->m_fMass;
 			iter->gc<CEnemy>()->OnHit((int)fFinalDamage, vDir);
 			EFFECT(iter->tf->m_vPos + Vector3(0, 100, 0), Vector3(0.25f, 0.25f, 0.25f), "EFFECT_PLAYERATTACK02");
 		}

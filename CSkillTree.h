@@ -20,7 +20,6 @@ public:
 	void Disable();
 private:
 	int index = 0;
-	
 	CGameObject * m_pSkillTreeWindow = nullptr;
 	CGameObject * m_pBlack = nullptr;
 	CGameObject * m_pBtClose = nullptr;

@@ -82,7 +82,7 @@ void CEnemy::OnCollision(CGameObject * _pObject)
 			_vDir.z = my::RandRange(-100, 100) / 100.f;
 		}
 
-		Move(-_vDir*dt*50);
+		Move(-_vDir*dt*20);
 	}
 }
 
@@ -115,17 +115,18 @@ void CEnemy::OnHit(int _Damage, Vector3 _vDir)
 			}, 0.025F);
 
 
-			auto DamageFont = OBJ.Create();
-			DamageFont->tf->m_vScale = Vector3(0.4f, 0.4f, 0.f);
-			DamageFont->ac<CDamageFont>()->Init("UI_DAMAGEFONT",tf->m_vPos + Vector3(my::RandRange(-50, 50), my::RandRange(170, 280), 0), _Damage);
-			DamageFont->gc<CDamageFont>()->SetTransform();
-			gc<CMeshRenderer>()->sa->Add([=]()->bool {
-				return gc<CMeshRenderer>()->LerpColor(Color(1.f, 0.f, 0.f, 1.f), 24.f * dt);
-			});
-			gc<CMeshRenderer>()->sa->Add([=]()->bool {
-				return gc<CMeshRenderer>()->LerpColor(Color(1.f, 1.f, 1.f, 1.f), 24.f * dt);
-			});
+
 		}
+		auto DamageFont = OBJ.Create();
+		DamageFont->tf->m_vScale = Vector3(0.4f, 0.4f, 0.f);
+		DamageFont->ac<CDamageFont>()->Init("UI_DAMAGEFONT", tf->m_vPos + Vector3(my::RandRange(-50, 50), my::RandRange(170, 280), 0), _Damage);
+		DamageFont->gc<CDamageFont>()->SetTransform();
+		gc<CMeshRenderer>()->sa->Add([=]()->bool {
+			return gc<CMeshRenderer>()->LerpColor(Color(1.f, 0.f, 0.f, 1.f), 24.f * dt);
+		});
+		gc<CMeshRenderer>()->sa->Add([=]()->bool {
+			return gc<CMeshRenderer>()->LerpColor(Color(1.f, 1.f, 1.f, 1.f), 24.f * dt);
+		});
 }
 
 bool CEnemy::Correction(Vector3 _vDir)
@@ -265,17 +266,17 @@ void CEnemy::Move(Vector3 _vDirection)
 void CEnemy::Attack()
 {
 
-	float fFinalDamage = m_iDamage * max(100, (100.f - GAME.GetValue(7))) / 100.f * my::RandRange(80,120) / 100.f;
+	float fFinalDamage = m_iDamage * (min(100, (100.f - GAME.GetValue(7))) / 100.f) * (my::RandRange(80,120) / 100.f);
 
 
-	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(tf->m_vPos + my::GetDirection(this->tf->m_vPos, GAME.m_pPlayer->tf->m_vPos ) * 75, 150, Tag::Player);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
+	list<CGameObject *> listHitObject = OBJ.GetCollisionObject(tf->m_vPos + my::GetDirection(this->tf->m_vPos, GAME.m_pPlayer->tf->m_vPos ) * 75, 250, Tag::Player);//OBJ.RayCast(this->tf->m_vPos , vDir, Tag::Enemy,fDistance);
 
 	if (listHitObject.empty() == false)
 	{
 		GRAPHICS.dPlay("VFX_HIT0" + to_string(RandRange(1, 3)));
 		GAME.Hit(fFinalDamage);
 		auto DamageFont = OBJ.Create();
-		DamageFont->tf->m_vScale = Vector3(0.4f, 0.4f, 0.f);
+		DamageFont->tf->m_vScale = Vector3(0.75f, 0.75f, 0.f);
 		DamageFont->ac<CDamageFont>()->Init("UI_HITFONT", GAME.m_pPlayer->tf->m_vPos + Vector3(my::RandRange(-50, 50), my::RandRange(170, 280), 0), (int)fFinalDamage);
 		DamageFont->gc<CDamageFont>()->SetTransform();
 		gc<CMeshRenderer>()->sa->Add([=]()->bool {

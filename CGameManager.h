@@ -46,7 +46,8 @@ public:
 	float Skill02Timer = 0.f;
 	int GetFinalDamage()
 	{
-		return Damage + (Damage  * (1.f / max(1,GetValue(7)))* (DamageMul + GetValue(2) / 100.f));
+		float Base = Damage + Damage *  max(0, GetValue(7)) / 100.f;
+		return Base * max(1.f, DamageMul + GetValue(2) / 100.f);
 	}
 
 	int SkillPoint = 10;
@@ -55,9 +56,9 @@ public:
 	int Count = 0;
 	string QuestString[4] =
 	{
-		"적을 200 마리 처치하세요. [ %d / 200 ]",
+		"적을 70 마리 처치하세요. [ %d / 70 ]",
 		"보스를 처치하세요. [ %d / 1 ]",
-		"적을 300 마리 처치하세요. [ %d / 300 ]",
+		"적을 100 마리 처치하세요. [ %d / 100 ]",
 		"보스를 처치하세요. [ %d / 1 ]"
 	};
 	string SkillName[8] = {
@@ -97,14 +98,14 @@ public:
 	{
 		10,
 		25,
-		7,
+		12,
 		15,
 		1,
 		3,
-		7,
+		10,
 		3
 	};
-	int  GetMaxHp() { return MaxHp + MaxHp * max(1.f, GetValue(2)); }
+	int  GetMaxHp() { return MaxHp + MaxHp * max(0.f, GetValue(2)); }
 	
 	float GetValue (int _index)
 	{

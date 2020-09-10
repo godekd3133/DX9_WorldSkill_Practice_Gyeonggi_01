@@ -108,7 +108,7 @@ void CEnemy01::Init(Vector3 _vPos)
 {
 	tf->m_vScale = Vector3(1.5f, 1.5f, 1.5f); 
 	tf->m_vPos = _vPos; 
-	ac<CEnemy>()->Init(1500, 50, 60,1000,200,0.f,1.f,2);
+	ac<CEnemy>()->Init(1500, 15, 100,1000,200,0.f,1.f,2);
 	ac<CMeshRenderer>()->Init(nullptr);
 	ac<CRigidBody>();
 	ac<CAnimator3D>()->AddState("ATTACK", "ENEMY01_ATTACK", 30.F / 1000.F, FALSE);

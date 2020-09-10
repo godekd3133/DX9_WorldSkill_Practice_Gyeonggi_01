@@ -5,6 +5,7 @@
 #include "CStageClear.h"
 #include "CStage02.h"
 #include "CGameClear.h"
+#include "CGameOver.h"
 CMainGame::CMainGame()
 {
 
@@ -215,6 +216,7 @@ void CMainGame::Init()
 	SCENE.AddScene("S_STAGECLEAR", new CStageClear());
 	SCENE.AddScene("S_STAGE02", new CStage02());
 	SCENE.AddScene("S_GAMECLEAR", new CGameClear());
+	SCENE.AddScene("S_GAMEOVER", new CGameOver());
 	SCENE.ChangeScene("S_TITLE");
 
 }
@@ -241,7 +243,7 @@ void CMainGame::Update()
 	}
 	if (INPUT.KeyDown(VK_F3))
 	{
-		GAME.GainExp(GAME.MaxExp - GAME.CurExp);
+		GAME.GainExp(GAME.MaxExp - GAME.CurExp+1);
 	}
 	if (INPUT.KeyDown(VK_F4))
 	{

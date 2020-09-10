@@ -21,6 +21,7 @@ CGraphicsManager::~CGraphicsManager()
 	for (auto iter : m_mapSound)
 	{
 		iter.second->Stop();
+		iter.second->Reset();
 		SAFE_DELETE(iter.second);
 	}
 	m_mapSound.clear();

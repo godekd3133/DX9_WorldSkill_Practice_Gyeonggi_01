@@ -55,7 +55,7 @@ void CGameManager::LoadData()
 
 void CGameManager::Reset()
 {
-	God = true;
+	God = false;
 	m_pPlayer = nullptr;
 	m_pMap = nullptr;
 
@@ -74,8 +74,8 @@ void CGameManager::Reset()
 	this->DamageMul = 1.f;
 	this->Damage = 100;
 	
-	this->CurHp = 500;
-	this->MaxHp = 500;
+	this->MaxHp = 100;
+	this->CurHp = GetMaxHp();
 
 	this->CurExp = 0;
 	this->MaxExp = 3000;

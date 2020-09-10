@@ -62,11 +62,11 @@ void CStage01::Update()
 					pEnemy->ac<CEnemy02>()->Init(vPos[idx]);
 				}
 				idx++;
-				if (idx > 5) idx = 0;
+				if (idx > 4) idx = 0;
 			}
 		}
 
-		if (GAME.Count >= 200)
+		if (GAME.Count >= 70)
 		{
 			GRAPHICS.dPlay("VFX_BOSS");
 			CGameObject * pEnemy = OBJ.Create("1", Tag::Enemy);

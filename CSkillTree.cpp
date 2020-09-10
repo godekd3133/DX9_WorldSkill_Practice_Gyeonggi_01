@@ -174,8 +174,8 @@ void CSkillTree::Update()
 	}
 	m_pSelectIcon->gc<CSpriteRenderer>()->m_pSprite = SPRITE("UI_ST_ICON_0" + to_string(index + 1));
 	m_pSelectName_Text->gc<CText>()->m_Text = GAME.SkillName[index];
-	char text[100];
-	sprintf(text, GAME.SkillTooltip[index].c_str(), (int)GAME.GetValue(index));
+	char text[300];
+ 	sprintf(text, GAME.SkillTooltip[index].c_str(), (int)GAME.GetValue(index));
 	m_pSelectTooltip_Text->gc<CText>()->m_Text = text;
 	m_pLevelText->gc<CText>()->m_Text = "[" + to_string(GAME.SkillLevel[index]) + " 레벨]";
 	m_pSPText->gc<CText>()->m_Text = "남은 포인트 : " + to_string(GAME.SkillPoint);
